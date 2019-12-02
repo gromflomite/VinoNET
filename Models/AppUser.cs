@@ -26,5 +26,9 @@ namespace Wineapp.Models
         [MaxLength(35)]
         public string Company { get; set; }
 
+        public List<SweetnessTaste> sweetnessTastes { get; set; }
+        public List<ColourTaste> ColourTaste { get; set; }
+        public List<SourceTaste> SourceTaste { get; set; }
+
     }
 }

@@ -5,17 +5,13 @@ using System.Threading.Tasks;
 
 namespace Wineapp.Models
 {
-    public class UserScore
+    public class WineListWine
     {
         public int Id { get; set; }
-        public int? VoteValue { get; set; }
-        public DateTime? VoteDate { get; set; }
-
-        public string AppUserId { get; set; }
-        public AppUser AppUser { get; set; }
+        public int WineListId { get; set; }
+        public WineList WineList{ get; set; }
         public int WineId { get; set; }
         public Wine Wine { get; set; }
-
 
     }
 }
