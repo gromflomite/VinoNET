@@ -1,0 +1,39 @@
+﻿@model Wineapp.Models.ViewModels.TastesVM
+@{
+    ViewData["Title"] = "Survey";
+}
+
+<h1>Survey</h1>
+
+<p>Colours</p>
+<form>
+    @foreach (ColourTaste colourTaste in Model.ColourTastes)
+    {
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" value=5>
+            <label class="form-check-label" for="inlineCheckbox1">@Model.ColourTaste.Colour.ColourType</label>
+        </div>
+    }
+</form>
+
+<p>Source</p>
+<form>
+    @foreach (ColourTaste colourTaste in Model.ColourTastes)
+    {
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" value=5>
+            <label class="form-check-label" for="inlineCheckbox1">@Model.ColourTaste.Colour.ColourType</label>
+        </div>
+    }
+</form>
+
+<p>Sweetness</p>
+<form>
+    @foreach (ColourTaste colourTaste in Model.ColourTastes)
+    {
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" value=5>
+            <label class="form-check-label" for="inlineCheckbox1">@Model.ColourTaste.Colour.ColourType</label>
+        </div>
+    }
+</form>
