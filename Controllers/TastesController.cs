@@ -12,18 +12,21 @@ namespace Wineapp.Controllers
     public class TastesController : Controller
     {
         private readonly ITastes _tastesServices;
+        private readonly IFilters _filtersServices;
 
-        public TastesController(ITastes tastesServices)
+        public TastesController(ITastes tastesServices, IFilters filtersServices)
         {
             _tastesServices = tastesServices;
+            _filtersServices = filtersServices;
         }
 
         // GET: Tastes
-        public ActionResult Survey(string userId)
+        public async Task<ActionResult> Survey(string userId)
         {
             TastesVM tvm = new TastesVM
             {
-             
+                ListColours = await _filtersServices.GetColourAsync(),
+
 
             };
 

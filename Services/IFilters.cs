@@ -8,13 +8,13 @@ namespace Wineapp.Services
 {
     public interface IFilters
     {
-        public Task<List<Colour>> GetColourTastesAsync();
-        public Task<Colour> GetColourTasteByIdAsync(int? id);
+        public Task<List<Colour>> GetColourAsync();
+        public Task<Colour> GetColourByIdAsync(int? id);
 
-        public Task<List<Source>> GetSourceTastesAsync();
-        public Task<Source> GetSourceTasteByIdAsync(int? id);
+        public Task<List<Source>> GetSourceAsync();
+        public Task<Source> GetSourceByIdAsync(int? id);
 
-        public Task<List<Sweetnes>> GetSweetnesTastesAsync();
-        public Task<Sweetnes> GetSweetnesTasteByIdAsync(int? id);
+        public Task<List<Sweetnes>> GetSweetnesAsync();
+        public Task<Sweetnes> GetSweetnesByIdAsync(int? id);
     }
 }
