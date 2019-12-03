@@ -67,12 +67,13 @@ namespace Wineapp.Areas.Identity.Pages.Account
                 sweetnessTaste.AppUserId = userId;
                 sweetnessTaste.Score = 0;
                 await _tasteServices.CreateSweetnessTasteAsync(sweetnessTaste);
+
             }
 
 
             code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
             var result = await _userManager.ConfirmEmailAsync(user, code);
-            StatusMessage = result.Succeeded ? "Thank you for confirming your email." : "Error confirming your email.";
+            StatusMessage = result.Succeeded ? "Gracias por confirmar tu correo electrónico." : "Error al confirmar tu correo electrónico.";
             return Page();
         }
     }

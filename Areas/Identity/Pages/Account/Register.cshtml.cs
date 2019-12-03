@@ -48,19 +48,33 @@ namespace Wineapp.Areas.Identity.Pages.Account
         {
             [Required]
             [EmailAddress]
-            [Display(Name = "Email")]
+            [Display(Name = "Correo Eletrónico")]
             public string Email { get; set; }
 
             [Required]
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
             [DataType(DataType.Password)]
-            [Display(Name = "Password")]
+            [Display(Name = "Contraseña")]
             public string Password { get; set; }
 
             [DataType(DataType.Password)]
-            [Display(Name = "Confirm password")]
+            [Display(Name = "Confirmar Contraseña")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            [Display(Name = "Nombre")]
+            public string Name { get; set; }
+
+            [Display(Name = "Apellido")]
+            public string Surname { get; set; }
+
+            [Display(Name = "Dirección")]
+            public string Address { get; set; }
+
+            [Display(Name = "Empresa")]
+            public string Company { get; set; }
+
+
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -75,7 +89,15 @@ namespace Wineapp.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new AppUser { UserName = Input.Email, Email = Input.Email };
+                var user = new AppUser { 
+                    UserName = Input.Email,
+                    Email = Input.Email ,
+                    Name = Input.Name,
+                    Surname = Input.Surname,
+                    Address = Input.Address,
+                    Company = Input.Company
+
+                };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
