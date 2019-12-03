@@ -1,0 +1,19 @@
+﻿@model Wineapp.Models.ViewModels.TastesVM
+@{
+    ViewData["Title"] = "Survey";
+}
+
+<h1>Survey</h1>
+
+<p>Colours</p>
+<form>
+@foreach (Colour colour in Model.ListColours)
+{
+    <div class="form-check form-check-inline">
+        <input asp-for="ColourTaste.ColourId" class="form-check-input" type="checkbox" value="@colour.Id">
+        <label class="form-check-label" for="inlineCheckbox1">@colour.ColourType</label>
+    </div>
+
+}
+</form>
+
