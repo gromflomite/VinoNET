@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Wineapp.Models;
+using Wineapp.Services;
 
 namespace Wineapp.Areas.Identity.Pages.Account
 {
@@ -16,10 +17,15 @@ namespace Wineapp.Areas.Identity.Pages.Account
     public class ConfirmEmailModel : PageModel
     {
         private readonly UserManager<AppUser> _userManager;
+        private readonly ITastes _tasteServices;
+        private readonly IFilters _filtersServices;
 
-        public ConfirmEmailModel(UserManager<AppUser> userManager)
+
+        public ConfirmEmailModel(UserManager<AppUser> userManager, ITastes tasteServices, IFilters filtersServices)
         {
             _userManager = userManager;
+            _tasteServices = tasteServices;
+            _filtersServices = filtersServices;
         }
 
         [TempData]
@@ -27,6 +33,7 @@ namespace Wineapp.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnGetAsync(string userId, string code)
         {
+
             if (userId == null || code == null)
             {
                 return RedirectToPage("/Index");
@@ -37,6 +44,31 @@ namespace Wineapp.Areas.Identity.Pages.Account
             {
                 return NotFound($"Unable to load user with ID '{userId}'.");
             }
+            foreach (Colour colour in await _filtersServices.GetColourAsync())
+            {
+                ColourTaste colourTaste = new ColourTaste();
+                colourTaste.ColourId = colour.Id;
+                colourTaste.AppUserId = userId;
+                colourTaste.Score = 0;
+                await _tasteServices.CreateColourTasteAsync(colourTaste);
+            }
+            foreach (Source source in await _filtersServices.GetSourceAsync())
+            {
+                SourceTaste sourceTaste = new SourceTaste();
+                sourceTaste.SourceId = source.Id;                
+                sourceTaste.AppUserId = userId;
+                sourceTaste.Score = 0;
+                await _tasteServices.CreateSourceTasteAsync(sourceTaste);
+            }
+            foreach (Sweetnes sweetnes in await _filtersServices.GetSweetnesAsync())
+            {
+                SweetnessTaste sweetnessTaste = new SweetnessTaste();
+                sweetnessTaste.SweetnesId= sweetnes.Id;               
+                sweetnessTaste.AppUserId = userId;
+                sweetnessTaste.Score = 0;
+                await _tasteServices.CreateSweetnessTasteAsync(sweetnessTaste);
+            }
+
 
             code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
             var result = await _userManager.ConfirmEmailAsync(user, code);
