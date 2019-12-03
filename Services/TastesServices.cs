@@ -108,17 +108,18 @@ namespace Wineapp.Services
         {
             throw new NotImplementedException();
         }
-        public Task<List<SweetnessTaste>> GetSweetnessTastesAsync()
+        public async Task<List<SweetnessTaste>> GetSweetnessTastesAsync()
         {
-            throw new NotImplementedException();
+            return await _context.SweetnessTastes.ToListAsync();
         }
         public bool SweetnessTasteExists(int? id)
         {
-            throw new NotImplementedException();
+            return _context.SweetnessTastes.Any(e => e.Id == id);
         }
-        public Task UpdateSweetnessTasteAsync(SweetnessTaste sweetnessTaste)
+        public async Task UpdateSweetnessTasteAsync(SweetnessTaste sweetnessTaste)
         {
-            throw new NotImplementedException();
+            _context.Update(sweetnessTaste);
+            await _context.SaveChangesAsync();
         }
 
     }
