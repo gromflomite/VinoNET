@@ -13,5 +13,6 @@ namespace Wineapp.Models
         [DataType(DataType.Text)]
         [MaxLength(30)]
         public string SourceType { get; set; }
+        public string Province { get; set; }
     }
 }
