@@ -44,7 +44,7 @@ namespace Wineapp.Services
         }
         public async Task<List<ColourTaste>> GetColourTastesAsync()
         {
-            return await _context.ColourTastes.ToListAsync();
+            return await _context.ColourTastes.Include(x=>x.Colour).ToListAsync();
         }
         public async Task UpdateColourTasteAsync(ColourTaste colourTaste)
         {
@@ -75,7 +75,7 @@ namespace Wineapp.Services
         }
         public async Task<List<SourceTaste>> GetSourceTastesAsync()
         {
-            return await _context.SourceTastes.ToListAsync();
+            return await _context.SourceTastes.Include(x=>x.Source).ToListAsync();
         }
         public bool SourceTasteExists(int? id)
         {
@@ -110,7 +110,7 @@ namespace Wineapp.Services
         }
         public async Task<List<SweetnessTaste>> GetSweetnessTastesAsync()
         {
-            return await _context.SweetnessTastes.ToListAsync();
+            return await _context.SweetnessTastes.Include(x=>x.Sweetnes).ToListAsync();
         }
         public bool SweetnessTasteExists(int? id)
         {
