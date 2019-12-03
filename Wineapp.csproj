@@ -5,6 +5,10 @@
     <UserSecretsId>aspnet-Wineapp-3B8D8EAB-9158-4B93-9F5F-0F69CFDF2994</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Controllers\TastesController.cs" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.0.0" />

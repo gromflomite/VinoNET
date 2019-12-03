@@ -10,8 +10,8 @@ using Wineapp.Data;
 namespace Wineapp.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20191202171441_tables")]
-    partial class tables
+    [Migration("20191202173830_addProvinceInSource")]
+    partial class addProvinceInSource
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -276,6 +276,9 @@ namespace Wineapp.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Province")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("SourceType")
                         .IsRequired()
                         .HasColumnType("nvarchar(30)")
@@ -523,7 +526,7 @@ namespace Wineapp.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.AppUserrLogin<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.AppUserLogin<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.AppUser", null)
                         .WithMany()
