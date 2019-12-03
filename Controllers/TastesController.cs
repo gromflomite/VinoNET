@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Wineapp.Models;
 using Wineapp.Models.ViewModels;
 using Wineapp.Services;
 
@@ -12,18 +14,32 @@ namespace Wineapp.Controllers
     public class TastesController : Controller
     {
         private readonly ITastes _tastesServices;
+        private readonly IFilters _filtersServices;
+        private readonly UserManager<AppUser> _userManager;
 
-        public TastesController(ITastes tastesServices)
+        public TastesController(ITastes tastesServices, IFilters filtersServices)
         {
             _tastesServices = tastesServices;
+            _filtersServices = filtersServices;
         }
 
         // GET: Tastes
-        public ActionResult Survey(string userId)
+        public async Task<ActionResult> Survey(string userId)
         {
+
+            List<SourceTaste> sourcetaste = await _tastesServices.GetSourceTastesAsync();
+            List<ColourTaste> colourtaste = await _tastesServices.GetColourTastesAsync();
+            List<SweetnessTaste> sweetnesstaste = await _tastesServices.GetSweetnessTastesAsync();
+
             TastesVM tvm = new TastesVM
             {
-             
+                ListColours = await _filtersServices.GetColourAsync(),
+                ListSources = await _filtersServices.GetSourceAsync(),
+                ListSweetness = await _filtersServices.GetSweetnesAsync(),
+
+                SourceTastes = sourcetaste.Where(x => x.AppUser.Id == _userManager.GetUserId(User)).ToList(),
+                ColourTastes = colourtaste.Where(x => x.AppUser.Id == _userManager.GetUserId(User)).ToList(),
+                SweetnesTastes = sweetnesstaste.Where(x => x.AppUser.Id == _userManager.GetUserId(User)).ToList(),
 
             };
 

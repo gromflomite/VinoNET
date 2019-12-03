@@ -16,32 +16,32 @@ namespace Wineapp.Services
         {
             _context = context;
         }
-        public async Task<Colour> GetColourTasteByIdAsync(int? id)
+        public async Task<Colour> GetColourByIdAsync(int? id)
         {
             return await _context.Colours.FindAsync(id);
         }
 
-        public async Task<List<Colour>> GetColourTastesAsync()
+        public async Task<List<Colour>> GetColourAsync()
         {
             return await _context.Colours.ToListAsync(); 
         }
 
-        public async Task<Source> GetSourceTasteByIdAsync(int? id)
+        public async Task<Source> GetSourceByIdAsync(int? id)
         {
             return await _context.Sources.FindAsync(id);
         }
 
-        public async Task<List<Source>> GetSourceTastesAsync()
+        public async Task<List<Source>> GetSourceAsync()
         {
             return await _context.Sources.ToListAsync();
         }
 
-        public async Task<Sweetnes> GetSweetnesTasteByIdAsync(int? id)
+        public async Task<Sweetnes> GetSweetnesByIdAsync(int? id)
         {
             return await _context.Sweetness.FindAsync(id);
         }
 
-        public async Task<List<Sweetnes>> GetSweetnesTastesAsync()
+        public async Task<List<Sweetnes>> GetSweetnesAsync()
         {
             return await _context.Sweetness.ToListAsync();
         }
