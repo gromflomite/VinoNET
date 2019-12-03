@@ -67,6 +67,7 @@ namespace Wineapp.Areas.Identity.Pages.Account
                 sweetnessTaste.AppUserId = userId;
                 sweetnessTaste.Score = 0;
                 await _tasteServices.CreateSweetnessTasteAsync(sweetnessTaste);
+
             }
 
 
