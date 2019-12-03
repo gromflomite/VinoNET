@@ -13,20 +13,21 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using Wineapp.Models;
 
 namespace Wineapp.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
     public class RegisterModel : PageModel
     {
-        private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly SignInManager<AppUser> _signInManager;
+        private readonly UserManager<AppUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
 
         public RegisterModel(
-            UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager,
+            UserManager<AppUser> userManager,
+            SignInManager<AppUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender)
         {
@@ -60,6 +61,25 @@ namespace Wineapp.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+
+            [DataType(DataType.Text)]
+            [MaxLength(25)]
+            public string Name { get; set; }
+
+            [DataType(DataType.Text)]
+            [MaxLength(30)]
+            public string Surname { get; set; }
+
+            [DataType(DataType.Text)]
+            [MaxLength(60)]
+            public string Address { get; set; }
+
+            [DataType(DataType.Text)]
+            [MaxLength(35)]
+            public string Company { get; set; }
+
+
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -74,8 +94,20 @@ namespace Wineapp.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new IdentityUser { UserName = Input.Email, Email = Input.Email };
-                var result = await _userManager.CreateAsync(user, Input.Password);
+                var user = new AppUser
+                { UserName = Input.Email,
+                    Email = Input.Email, 
+                    Name = Input.Name,
+                    Surname = Input.Surname,
+                    Address = Input.Address,
+                    Company = Input.Company
+                    
+
+
+                };
+
+                var result = await _userManager.CreateAsync(user , Input.Password);
+
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
