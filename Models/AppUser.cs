@@ -25,6 +25,8 @@ namespace Wineapp.Models
         [DataType(DataType.Text)]
         [MaxLength(35)]
         public string Company { get; set; }
+        public bool Survey { get; set; }
+        public string Image { get; set; }
 
         public List<SweetnessTaste> SweetnessTastes { get; set; }
         public List<ColourTaste> ColourTastes { get; set; }

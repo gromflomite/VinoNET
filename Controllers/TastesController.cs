@@ -46,6 +46,34 @@ namespace Wineapp.Controllers
             return View(tvm);
         }
 
+        public async Task<ActionResult> InsertSurveyValues(int[] colour, int[] source, int[] sweet)
+        {
+            foreach (int col in colour)
+            {
+                ColourTaste colourTaste = await _tastesServices.GetColourTasteByIdAsync(col);
+                colourTaste.Score = +5;
+                await _tastesServices.UpdateColourTasteAsync(colourTaste);
+            }
+            foreach (int sor in source)
+            {
+                SourceTaste sourceTaste = await _tastesServices.GetSourceTasteByIdAsync(sor);
+                sourceTaste.Score = +5;
+                await _tastesServices.UpdateSourceTasteAsync(sourceTaste);
+            }
+            foreach (int swe in sweet)
+            {
+                SweetnessTaste sweetnessTaste = await _tastesServices.GetSweetnessTasteByIdAsync(swe);
+                sweetnessTaste.Score = +5;
+                await _tastesServices.UpdateSweetnessTasteAsync(sweetnessTaste);
+            }
+            AppUser user = await _userManager.GetUserAsync(User);
+            user.Survey = true;
+            await _userManager.UpdateAsync(user);
+
+            return RedirectToAction(nameof(Index));
+        }
+
+
         // GET: Tastes/Details/5
         public ActionResult Details(int id)
         {

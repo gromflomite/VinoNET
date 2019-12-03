@@ -4,36 +4,41 @@
 }
 
 <h1>Survey</h1>
+<a asp-action="Home">Saltar</a>
 
 <p>Colours</p>
-<form>
+<form name="colour">
     @foreach (ColourTaste colourTaste in Model.ColourTastes)
     {
         <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" value=5>
+            <input class="form-check-input" type="checkbox" value="@Model.ColourTaste.Id">
             <label class="form-check-label" for="inlineCheckbox1">@Model.ColourTaste.Colour.ColourType</label>
         </div>
     }
 </form>
 
 <p>Source</p>
-<form>
-    @foreach (ColourTaste colourTaste in Model.ColourTastes)
+<form name="source">
+    @foreach (SourceTaste sourceTaste in Model.SourceTastes)
     {
         <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" value=5>
-            <label class="form-check-label" for="inlineCheckbox1">@Model.ColourTaste.Colour.ColourType</label>
+            <input class="form-check-input" type="checkbox" value="@Model.SourceTaste.Id">
+            <label class="form-check-label" for="inlineCheckbox1">@Model.SourceTaste.Source.SourceType</label>
         </div>
     }
 </form>
 
 <p>Sweetness</p>
-<form>
-    @foreach (ColourTaste colourTaste in Model.ColourTastes)
+<form name="sweet">
+    @foreach (SweetnessTaste sweetnessTaste in Model.SweetnesTastes)
     {
         <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" value=5>
-            <label class="form-check-label" for="inlineCheckbox1">@Model.ColourTaste.Colour.ColourType</label>
+            <input class="form-check-input" type="checkbox" value="@Model.SourceTaste.Id">
+            <label class="form-check-label" for="inlineCheckbox1">@Model.SweetnessTaste.Sweetnes.SweetnesType</label>
         </div>
     }
 </form>
+
+<div>
+    <a asp-action="InsertSurveyValues">Finalizar</a>
+</div>
