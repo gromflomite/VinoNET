@@ -16,6 +16,7 @@ namespace Wineapp.Models
         public Sweetnes Sweetnes { get; set; }
         public int? SourceId { get; set; }
         public Source Source { get; set; }
+        public string Image { get; set; }
         public List<WineListWine>  WineListWines{ get; set; }
         
         [Required]
