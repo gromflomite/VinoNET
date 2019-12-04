@@ -10,11 +10,12 @@ namespace Wineapp.Models.ViewModels
         public Wine Wine { get; set; }
         public Source Source { get; set; }
         public List<Wine> ListWineTaste { get; set; }
-        public List<Wine> ListWineUserScore { get; set; }
-        public List<Source> ListSourceTaste { get; set; }
+        public List<Wine> ListWineUserScore { get; set; }    
 
-        public ColourTaste colourTaste { get; set; }
-        public SourceTaste sourceTaste { get; set; }
-        public SweetnessTaste sweetnessTaste { get; set; }
+        public List< ColourTaste> ListUserColourTaste { get; set; }
+        public List<SourceTaste> ListUserSourceTaste { get; set; }
+        public List<SweetnessTaste> ListUserSweetnessTaste { get; set; }
+
+        public List<Wine> ListWinesTastesDetails { get; set; }
     }
 }

@@ -41,43 +41,89 @@ namespace Wineapp.Controllers
 
             WinesVM wvm = new WinesVM
             {
-                colourTaste = listColourTastes.OrderByDescending(x => x.Score).ToList().First(),
-                sourceTaste = listSourceTastes.OrderByDescending(x => x.Score).ToList().First(),
-                sweetnessTaste = listSweetnessTastes.OrderByDescending(x => x.Score).ToList().First(),
+                ListUserColourTaste = listColourTastes.OrderByDescending(x => x.Score).ToList().GetRange(0,3),
+                ListUserSourceTaste = listSourceTastes.OrderByDescending(x => x.Score).ToList().GetRange(0, 3),
+                ListUserSweetnessTaste = listSweetnessTastes.OrderByDescending(x => x.Score).ToList().GetRange(0, 3),
             };
 
             return wvm;
-    }
+        }
 
 
         // GET: Wines
-        //        public async Task<IActionResult> Index()
-        //        {
-        //            var applicationDbContext = _context.Wines.Include(w => w.Colour).Include(w => w.Source).Include(w => w.Sweetnes);
-        //            return View(await applicationDbContext.ToListAsync());
-        //        }
+        public async Task<IActionResult> Index()
+        {
+            List<Wine> listWines = await _winesServices.GetWinesAsync(); 
+            return View(listWines);
+        }
 
-        // GET: Wines/Details/5
-        //public async Task<IActionResult> Details(int? id)
-        //{
-        //        WinesVM wvm = await GetUserPreferences();
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
+        //GET: Wines/Details/5
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            WinesVM wvm = await GetUserPreferences();
+            wvm.Wine = await _winesServices.GetWineByIdAsync(id);
+            
 
-        //    var wine = await _context.Wines
-        //        .Include(w => w.Colour)
-        //        .Include(w => w.Source)
-        //        .Include(w => w.Sweetnes)
-        //        .FirstOrDefaultAsync(m => m.Id == id);
-        //    if (wine == null)
-        //    {
-        //        return NotFound();
-        //    }
+            List<Wine> listOne = new List<Wine>();
+            List<Wine> listTwo = new List<Wine>();
+            List<Wine> listThree = new List<Wine>();
 
-        //    return View(wine);
-        //}
+            int colourTasteOne = wvm.ListUserColourTaste[0].ColourId;
+            int sweetnessTasteOne = wvm.ListUserSweetnessTaste[0].SweetnesId;
+            int sourceTasteOne = wvm.ListUserSourceTaste[0].SourceId;
+
+           
+            //Lista de todos los vinos
+            foreach (Wine wine in await _winesServices.GetWinesAsync())
+            {
+                if (wine.ColourId == wvm.Wine.ColourId && wine.SweetnesId == sweetnessTasteOne && wine.SourceId == sourceTasteOne)
+                {
+                    listOne.Add(wine);
+                }
+                else if (wine.ColourId == colourTasteOne && wine.SweetnesId == sweetnessTasteOne && wine.SourceId == sourceTasteOne)
+                {
+                    listTwo.Add(wine);
+                }
+                else if (wine.SourceId == wvm.Wine.SourceId && wine.SweetnesId == sweetnessTasteOne)
+                {
+                    listThree.Add(wine);
+                }                 
+            }
+
+            List<Wine> newlist = new List<Wine>();
+            Random rnd = new Random();
+            for (int i = 0; i < 5; i++)
+            {
+                int numberRandom = rnd.Next(0, listOne.Count-1);
+
+                newlist.Add(listOne[numberRandom]);
+            }
+            for (int i = 0; i < 3; i++)
+            {               
+                int numberRandom = rnd.Next(0, listTwo.Count - 1);
+
+                newlist.Add(listTwo[numberRandom]);
+            }
+            for (int i = 0; i < 2; i++)
+            {               
+                int numberRandom = rnd.Next(0, listOne.Count - 1);
+
+                newlist.Add(listTwo[numberRandom]);
+            }
+
+            if (newlist == null)
+            {
+                return NotFound();
+            }
+
+            wvm.ListWinesTastesDetails = newlist;
+
+            return View(wvm);
+        }
 
         //        // GET: Wines/Create
         //        public IActionResult Create()
