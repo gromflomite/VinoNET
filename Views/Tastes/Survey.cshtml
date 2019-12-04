@@ -11,8 +11,8 @@
     @foreach (ColourTaste colourTaste in Model.ColourTastes)
     {
         <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" value="@Model.ColourTaste.Id">
-            <label class="form-check-label" for="inlineCheckbox1">@Model.ColourTaste.Colour.ColourType</label>
+            <input class="form-check-input" type="checkbox" value="@colourTaste.Id">
+            <label class="form-check-label" for="inlineCheckbox1">@colourTaste.Colour.ColourType</label>
         </div>
     }
 </form>
@@ -22,8 +22,8 @@
     @foreach (SourceTaste sourceTaste in Model.SourceTastes)
     {
         <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" value="@Model.SourceTaste.Id">
-            <label class="form-check-label" for="inlineCheckbox1">@Model.SourceTaste.Source.SourceType</label>
+            <input class="form-check-input" type="checkbox" value="@sourceTaste.Id">
+            <label class="form-check-label" for="inlineCheckbox1">@sourceTaste.Source.SourceType</label>
         </div>
     }
 </form>
@@ -33,8 +33,8 @@
     @foreach (SweetnessTaste sweetnessTaste in Model.SweetnesTastes)
     {
         <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" value="@Model.SourceTaste.Id">
-            <label class="form-check-label" for="inlineCheckbox1">@Model.SweetnessTaste.Sweetnes.SweetnesType</label>
+            <input class="form-check-input" type="checkbox" value="@sweetnessTaste.Id">
+            <label class="form-check-label" for="inlineCheckbox1">@sweetnessTaste.Sweetnes.SweetnesType</label>
         </div>
     }
 </form>
