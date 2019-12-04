@@ -40,7 +40,7 @@ namespace Wineapp.Services
         }
         public async Task<List<ColourTaste>> GetColourTasteesByUserIdAsync(string userId)
         {
-            return await _context.ColourTastes.Where(x => x.AppUserId == userId).ToListAsync();
+            return await _context.ColourTastes.Where(x => x.AppUserId == userId).Include(x=>x.Colour).ToListAsync();
         }
         public async Task<List<ColourTaste>> GetColourTastesAsync()
         {
@@ -71,7 +71,7 @@ namespace Wineapp.Services
         }
         public async Task<List<SourceTaste>> GetSourceTasteesByUserIdAsync(string userId)
         {
-            return await _context.SourceTastes.Where(x => x.AppUserId == userId).ToListAsync(); 
+            return await _context.SourceTastes.Where(x => x.AppUserId == userId).Include(x=>x.Source).ToListAsync();
         }
         public async Task<List<SourceTaste>> GetSourceTastesAsync()
         {
@@ -106,7 +106,7 @@ namespace Wineapp.Services
         }
         public async Task<List<SweetnessTaste>> GetSweetnessTasteesByUserIdAsync(string userId)
         {
-            return await _context.SweetnessTastes.Where(x => x.AppUserId == userId).ToListAsync();
+            return await _context.SweetnessTastes.Where(x => x.AppUserId == userId).Include(x=>x.Sweetnes).ToListAsync();
         }
         public async Task<List<SweetnessTaste>> GetSweetnessTastesAsync()
         {
