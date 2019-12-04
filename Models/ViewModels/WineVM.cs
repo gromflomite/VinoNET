@@ -10,5 +10,6 @@ namespace Wineapp.Models.ViewModels
         public Wine Wine { get; set; }
         public List<Wine> ListWineTaste { get; set; }
         public List<Wine> ListWineUserScore { get; set; }
+
     }
 }
