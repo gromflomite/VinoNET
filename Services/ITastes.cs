@@ -9,7 +9,7 @@ namespace Wineapp.Services
     public interface ITastes
     {
         //COLOUR TASTE
-        public Task<List<ColourTaste>> GetColourTasteesByUserIdAsync();
+        public Task<List<ColourTaste>> GetColourTasteesByUserIdAsync(string userId);
         public Task<List<ColourTaste>> GetColourTastesAsync();
         public Task<ColourTaste> GetColourTasteByIdAsync(int? id);
         public Task CreateColourTasteAsync(ColourTaste colourTaste);
@@ -18,7 +18,7 @@ namespace Wineapp.Services
         public bool ColourTasteExists(int? id);
 
         //SOURCE TASTE
-        public Task<List<SourceTaste>> GetSourceTasteesByUserIdAsync();
+        public Task<List<SourceTaste>> GetSourceTasteesByUserIdAsync(string userId);
         public Task<List<SourceTaste>> GetSourceTastesAsync();
         public Task<SourceTaste> GetSourceTasteByIdAsync(int? id);
         public Task CreateSourceTasteAsync(SourceTaste sourceTaste);
@@ -27,7 +27,7 @@ namespace Wineapp.Services
         public bool SourceTasteExists(int? id);
 
         //SWEETNESS TASTE
-        public Task<List<SweetnessTaste>> GetSweetnessTasteesByUserIdAsync();
+        public Task<List<SweetnessTaste>> GetSweetnessTasteesByUserIdAsync(string userId);
         public Task<List<SweetnessTaste>> GetSweetnessTastesAsync();
         public Task<SweetnessTaste> GetSweetnessTasteByIdAsync(int? id);
         public Task CreateSweetnessTasteAsync(SweetnessTaste sweetnessTaste);
