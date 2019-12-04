@@ -17,29 +17,30 @@ namespace Wineapp.Controllers
         private readonly IFilters _filtersServices;
         private readonly UserManager<AppUser> _userManager;
 
-        public TastesController(ITastes tastesServices, IFilters filtersServices)
+        public TastesController(ITastes tastesServices, IFilters filtersServices, UserManager<AppUser> userManager)
         {
             _tastesServices = tastesServices;
             _filtersServices = filtersServices;
+            _userManager = userManager;
         }
 
         // GET: Tastes
-        public async Task<ActionResult> Survey(string userId)
+        public async Task<ActionResult> Survey()
         {
 
             List<SourceTaste> sourcetaste = await _tastesServices.GetSourceTastesAsync();
             List<ColourTaste> colourtaste = await _tastesServices.GetColourTastesAsync();
             List<SweetnessTaste> sweetnesstaste = await _tastesServices.GetSweetnessTastesAsync();
-
+            var user = await _userManager.FindByEmailAsync(User.Identity.Name);
             TastesVM tvm = new TastesVM
             {
                 ListColours = await _filtersServices.GetColourAsync(),
                 ListSources = await _filtersServices.GetSourceAsync(),
                 ListSweetness = await _filtersServices.GetSweetnesAsync(),
 
-                SourceTastes = sourcetaste.Where(x => x.AppUser.Id == _userManager.GetUserId(User)).ToList(),
-                ColourTastes = colourtaste.Where(x => x.AppUser.Id == _userManager.GetUserId(User)).ToList(),
-                SweetnesTastes = sweetnesstaste.Where(x => x.AppUser.Id == _userManager.GetUserId(User)).ToList(),
+                SourceTastes = sourcetaste.Where(x => x.AppUser.Id ==  user.Id).ToList(),
+                ColourTastes = colourtaste.Where(x => x.AppUser.Id == user.Id).ToList(),
+                SweetnesTastes = sweetnesstaste.Where(x => x.AppUser.Id ==user.Id).ToList(),
 
             };
 
