@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -17,60 +18,73 @@ namespace Wineapp.Controllers
         private readonly IFilters _filtersServices;
         private readonly UserManager<AppUser> _userManager;
 
-        public TastesController(ITastes tastesServices, IFilters filtersServices)
+        public TastesController(ITastes tastesServices, IFilters filtersServices, UserManager<AppUser> userManager)
         {
             _tastesServices = tastesServices;
             _filtersServices = filtersServices;
+            _userManager = userManager;
         }
 
         // GET: Tastes
-        public async Task<ActionResult> Survey(string userId)
+        [Authorize]
+        public async Task<ActionResult> Survey()
         {
-
             List<SourceTaste> sourcetaste = await _tastesServices.GetSourceTastesAsync();
             List<ColourTaste> colourtaste = await _tastesServices.GetColourTastesAsync();
             List<SweetnessTaste> sweetnesstaste = await _tastesServices.GetSweetnessTastesAsync();
-
+            var user = await _userManager.FindByEmailAsync(User.Identity.Name);
             TastesVM tvm = new TastesVM
             {
                 ListColours = await _filtersServices.GetColourAsync(),
                 ListSources = await _filtersServices.GetSourceAsync(),
                 ListSweetness = await _filtersServices.GetSweetnesAsync(),
 
-                SourceTastes = sourcetaste.Where(x => x.AppUser.Id == _userManager.GetUserId(User)).ToList(),
-                ColourTastes = colourtaste.Where(x => x.AppUser.Id == _userManager.GetUserId(User)).ToList(),
-                SweetnesTastes = sweetnesstaste.Where(x => x.AppUser.Id == _userManager.GetUserId(User)).ToList(),
+                SourceTastes = sourcetaste.Where(x => x.AppUser.Id == user.Id).ToList(),
+                ColourTastes = colourtaste.Where(x => x.AppUser.Id == user.Id).ToList(),
+                SweetnesTastes = sweetnesstaste.Where(x => x.AppUser.Id == user.Id).ToList(),
 
             };
 
             return View(tvm);
         }
 
+
         public async Task<ActionResult> InsertSurveyValues(int[] colour, int[] source, int[] sweet)
         {
-            foreach (int col in colour)
+            if (colour.Length > 0)
             {
-                ColourTaste colourTaste = await _tastesServices.GetColourTasteByIdAsync(col);
-                colourTaste.Score = +5;
-                await _tastesServices.UpdateColourTasteAsync(colourTaste);
+                foreach (int col in colour)
+                {
+                    ColourTaste colourTaste = await _tastesServices.GetColourTasteByIdAsync(col);
+                    colourTaste.Score = +5;
+                    await _tastesServices.UpdateColourTasteAsync(colourTaste);
+                }
             }
-            foreach (int sor in source)
+            if (source.Length > 0)
             {
-                SourceTaste sourceTaste = await _tastesServices.GetSourceTasteByIdAsync(sor);
-                sourceTaste.Score = +5;
-                await _tastesServices.UpdateSourceTasteAsync(sourceTaste);
+                foreach (int sor in source)
+                {
+                    SourceTaste sourceTaste = await _tastesServices.GetSourceTasteByIdAsync(sor);
+                    sourceTaste.Score = +5;
+                    await _tastesServices.UpdateSourceTasteAsync(sourceTaste);
+                }
+
             }
-            foreach (int swe in sweet)
+            if (sweet.Length > 0)
             {
-                SweetnessTaste sweetnessTaste = await _tastesServices.GetSweetnessTasteByIdAsync(swe);
-                sweetnessTaste.Score = +5;
-                await _tastesServices.UpdateSweetnessTasteAsync(sweetnessTaste);
+                foreach (int swe in sweet)
+                {
+                    SweetnessTaste sweetnessTaste = await _tastesServices.GetSweetnessTasteByIdAsync(swe);
+                    sweetnessTaste.Score = +5;
+                    await _tastesServices.UpdateSweetnessTasteAsync(sweetnessTaste);
+                }
+
             }
             AppUser user = await _userManager.GetUserAsync(User);
             user.Survey = true;
             await _userManager.UpdateAsync(user);
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(HomeController));
         }
 
 
