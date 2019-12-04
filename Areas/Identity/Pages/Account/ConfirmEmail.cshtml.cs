@@ -70,7 +70,6 @@ namespace Wineapp.Areas.Identity.Pages.Account
 
             }
 
-
             code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
             var result = await _userManager.ConfirmEmailAsync(user, code);
             StatusMessage = result.Succeeded ? "Gracias por confirmar tu correo electrónico." : "Error al confirmar tu correo electrónico.";
