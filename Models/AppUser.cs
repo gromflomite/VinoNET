@@ -24,7 +24,7 @@ namespace Wineapp.Models
 
         [DataType(DataType.Text)]
         [MaxLength(35)]
-        public string Company { get; set; }       
+        public string Company { get; set; }
         public bool Survey { get; set; }
         public string Image { get; set; }
 

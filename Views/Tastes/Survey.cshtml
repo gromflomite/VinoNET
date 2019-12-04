@@ -1,39 +1,55 @@
-﻿@model Wineapp.Models.ViewModels.TastesVM
+﻿@using Microsoft.AspNetCore.Identity
+@model Wineapp.Models.ViewModels.TastesVM
+@inject UserManager<AppUser> _userManager
+
+
 @{
-    ViewData["Title"] = "Survey";
+    var user = await _userManager.FindByEmailAsync(User.Identity.Name);
+    //Comprueba que el usuario loggeado haya hecho la encuesta
+    if (user.Survey == true)
+    {
+        <p>Ya has realizado tu encuesta</p>
+    }
+    else
+    {
+        <h1>Survey</h1>
+        <a asp-action="Home">Saltar</a>
+
+        <form asp-action="InsertSurveyValues">
+
+            <p>Colours</p>
+            @foreach (ColourTaste colourTaste in Model.ColourTastes)
+            {
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" name="colour" value="@colourTaste.Id">
+                    <label class="form-check-label" for="inlineCheckbox-@colourTaste.Id">@colourTaste.Colour.ColourType</label>
+                </div>
+            }
+
+
+            <p>Source</p>
+
+            @foreach (SourceTaste sourceTaste in Model.SourceTastes)
+            {
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" name="source" value="@sourceTaste.Id">
+                    <label class="form-check-label" for="inlineCheckbox-@sourceTaste.Id">@sourceTaste.Source.SourceType</label>
+                </div>
+            }
+
+
+            <p>Sweetness</p>
+
+            @foreach (SweetnessTaste sweetnessTaste in Model.SweetnesTastes)
+            {
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" name="sweet" value="@sweetnessTaste.Id">
+                    <label class="form-check-label" for="inlineCheckbox-@sweetnessTaste.Id">@sweetnessTaste.Sweetnes.SweetnesType</label>
+                </div>
+            }
+
+            <input type="submit" value="Finalizar" />
+        </form>
+    }
 }
 
-<h1>Survey</h1>
-
-<p>Colours</p>
-<form>
-    @foreach (ColourTaste colourTaste in Model.ColourTastes)
-    {
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" value=5>
-            <label class="form-check-label" for="inlineCheckbox1">@Model.ColourTaste.Colour.ColourType</label>
-        </div>
-    }
-</form>
-
-<p>Source</p>
-<form>
-    @foreach (ColourTaste colourTaste in Model.ColourTastes)
-    {
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" value=5>
-            <label class="form-check-label" for="inlineCheckbox1">@Model.ColourTaste.Colour.ColourType</label>
-        </div>
-    }
-</form>
-
-<p>Sweetness</p>
-<form>
-    @foreach (ColourTaste colourTaste in Model.ColourTastes)
-    {
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" value=5>
-            <label class="form-check-label" for="inlineCheckbox1">@Model.ColourTaste.Colour.ColourType</label>
-        </div>
-    }
-</form>
