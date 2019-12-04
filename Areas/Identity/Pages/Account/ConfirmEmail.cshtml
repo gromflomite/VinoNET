@@ -1,8 +1,11 @@
 ﻿@page
 @model ConfirmEmailModel
 @{
-    ViewData["Title"] = "Confirm email";
+    ViewData["Title"] = "Confirmar Correo electrónico";
 }
 
 <h1>@ViewData["Title"]</h1>
 <partial name="_StatusMessage" model="Model.StatusMessage" />
+<p>Ayúdanos a conocerte rellenando esta encuesta</p>
+<a asp-controller="Tastes" asp-action="Survey">Adelante</a>
+<a asp-controller="Home" asp-action="Index">Saltar</a>
