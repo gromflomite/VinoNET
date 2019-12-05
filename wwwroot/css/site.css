@@ -1,17 +1,43 @@
-﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
+
+body {
+  font-family: 'Cinzel', serif;
+  background-color: #F7D08D;
+}
 
 a.navbar-brand {
   white-space: normal;
   text-align: center;
   word-break: break-all;
+  color: white;
+  letter-spacing: 0.5rem;
+}
+
+a.nav-link {
+  color: white;
+  font-size: 1.5vw;
+}
+
+.navbar {
+  font-family: 'Cinzel', serif;
+  font-size: 1.2vw;
+  background-image: url("../img/navbarbackground.jpg");
+  height: 9rem;
+  letter-spacing: 0.2rem;
+  
+  
+  
+}
+
+.navbar-brand {  
+  font-size: 3vw;
+  padding-left: 3%;
+  padding-right: 3%;
+  font-weight: bold;
 }
 
 /* Provide sufficient contrast against white background */
-a {
-  color: #0366d6;
-}
-
 .btn-primary {
   color: #fff;
   background-color: #1b6ec2;
@@ -29,6 +55,7 @@ a {
 html {
   font-size: 14px;
 }
+
 @media (min-width: 768px) {
   html {
     font-size: 16px;
@@ -68,4 +95,94 @@ body {
   width: 100%;
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
+  background-color: black;
+}
+
+/* Footer icons
+---------------------------------------------------------*/
+
+.social_icons_rounded ul {    
+  list-style: none;
+  padding-left: 33%;
+  
+}
+
+.social_icons_rounded ul li a {
+        float: left;
+        border-radius: 50%;
+        line-height: 40px;
+        color: #e0e0e0;
+        height: 40px;
+        width: 40px;
+        text-align: center;
+        margin-bottom: 1%;
+        border: 1px solid #e0e0e0
+}
+
+.social_icons_rounded ul li a i {
+  font-size: 16px
+}
+
+.f_facebook:hover {
+    color: #fff;
+    background: #2a66b3;
+    border: 1px solid #2a66b3
+}
+
+.t_twitter:hover {
+    color: #fff;
+    background: #35bbec;
+    border: 1px solid #35bbec
+}
+
+.pinterest:hover {
+    color: #fff;
+    background: #cb2027;
+    border: 1px solid #cb2027
+}
+
+.linkedin:hover {
+    color: #fff;
+    background: #007bb5;
+    border: 1px solid #007bb5
+}
+
+.g_google:hover {
+    color: #fff;
+    background: #e55644;
+    border: 1px solid #e55644
+}
+
+.dribbble:hover {
+    color: #fff;
+    background: #ea4c89;
+    border: 1px solid #ea4c89
+}
+
+.skype:hover {
+    color: #fff;
+    background: #01aaf8;
+    border: 1px solid #01aaf8
+}
+
+.flickr:hover {
+    color: #fff;
+    background: #ff0084;
+    border: 1px solid #ff0084
+}
+
+.gap {
+    margin-left: 15px
+}
+
+/* Personal style ---------------------------------------------------------*/
+
+h1 {
+  text-align: center;
+  padding-top: 3rem;
+}
+
+p {
+  text-align: justify;
+  padding-top: 2rem /*Padding tramposo*/
 }
