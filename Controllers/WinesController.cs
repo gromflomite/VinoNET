@@ -41,13 +41,80 @@ namespace Wineapp.Controllers
 
             WinesVM wvm = new WinesVM
             {
-                colourTaste = listColourTastes.OrderByDescending(x => x.Score).ToList().First(),
-                sourceTaste = listSourceTastes.OrderByDescending(x => x.Score).ToList().First(),
-                sweetnessTaste = listSweetnessTastes.OrderByDescending(x => x.Score).ToList().First(),
+                ListUserColourTaste = listColourTastes.OrderByDescending(x => x.Score).ToList().GetRange(0, 3),
+                ListUserSourceTaste = listSourceTastes.OrderByDescending(x => x.Score).ToList().GetRange(0, 3),
+                ListUserSweetnessTaste = listSweetnessTastes.OrderByDescending(x => x.Score).ToList().GetRange(0, 3),
             };
 
             return wvm;
-    }
+        }
+
+        public async Task<IActionResult> SourcePreferences(int sourceId)
+        {
+            sourceId = 1;
+            WinesVM wvm = await GetUserPreferences();
+            wvm.Source = await _filtersServices.GetSourceByIdAsync(sourceId);
+            wvm.ListSources = await _filtersServices.GetSourceAsync();
+
+            List<Wine> wines = await _winesServices.GetWinesAsync();
+            wines = wines.Where(x => x.Source.Id == sourceId).ToList();
+
+            List<Wine> firstPreference = new List<Wine>();
+            List<Wine> secondPreference = new List<Wine>();
+
+
+            if (_signInManager.IsSignedIn(User))
+            {
+                foreach (Wine wine in wines)
+                {
+                    if (wvm.ListUserColourTaste[0].ColourId == wine.ColourId && wvm.ListUserSweetnessTaste[0].SweetnesId == wine.SweetnesId)
+                    {
+                        firstPreference.Add(wine);
+                    }
+                    else if (wvm.ListUserColourTaste[0].ColourId == wine.ColourId && wvm.ListUserSweetnessTaste[1].SweetnesId == wine.SweetnesId)
+                    {
+                        secondPreference.Add(wine);
+                    }
+                    else if (wvm.ListUserColourTaste[1].ColourId == wine.ColourId && wvm.ListUserSweetnessTaste[1].SweetnesId == wine.SweetnesId)
+                    {
+                        secondPreference.Add(wine);
+                    }
+                }
+
+            }
+            else
+            {
+                firstPreference = await _winesServices.GetWinesAsync();
+            }
+
+            Random numberRandom = new Random();
+            if (firstPreference.Count > 0)
+            {              
+                for (int i = 0; i < 1; i++)
+                {
+                    int num = numberRandom.Next(0, firstPreference.Count);
+                    wvm.ListWinesTastesSources.Add(firstPreference[num]);
+                }
+
+            }
+            if (secondPreference.Count > 0)
+            {
+                for (int i = 0; i < 1; i++)
+                {
+                    int num = numberRandom.Next(0, secondPreference.Count);
+                    wvm.ListWinesTastesSources.Add(secondPreference[num]);
+                }
+
+            }
+
+            if (wvm.ListWinesTastesSources==null)
+            {
+                wvm.ListWinesTastesSources = wines;
+            }
+
+            return View(wvm);
+        }
+
 
 
         // GET: Wines
