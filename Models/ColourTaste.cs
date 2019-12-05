@@ -10,7 +10,7 @@ namespace Wineapp.Models
     {
         public int Id { get; set; }
 
-        public int Score { get; set; }
+        public double Score { get; set; }
         public string AppUserId { get; set; }
         public AppUser AppUser { get; set; }
         public int ColourId { get; set; }
