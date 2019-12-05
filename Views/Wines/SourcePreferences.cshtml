@@ -1,0 +1,24 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<AppUser> _signInManager
+@inject UserManager<AppUser> _userManager
+@model Wineapp.Models.ViewModels.WinesVM
+
+<h1>SourcePreferences</h1>
+
+
+
+
+<h1>@Model.Source.SourceType</h1>
+<div>
+    @foreach (Wine wine in Model.ListWinesTastesSources)
+    {
+        <p>@wine.Name</p>
+
+    }
+
+    @foreach (Source source in Model.ListSources)
+    {
+        <p>@source.SourceType</p>
+    }
+</div>
+
