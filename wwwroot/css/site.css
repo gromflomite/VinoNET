@@ -24,10 +24,7 @@ a.nav-link {
   font-size: 1.2vw;
   background-image: url("../img/navbarbackground.jpg");
   height: 9rem;
-  letter-spacing: 0.2rem;
-  
-  
-  
+  letter-spacing: 0.2rem; 
 }
 
 .navbar-brand {  
@@ -177,12 +174,7 @@ body {
 
 /* Personal style ---------------------------------------------------------*/
 
-h1 {
-  text-align: center;
-  padding-top: 3rem;
+.surveyp {
+  font-size: 1.5rem;  
 }
 
-p {
-  text-align: justify;
-  padding-top: 2rem /*Padding tramposo*/
-}
