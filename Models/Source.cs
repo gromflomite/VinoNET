@@ -15,5 +15,9 @@ namespace Wineapp.Models
         public string SourceType { get; set; }
         public string Province { get; set; }
         public string Image { get; set; }
+        public string Logo { get; set; }
+        public string Description { get; set; }
+
     }
 }
+
