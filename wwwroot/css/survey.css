@@ -1,36 +1,22 @@
-h1 {
-  margin: 0 auto;
-  padding-top: 3%;
-  padding-bottom: 4%;
-  font-weight: bold;
+.surveyviewh1 {
+    margin: 0 auto;
+    padding-top: 3%;
+    padding-bottom: 4%;
+    font-weight: bold;
 }
 
-h4 {
-  margin-top: 3%;
+.surveyviewh1top {
+    padding-top: 5%;
+    padding-bottom: 3%;
 }
 
-.surveyp {
-  margin-left: 5%;
-  margin-top: 3%;
+.surveyviewh3top {
+    padding-bottom: 3%;
+    font-family: 'Ibarra Real Nova', serif;
 }
 
-.form-group {  
-  padding-left: 5%;  
-  font-family: 'Libre Baskerville', serif;
-
+.surveyviewbutton {
+    margin-top: 3%;
+    margin-bottom: 3%;
 }
 
-.questions {
-  margin-left: 5%;
-  margin-top: 3%
-}
-
-.questionsblock {
-  padding-left: 12%;
-  font-size: 1.1rem;
-}
-
-.sendbutton {
-  margin: 5%;
-  margin-left: 15%;
-}

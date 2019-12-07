@@ -2,12 +2,12 @@
 @model Wineapp.Models.ViewModels.TastesVM
 @inject UserManager<AppUser> _userManager
 
-@{
-    ViewData["Title"] = "Encuesta";
-}
-
 @section Styles {
     <link href="@Url.Content("~/css/survey.css")" rel="stylesheet" type="text/css" />
+}
+
+@{
+    ViewData["Title"] = "Encuesta";
 }
 
 @{
@@ -20,52 +20,69 @@
     }
     else
     {
-        <h1>Encuesta de preferencias personales</h1>
+        <h1 class="surveyviewh1top">Encuesta de preferencias personales</h1>
+
+        <h3 class="surveyviewh3top">Rellenar el formulario nos permitirá crear recomendaciones de producto ajustadas a sus preferencias.</h3>
 
         <div class="form-group">
 
-            <h3>Rellenar el formulario nos permitirá crear recomendaciones de productos ajustadas a sus preferencias.</h3>
-
             @*<a class="surveyafter" asp-controller="Home" asp-action="Index">Haré la encuesta en otro momento</a>*@
-
-            <h4>Seleccione sus preferencias entre las siguientes opciones:</h4>
 
             <form asp-action="InsertSurveyValues">
 
-                <div class="questions">
-                    <p class="surveyp">• Color:</p>
+                <div class="row">
 
-
-                    @foreach (ColourTaste colourTaste in Model.ColourTastes)
-                    {
-                        <div class="form-check questionsblock">
-                            <input class="form-check-input" type="checkbox" name="colour" value="@colourTaste.Id">
-                            <label class="form-check-label" for="inlineCheckbox-@colourTaste.Id">@colourTaste.Colour.ColourType</label>
+                    <div class="col">
+                        <div class="card border-dark">
+                            <div class="card-header">Tipo de vino</div>
+                            <div class="card-body">
+                                @foreach (ColourTaste colourTaste in Model.ColourTastes)
+                                {
+                                    <div class="form-check questionsblock">
+                                        <input class="form-check-input" type="checkbox" name="colour" value="@colourTaste.Id">
+                                        <label class="form-check-label" for="inlineCheckbox-@colourTaste.Id">@colourTaste.Colour.ColourType</label>
+                                    </div>
+                                }
+                            </div>
                         </div>
-                    }
+                    </div>
 
-                    <p class="surveyp">• Denominaciones de origen:</p>
-
-                    @foreach (SourceTaste sourceTaste in Model.SourceTastes)
-                    {
-                        <div class="form-check questionsblock">
-                            <input class="form-check-input" type="checkbox" name="source" value="@sourceTaste.Id">
-                            <label class="form-check-label" for="inlineCheckbox-@sourceTaste.Id">@sourceTaste.Source.SourceType</label>
+                    <div class="col">
+                        <div class="card border-dark mb-2">
+                            <div class="card-header">Dulzor:</div>
+                            <div class="card-body">
+                                @foreach (SweetnessTaste sweetnessTaste in Model.SweetnesTastes)
+                                {
+                                    <div class="form-check questionsblock">
+                                        <input class="form-check-input" type="checkbox" name="sweet" value="@sweetnessTaste.Id">
+                                        <label class="form-check-label" for="inlineCheckbox-@sweetnessTaste.Id">@sweetnessTaste.Sweetnes.SweetnesType</label>
+                                    </div>
+                                }
+                            </div>
                         </div>
-                    }
-
-                    <p class="surveyp">• Dulzor:</p>
-
-                    @foreach (SweetnessTaste sweetnessTaste in Model.SweetnesTastes)
-                    {
-                        <div class="form-check questionsblock">
-                            <input class="form-check-input" type="checkbox" name="sweet" value="@sweetnessTaste.Id">
-                            <label class="form-check-label" for="inlineCheckbox-@sweetnessTaste.Id">@sweetnessTaste.Sweetnes.SweetnesType</label>
-                        </div>
-                    }
-
-                    <input class="sendbutton" type="submit" value="Completar" />
+                    </div>
                 </div>
+
+                <div class="row">
+                    <div class="col">
+                        <div class="card border-dark">
+                            <div class="card-header">Denominación de origen</div>
+                            <div class="card-body">
+                                @foreach (SourceTaste sourceTaste in Model.SourceTastes)
+                                {
+                                    <div class="form-check questionsblock">
+                                        <input class="form-check-input" type="checkbox" name="source" value="@sourceTaste.Id">
+                                        <label class="form-check-label" for="inlineCheckbox-@sourceTaste.Id">@sourceTaste.Source.SourceType</label>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary col-4 offset-4 surveyviewbutton">Enviar</button>
+
+                @*<input class="sendbutton" type="submit" value="Enviar" />*@
             </form>
         </div>
     }

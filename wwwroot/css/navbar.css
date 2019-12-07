@@ -3,6 +3,11 @@
 
 /* Navbar section */
 
+nav {
+    position: absolute;
+    z-index: 1;
+}
+
 .nav .container-fluid .main_list  .navlinks .nav-item a {
     font-size: 1.5rem;
 }

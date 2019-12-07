@@ -75,7 +75,7 @@ body {
 
 .social_icons_rounded ul {
     list-style: none;
-    padding-left: 33%; /*Really bad method to "center" the footer icons (Raúl)*/
+    padding-left: 38%; /*Really bad method to "center" the footer icons (created by Raúl)*/
 }
 
     .social_icons_rounded ul li a {
@@ -155,7 +155,6 @@ body {
 .test {
     padding-top: 5%;
     padding-bottom: 5%;
-    
 }
 
 .test2 {
