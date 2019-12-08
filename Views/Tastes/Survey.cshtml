@@ -39,7 +39,7 @@
                                 @foreach (ColourTaste colourTaste in Model.ColourTastes)
                                 {
                                     <div class="form-check questionsblock">
-                                        <input class="form-check-input" type="checkbox" name="colour" value="@colourTaste.Id">
+                                        <input class="form-check-input up" type="checkbox" name="colour" value="@colourTaste.Id">
                                         <label class="form-check-label" for="inlineCheckbox-@colourTaste.Id">@colourTaste.Colour.ColourType</label>
                                     </div>
                                 }
@@ -49,12 +49,12 @@
 
                     <div class="col">
                         <div class="card border-dark mb-2">
-                            <div class="card-header">Dulzor:</div>
+                            <div class="card-header">Dulzor</div>
                             <div class="card-body">
                                 @foreach (SweetnessTaste sweetnessTaste in Model.SweetnesTastes)
                                 {
                                     <div class="form-check questionsblock">
-                                        <input class="form-check-input" type="checkbox" name="sweet" value="@sweetnessTaste.Id">
+                                        <input class="form-check-input up" type="checkbox" name="sweet" value="@sweetnessTaste.Id">
                                         <label class="form-check-label" for="inlineCheckbox-@sweetnessTaste.Id">@sweetnessTaste.Sweetnes.SweetnesType</label>
                                     </div>
                                 }
@@ -71,7 +71,7 @@
                                 @foreach (SourceTaste sourceTaste in Model.SourceTastes)
                                 {
                                     <div class="form-check questionsblock">
-                                        <input class="form-check-input" type="checkbox" name="source" value="@sourceTaste.Id">
+                                        <input class="form-check-input down" type="checkbox" name="source" value="@sourceTaste.Id">
                                         <label class="form-check-label" for="inlineCheckbox-@sourceTaste.Id">@sourceTaste.Source.SourceType</label>
                                     </div>
                                 }
