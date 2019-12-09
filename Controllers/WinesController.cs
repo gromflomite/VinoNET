@@ -316,6 +316,10 @@ namespace Wineapp.Controllers
 
             await _likeServices.Create(userScore);
 
+            Wine wine = await _winesServices.GetWineByIdAsync(idWine);
+            wine.Score ++;
+            await _winesServices.UpdateWineAsync(wine);
+
             Response.Redirect(url);
         }
         public async Task DelateLikeValues(int colourId, int sourceId, int sweetId, string url, int idWine)
@@ -324,17 +328,21 @@ namespace Wineapp.Controllers
             await _tastesServices.DelateLikeValues(colourId, sourceId, sweetId, user.Id);
             await _likeServices.Delete(idWine, user.Id);
 
+            Wine wine = await _winesServices.GetWineByIdAsync(idWine);
+            wine.Score--;
+            await _winesServices.UpdateWineAsync(wine);
+
             Response.Redirect(url);
         }
 
 
 
-        // GET: Wines
-        //        public async Task<IActionResult> Index()
-        //        {
-        //            var applicationDbContext = _context.Wines.Include(w => w.Colour).Include(w => w.Source).Include(w => w.Sweetnes);
-        //            return View(await applicationDbContext.ToListAsync());
-        //        }
+        //GET: Wines
+        public async Task<IActionResult> Index()
+        {
+            List<Wine> listWines = await _winesServices.GetWinesAsync();
+            return View(listWines);
+        }
 
         // GET: Wines/Details/5
         //public async Task<IActionResult> Details(int? id)
