@@ -39,6 +39,7 @@ namespace Wineapp
             services.AddRazorPages();
             services.AddTransient<IFilters, FiltersServices>();
             services.AddTransient<ITastes, TastesServices>();
+            services.AddTransient<IWines, WinesServices>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
