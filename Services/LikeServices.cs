@@ -25,7 +25,7 @@ namespace Wineapp.Services
 
         public async Task Delete(int idWine, string idUserScore)
         {
-            UserScore userScore =  _context.UserScores.ToList().Last(x => x.AppUserId == idUserScore && x.WineId == idWine) ;
+            UserScore userScore =  _context.UserScores.FirstOrDefault(x => x.AppUserId == idUserScore && x.WineId == idWine);
             _context.Remove(userScore);
             await _context.SaveChangesAsync();
         }
