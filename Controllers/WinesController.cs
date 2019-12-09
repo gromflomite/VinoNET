@@ -87,12 +87,13 @@ namespace Wineapp.Controllers
             }
 
             wvm.ListWinesTastesSources = new List<Wine>();
+
             Random numberRandom = new Random();
             if (firstPreference.Count > 0)
             {
-                for (int i = 0; i < 1; i++)
+                for (int i = 0; i < 3; i++)
                 {
-                    int num = numberRandom.Next(0, firstPreference.Count);
+                    int num = numberRandom.Next(0, firstPreference.Count - 1);
                     wvm.ListWinesTastesSources.Add(firstPreference[num]);
                 }
 
