@@ -1,18 +1,71 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity
+@using Wineapp.Services;
+@inject SignInManager<AppUser> _signInManager
+@inject UserManager<AppUser> _userManager
+@inject ITastes  _tastesServices
+@model Wineapp.Models.ViewModels.WinesVM
+
+@{
     ViewData["Title"] = "Inicio";
 }
 
 <h1 class="test">Bienvenido la web del proyecto VinoNET</h1>
 
-<p class="test2">
 
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ut nibh eros. Fusce sed arcu quis augue scelerisque porttitor. Nullam vel ultricies risus. Quisque at suscipit urna. Etiam ut risus sem. Cras ultrices, lorem vitae auctor tempor, urna erat feugiat nisl, sed malesuada neque dui suscipit metus. Nam mattis bibendum fringilla. Suspendisse a venenatis orci. Suspendisse eu justo vestibulum, venenatis elit non, iaculis magna.
+<div>
+    <h3>DENOMINACIONES DE ORIGEN</h3>
 
-    Donec nec eros mollis, tristique leo a, sollicitudin erat. Etiam in pretium est. Integer placerat augue id libero hendrerit, ut pretium massa tempor. Nunc ac dignissim lorem. Fusce a quam a enim elementum elementum. Etiam venenatis rhoncus tristique. Etiam magna velit, bibendum rutrum velit sed, euismod porttitor ante. Aliquam erat volutpat. Quisque aliquet tortor id sapien scelerisque congue. Nullam id fermentum arcu. Quisque ultrices, enim porta dapibus dictum, risus lacus mollis purus, eget rhoncus nulla risus eu dui. Suspendisse volutpat volutpat neque. Praesent scelerisque id lorem vel congue. Duis iaculis libero eget euismod lobortis. Etiam et ullamcorper leo. Morbi pretium leo metus, non venenatis mi luctus eu.
+    <!--El método en HomeController ya crea la lista según si el usuario está registrado o no-->
+    <!--La lista solo tiene 3 elementos por lo que si queremos añadir más hay que cambiar el HomeController-->
 
-    Fusce vestibulum mi ut purus finibus, quis pretium libero sollicitudin. Aliquam id fermentum nulla, a aliquet arcu. Nullam ac faucibus leo. Maecenas sodales luctus nunc, at cursus odio fermentum et. Quisque elit orci, vestibulum sit amet rutrum ut, malesuada eu urna. Vestibulum non volutpat sem. Morbi vitae rhoncus sapien. Proin tincidunt ante neque. Nullam euismod rutrum nisi eget tincidunt.
+    @foreach (Source source in Model.ListSources)
+    {
 
-    Vestibulum sed mauris eu odio blandit laoreet. Proin dapibus iaculis sapien id ullamcorper. Mauris commodo enim ac urna rutrum rhoncus. Nulla sit amet sodales ligula. Curabitur pharetra ligula commodo neque ultrices posuere. Donec sodales sit amet lacus at elementum. Nunc aliquam quam magna, sit amet blandit nisi mattis non. Fusce porttitor in velit ac sodales. Praesent finibus velit sed enim dictum, sed finibus nibh gravida.
+        <form asp-controller="Wines" asp-action="SourcePreferences">
+            <input type="hidden" name="sourceId" value="@source.Id"/>
+            <input type="image" src="~/img/dologo/@source.Logo"/>
+        </form>
+        <!--La etiqueta <a> es solo para indicaros la ruta a la que hay que mandar el id cuando pincha la imagen-->
+    }
+</div>
 
-    Fusce nec ligula leo. In non metus eget metus mollis vestibulum a eget tortor. Vestibulum eget hendrerit metus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Sed at tristique dolor. Duis vel tortor non nibh pretium molestie. Ut laoreet ipsum augue, faucibus malesuada ligula ultricies vel. Suspendisse at leo a erat pretium ultrices sit amet id est. Nulla auctor viverra auctor. Curabitur ligula nisl, consequat et bibendum quis, commodo a augue. Integer bibendum condimentum purus eu dapibus. In nec quam vitae augue finibus accumsan. Donec posuere ante non viverra vulputate. Proin augue mi, faucibus eu nulla eget, eleifend condimentum leo. Cras congue quis ligula in feugiat. Fusce elit augue, porttitor in augue et, malesuada maximus odio.
-</p>
+
+
+<div>
+    <h3>VINOS</h3>
+
+    @if (_signInManager.IsSignedIn(User))
+    {
+        <!--PARA EL USUARIO REGISTRADO-->
+        <h3>TE RECOMENDAMOS</h3>
+    }
+    else
+    {
+        <!--NO REGISTRADO-->
+        <h3>LO MÁS VISTO</h3>
+    }
+
+    <!--El método en HomeController ya crea la lista según si el usuario está registrado o no-->
+    <!--La lista solo tiene 3 elementos-->
+
+    @foreach (Wine wine in Model.ListWineTaste)
+    {
+        <form asp-controller="Wines" asp-action="Details">
+            <input type="hidden" name="id" value="@wine.Id" />
+            <input type="image" src="~/img/wines/@wine.Image" />
+        </form>
+        <p>@wine.Colour.ColourType,@wine.Sweetnes.SweetnesType,@wine.Source.SourceType</p>
+
+        <!--La etiqueta <a> es solo para indicaros la ruta-->
+    }
+
+</div>
+
+
+
+
+
+
+
+
+
