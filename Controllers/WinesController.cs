@@ -18,15 +18,17 @@ namespace Wineapp.Controllers
         private readonly ITastes _tastesServices;
         private readonly IWines _winesServices;
         private readonly IFilters _filtersServices;
+        private readonly ILike _likeServices;
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
 
 
-        public WinesController(ITastes tastesServices, IWines winesServices, IFilters filtersServices, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
+        public WinesController(ILike likeServices,ITastes tastesServices, IWines winesServices, IFilters filtersServices, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
         {
             _tastesServices = tastesServices;
             _winesServices = winesServices;
             _filtersServices = filtersServices;
+            _likeServices = likeServices;
             _userManager = userManager;
             _signInManager = signInManager;
 
@@ -51,13 +53,15 @@ namespace Wineapp.Controllers
 
         public async Task<IActionResult> SourcePreferences(int sourceId)
         {
-            sourceId = 1;
+         
             WinesVM wvm = await GetUserPreferences();
             wvm.Source = await _filtersServices.GetSourceByIdAsync(sourceId);
             wvm.ListSources = await _filtersServices.GetSourceAsync();
 
             List<Wine> wines = await _winesServices.GetWinesAsync();
             wines = wines.Where(x => x.Source.Id == sourceId).ToList();
+            AppUser user = await _userManager.FindByEmailAsync(User.Identity.Name);
+            await _tastesServices.InsertClickValues(0, wvm.Source.Id,0, 1, user.Id);
 
             List<Wine> firstPreference = new List<Wine>();
             List<Wine> secondPreference = new List<Wine>();
@@ -91,20 +95,51 @@ namespace Wineapp.Controllers
 
             Random numberRandom = new Random();
             if (firstPreference.Count > 0)
-            {              
+            {
                 for (int i = 0; i < 3; i++)
                 {
-                    int num = numberRandom.Next(0, firstPreference.Count-1);
-                    wvm.ListWinesTastesSources.Add(firstPreference[num]);
-                }
+                    if (firstPreference.Count != 0 && firstPreference.Count > i)
+                    {
+                        bool salir = false;
+                        do
+                        {
+                            int num = numberRandom.Next(0, firstPreference.Count - 1);
+                            if (!wvm.ListWinesTastesSources.Contains(firstPreference[num]))
+                            {
+                                wvm.ListWinesTastesSources.Add(firstPreference[num]);
+                                salir = true;
+                            }
+                        } while (!salir);
+                    }
+                    else
+                    {
+                        break;
+                    }
+                } 
 
             }
             if (secondPreference.Count > 0)
             {
                 for (int i = 0; i < 1; i++)
                 {
-                    int num = numberRandom.Next(0, secondPreference.Count);
-                    wvm.ListWinesTastesSources.Add(secondPreference[num]);
+                    if (firstPreference.Count != 0 && firstPreference.Count > i)
+                    {
+                        bool salir = false;
+                        do
+                        {
+                            int num = numberRandom.Next(0, secondPreference.Count - 1);
+                            if (!wvm.ListWinesTastesSources.Contains(secondPreference[num]))
+                            {
+                                wvm.ListWinesTastesSources.Add(secondPreference[num]);
+                                salir = true;
+                            }
+                        } while (!salir);
+                    }
+                    else
+                    {
+                        break;
+                    }
+                   
                 }
 
             }
@@ -117,14 +152,197 @@ namespace Wineapp.Controllers
             return View(wvm);
         }
 
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            WinesVM wvm = await GetUserPreferences();
+            AppUser user = await _userManager.FindByEmailAsync(User.Identity.Name);
+            wvm.Wine = await _winesServices.GetWineByIdAsync(id);
+            await _tastesServices.InsertClickValues(wvm.Wine.ColourId, wvm.Wine.SourceId, wvm.Wine.SweetnesId, 1, user.Id);
 
 
-        // GET: Wines
-        //        public async Task<IActionResult> Index()
-        //        {
-        //            var applicationDbContext = _context.Wines.Include(w => w.Colour).Include(w => w.Source).Include(w => w.Sweetnes);
-        //            return View(await applicationDbContext.ToListAsync());
-        //        }
+            List<Wine> listOne = new List<Wine>();
+            List<Wine> listTwo = new List<Wine>();
+            List<Wine> listThree = new List<Wine>();
+
+            int colourTasteOne = wvm.ListUserColourTaste[0].ColourId;
+            int sweetnessTasteOne = wvm.ListUserSweetnessTaste[0].SweetnesId;
+            int sourceTasteOne = wvm.ListUserSourceTaste[0].SourceId;
+
+
+            //Filtro para sacar los vinos segun gustos
+            foreach (Wine wine in await _winesServices.GetWinesAsync())
+            {
+                if (wine.ColourId == wvm.Wine.ColourId && wine.SweetnesId == wvm.ListUserSweetnessTaste[0].SweetnesId && wine.SourceId == wvm.ListUserSourceTaste[0].SourceId)
+                {
+                    listOne.Add(wine);
+                }
+                else if (wine.ColourId == wvm.Wine.ColourId && wine.SweetnesId == wvm.ListUserSweetnessTaste[1].SweetnesId && wine.SourceId == wvm.ListUserSourceTaste[1].SourceId)
+                {
+                    listOne.Add(wine);
+                }
+                else if (wine.ColourId == wvm.Wine.ColourId && wine.SweetnesId == wvm.ListUserSweetnessTaste[2].SweetnesId && wine.SourceId == wvm.ListUserSourceTaste[2].SourceId)
+                {
+                    listOne.Add(wine);
+                }
+                else if (wine.ColourId == wvm.ListUserColourTaste[0].ColourId && wine.SweetnesId == wvm.ListUserSweetnessTaste[0].SweetnesId && wine.SourceId == wvm.ListUserSourceTaste[0].SourceId)
+                {
+                    listTwo.Add(wine);
+                }
+                else if (wine.ColourId == wvm.ListUserColourTaste[1].ColourId && wine.SweetnesId == wvm.ListUserSweetnessTaste[1].SweetnesId && wine.SourceId == wvm.ListUserSourceTaste[1].SourceId)
+                {
+                    listTwo.Add(wine);
+                }
+                else if (wine.ColourId == wvm.ListUserColourTaste[2].ColourId && wine.SweetnesId == wvm.ListUserSweetnessTaste[2].SweetnesId && wine.SourceId == wvm.ListUserSourceTaste[2].SourceId)
+                {
+                    listTwo.Add(wine);
+                }
+                else if (wine.SourceId == wvm.Wine.SourceId && wine.SweetnesId == wvm.ListUserSweetnessTaste[0].SweetnesId)
+                {
+                    listThree.Add(wine);
+                }
+                else if (wine.SourceId == wvm.Wine.SourceId && wine.SweetnesId == wvm.ListUserSweetnessTaste[1].SweetnesId)
+                {
+                    listThree.Add(wine);
+                }
+                else if (wine.SourceId == wvm.Wine.SourceId && wine.SweetnesId == wvm.ListUserSweetnessTaste[2].SweetnesId)
+                {
+                    listThree.Add(wine);
+                }
+                else if (wine.SweetnesId == wvm.ListUserSweetnessTaste[0].SweetnesId)
+                {
+                    listTwo.Add(wine);
+                }
+                else if (wine.SourceId == wvm.ListUserSourceTaste[0].SourceId)
+                {
+                    listThree.Add(wine);
+                }
+            }
+
+            Random rnd = new Random();
+            wvm.ListWinesTastesDetails = new List<Wine>();
+            for (int i = 0; i < 5; i++)
+            {
+                if (listOne.Count != 0 && listOne.Count > i)
+                {
+                    bool salir = false;
+                    do
+                    {
+                        int numberRandom = rnd.Next(0, listOne.Count - 1);
+                        if (!wvm.ListWinesTastesDetails.Contains(listOne[numberRandom]))
+                        {
+                            wvm.ListWinesTastesDetails.Add(listOne[numberRandom]);
+                            salir = true;
+                        }
+                    } while (!salir);
+                }
+                else
+                {
+                    break;
+                }
+            }
+            for (int i = 0; i < 3; i++)
+            {
+                if (listTwo.Count != 0 && listTwo.Count > i)
+                {
+                    bool salir = false;
+                    do
+                    {
+                        int numberRandom = rnd.Next(0, listTwo.Count - 1);
+                        if (!wvm.ListWinesTastesDetails.Contains(listTwo[numberRandom]))
+                        {
+                            wvm.ListWinesTastesDetails.Add(listTwo[numberRandom]);
+                            salir = true;
+                        }
+                    } while (!salir);
+                }
+                else
+                {
+                    break;
+                }
+            }
+            for (int i = 0; i < 2; i++)
+            {
+                if (listThree.Count != 0 && listThree.Count > i)
+                {
+                    bool salir = false;
+                    do
+                    {
+                        int numberRandom = rnd.Next(0, listThree.Count - 1);
+                        if (!wvm.ListWinesTastesDetails.Contains(listThree[numberRandom]))
+                        {
+                            wvm.ListWinesTastesDetails.Add(listThree[numberRandom]);
+                            salir = true;
+                        }
+                    } while (!salir);
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            if (wvm.ListWinesTastesDetails.Count == 0)
+            {
+                return NotFound();
+            }
+
+            //lista de los vinos mejor valorados de orde de mayor a menor
+            wvm.ListWineUserScore = await _winesServices.GetWinesAsync();
+            wvm.ListWineUserScore = wvm.ListWineUserScore.OrderByDescending(x => x.Score).ToList().GetRange(0, 10);
+
+            return View(wvm);
+        }
+        public async Task<IActionResult> ViewsFavorite(int? id)
+        {
+            Wine wine = await _winesServices.GetWineByIdAsync(id);
+            WinesVM wvm = new WinesVM();
+            wvm.Wine = wine;
+            return View(wvm);
+        }
+        public async Task InsertLikeValues(int colourId, int sourceId, int sweetId, string url, int idWine)
+        {
+            AppUser user = await _userManager.FindByEmailAsync(User.Identity.Name);
+            await _tastesServices.InsertClickValues(colourId, sourceId, sweetId,3, user.Id);
+
+            UserScore userScore = new UserScore();
+            userScore.VoteValue = 0;
+            userScore.VoteDate = DateTime.Now;
+            userScore.AppUserId = user.Id;
+            userScore.WineId = idWine;
+
+            await _likeServices.Create(userScore);
+
+            Wine wine = await _winesServices.GetWineByIdAsync(idWine);
+            wine.Score ++;
+            await _winesServices.UpdateWineAsync(wine);
+
+            Response.Redirect(url);
+        }
+        public async Task DelateLikeValues(int colourId, int sourceId, int sweetId, string url, int idWine)
+        {
+            AppUser user = await _userManager.FindByEmailAsync(User.Identity.Name);
+            await _tastesServices.DelateLikeValues(colourId, sourceId, sweetId, user.Id);
+            await _likeServices.Delete(idWine, user.Id);
+
+            Wine wine = await _winesServices.GetWineByIdAsync(idWine);
+            wine.Score--;
+            await _winesServices.UpdateWineAsync(wine);
+
+            Response.Redirect(url);
+        }
+
+
+
+        //GET: Wines
+        public async Task<IActionResult> Index()
+        {
+            List<Wine> listWines = await _winesServices.GetWinesAsync();
+            return View(listWines);
+        }
 
         // GET: Wines/Details/5
         //public async Task<IActionResult> Details(int? id)
