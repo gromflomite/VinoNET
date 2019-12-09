@@ -6,6 +6,7 @@
 
 <h1>Details</h1>
 
+<h1>@Model.Wine.Name</h1>
 <h3>Tablas de Vino segun gustos 5 segun el vino selecionado,3 segun los tres fitros de Taste y 2 sefun D.O</h3>
 <table>
     <thead>
@@ -55,3 +56,17 @@
         }
     </tbody>
 </table>
+
+@*<iframe id="inlineFrameExample"
+        title="Inline Frame Example"
+        width="300"
+        height="200"
+        src="https://www.openstreetmap.org/export/embed.html?bbox=-0.004017949104309083%2C51.47612752641776%2C0.00030577182769775396%2C51.478569861898606&layer=mapnik">
+</iframe>*@
+<iframe id="inlineFrameExample"
+        title="Inline Frame Example"
+        width="300"
+        height="200"
+        src="https://localhost:44320/Wines/ViewsFavorite/@Model.Wine.Id"
+        style="border:none">
+</iframe>

@@ -124,13 +124,14 @@ namespace Wineapp.Controllers
         }
 
         //GET: Wines/Details/5
-        public async Task<IActionResult> Details()
-        {
-            int? id = 4;
+        
+        public async Task<IActionResult> Details(int? id)
+        {            
             if (id == null)
             {
                 return NotFound();
             }
+            await ViewsFavorite(id);
             WinesVM wvm = await GetUserPreferences();
             wvm.Wine = await _winesServices.GetWineByIdAsync(id);
 
@@ -267,6 +268,14 @@ namespace Wineapp.Controllers
 
             return View(wvm);
         }
+        public async Task<IActionResult> ViewsFavorite(int? id)
+        {
+            Wine wine = await _winesServices.GetWineByIdAsync(id);
+            WinesVM wvm = new WinesVM();
+            wvm.Wine = wine;
+            return View(wvm);
+        }        
+
 
         //        // GET: Wines/Create
         //        public IActionResult Create()

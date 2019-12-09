@@ -16,10 +16,12 @@ namespace Wineapp.Controllers
     {
         private readonly ITastes _tastesServices;
         private readonly IFilters _filtersServices;
+        private readonly ILike _likeServices;
         private readonly UserManager<AppUser> _userManager;
 
-        public TastesController(ITastes tastesServices, IFilters filtersServices, UserManager<AppUser> userManager)
+        public TastesController(ILike likeServices,ITastes tastesServices, IFilters filtersServices, UserManager<AppUser> userManager)
         {
+            _likeServices = likeServices;
             _tastesServices = tastesServices;
             _filtersServices = filtersServices;
             _userManager = userManager;
@@ -159,7 +161,7 @@ namespace Wineapp.Controllers
         //Inserta los valores en las tablas Tastes cuando el usuario añade un vino a favoritos, 
         //el valor base es +4
         //el valor que se reduce de manera exponencial cuando la puntuación total supera los 10 puntos,
-        public async Task InsertFavouriteValues(int colourId, int sourceId, int sweetId)
+        public async Task InsertFavouriteValues(int colourId, int sourceId, int sweetId, string url)
         {
             AppUser user = await _userManager.FindByEmailAsync(User.Identity.Name);
             List<ColourTaste> colourTastes = await _tastesServices.GetColourTasteesByUserIdAsync(user.Id);
@@ -217,7 +219,8 @@ namespace Wineapp.Controllers
                     await _tastesServices.UpdateSweetnessTasteAsync(sweetnessTaste);
                 }
             }
-
+           
+            Response.Redirect(url);
         }
 
 
@@ -225,7 +228,7 @@ namespace Wineapp.Controllers
         //Inserta los valores en las tablas Tastes cuando el usuario hace click, 
         //el valor base es +3
         //el valor que se reduce de manera exponencial cuando la puntuación total supera los 10 puntos,
-        public async Task InsertLikeValues(int colourId, int sourceId, int sweetId)
+        public async Task InsertLikeValues(int colourId, int sourceId, int sweetId,string url, int idWine)
         {
             AppUser user = await _userManager.FindByEmailAsync(User.Identity.Name);
             List<ColourTaste> colourTastes = await _tastesServices.GetColourTasteesByUserIdAsync(user.Id);
@@ -284,6 +287,78 @@ namespace Wineapp.Controllers
                 }
             }
 
+            UserScore userScore = new UserScore();
+            userScore.VoteValue = 0;
+            userScore.VoteDate = DateTime.Now;
+            userScore.AppUserId = user.Id;
+            userScore.WineId = idWine;
+
+            await _likeServices.Create(userScore);
+
+            Response.Redirect(url);
+        }
+        public async Task DelateLikeValues(int colourId, int sourceId, int sweetId, string url, int idWine)
+        {
+            AppUser user = await _userManager.FindByEmailAsync(User.Identity.Name);
+            List<ColourTaste> colourTastes = await _tastesServices.GetColourTasteesByUserIdAsync(user.Id);
+            List<SourceTaste> sourceTastes = await _tastesServices.GetSourceTasteesByUserIdAsync(user.Id);
+            List<SweetnessTaste> sweetnessTastes = await _tastesServices.GetSweetnessTasteesByUserIdAsync(user.Id);
+
+            if (colourId != 0)
+            {
+                ColourTaste colourTaste = colourTastes.FirstOrDefault(x => x.ColourId == colourId);
+                if (colourTaste.Score < 10)
+                {
+                    colourTaste.Score -= 3;
+                    await _tastesServices.UpdateColourTasteAsync(colourTaste);
+                }
+                else if (colourTaste.Score >= 10)
+                {
+                    double root = Convert.ToDouble(colourTaste.Score.ToString().Substring(0, 1)) + 1;
+                    double addScore = Math.Sqrt(3 / (Math.Pow(root, root)));
+                    colourTaste.Score -= addScore;
+                }
+            }
+
+            if (sourceId != 0)
+            {
+                SourceTaste sourceTaste = sourceTastes.FirstOrDefault(x => x.SourceId == sourceId);
+
+                if (sourceTaste.Score < 10)
+                {
+                    sourceTaste.Score -= 3;
+                    await _tastesServices.UpdateSourceTasteAsync(sourceTaste);
+                }
+                else if (sourceTaste.Score >= 10)
+                {
+                    double root = Convert.ToDouble(sourceTaste.Score.ToString().Substring(0, 1)) + 1;
+                    double addScore = Math.Sqrt(3 / (Math.Pow(root, root)));
+                    sourceTaste.Score -= addScore;
+                    await _tastesServices.UpdateSourceTasteAsync(sourceTaste);
+                }
+            }
+
+            if (sweetId != 0)
+            {
+                SweetnessTaste sweetnessTaste = sweetnessTastes.FirstOrDefault(x => x.SweetnesId == sweetId);
+
+                if (sweetnessTaste.Score < 10)
+                {
+                    sweetnessTaste.Score -= 3;
+                    await _tastesServices.UpdateSweetnessTasteAsync(sweetnessTaste);
+                }
+                else if (sweetnessTaste.Score >= 10)
+                {
+                    double root = Convert.ToDouble(sweetnessTaste.Score.ToString().Substring(0, 1)) + 1;
+                    double addScore = Math.Sqrt(3 / (Math.Pow(root, root)));
+                    sweetnessTaste.Score -= addScore;
+                    await _tastesServices.UpdateSweetnessTasteAsync(sweetnessTaste);
+                }
+            }
+
+            await _likeServices.Delete(idWine,user.Id);
+
+            Response.Redirect(url);
         }
 
         // GET: Tastes/Details/5
