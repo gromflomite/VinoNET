@@ -35,5 +35,8 @@ namespace Wineapp.Services
         public Task DeleteSweetnessTasteAsync(SweetnessTaste sweetnessTaste);
         public bool SweetnessTasteExists(int? id);
 
+
+        public Task InsertClickValues(int? colourId, int? sourceId, int? sweetId, int value, string userId);
+        public Task DelateLikeValues(int? colourId, int? sourceId, int? sweetId, string userId);
     }
 }

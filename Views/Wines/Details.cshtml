@@ -1,4 +1,4 @@
-﻿@model Wineapp.Models.Wine
+﻿@model Wineapp.Models.ViewModels.WinesVM
 
 @{
     ViewData["Title"] = "Details";
@@ -6,67 +6,67 @@
 
 <h1>Details</h1>
 
-<div>
-    <h4>Wine</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Colour)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Colour.ColourType)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Sweetnes)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Sweetnes.SweetnesType)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Source)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Source.SourceType)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Price)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Company)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Company)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Sparkling)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Sparkling)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Year)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Year)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Publish)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Publish)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+<h1>@Model.Wine.Name</h1>
+<h3>Tablas de Vino segun gustos 5 segun el vino selecionado,3 segun los tres fitros de Taste y 2 sefun D.O</h3>
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Nombre</th>
+            <th scope="col">Colour</th>
+            <th scope="col">Sweetness</th>
+            <th scope="col">Source</th>
+            <th scope="col">Score</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Wine wine in Model.ListWinesTastesDetails)
+        {
+            <tr>
+                <th>@wine.Name</th>
+                <td>@wine.Colour.ColourType</td>
+                <td>@wine.Sweetnes.SweetnesType</td>
+                <td>@wine.Source.SourceType</td>
+                <td>@wine.Score</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h3>Tablas segun la puntucion de los vinos</h3>
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Nombre</th>
+            <th scope="col">Colour</th>
+            <th scope="col">Sweetness</th>
+            <th scope="col">Source</th>
+            <th scope="col">Score</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Wine wine in Model.ListWineUserScore)
+        {
+            <tr>
+                <th>@wine.Name</th>
+                <td>@wine.Colour.ColourType</td>
+                <td>@wine.Sweetnes.SweetnesType</td>
+                <td>@wine.Source.SourceType</td>
+                <td>@wine.Score</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@*<iframe id="inlineFrameExample"
+            title="Inline Frame Example"
+            width="300"
+            height="200"
+            src="https://www.openstreetmap.org/export/embed.html?bbox=-0.004017949104309083%2C51.47612752641776%2C0.00030577182769775396%2C51.478569861898606&layer=mapnik">
+    </iframe>*@
+<iframe id="inlineFrameExample"
+        title="Inline Frame Example"
+        width="300"
+        height="200"
+        src="https://localhost:44320/Wines/ViewsFavorite/@Model.Wine.Id"
+        style="border:none">
+</iframe>
