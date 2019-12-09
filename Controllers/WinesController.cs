@@ -86,6 +86,7 @@ namespace Wineapp.Controllers
                 firstPreference = await _winesServices.GetWinesAsync();
             }
 
+            wvm.ListWinesTastesSources = new List<Wine>();
             Random numberRandom = new Random();
             if (firstPreference.Count > 0)
             {
