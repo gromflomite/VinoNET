@@ -2,73 +2,37 @@
 @inject SignInManager<AppUser> _signInManager
 @inject UserManager<AppUser> _userManager
 @model Wineapp.Models.ViewModels.WinesVM
+<!--Nombre de la denominación de origen que ha seleccionado-->
+<h1>@Model.Source.SourceType</h1>
 
-<h1>SourcePreferences</h1>
-
-
-
-@*<a asp-controller="Tastes" asp-action="InsertClickValues" asp-route-sourceId="@Model.Source.Id">@Model.Source.SourceType</a>*@
-<form asp-controller="Tastes" asp-action="InsertClickValues">
-    <input type="hidden" name="sourceId" value="@Model.Source.Id" />
-    <input type="image" src="~/img/wines/img1.jpg" alt="wine.Name" width="50" />
-</form>
 
 <div>
+    <p>Nuestra mejor selección de vinos de @Model.Source.SourceType</p>
     @foreach (Wine wine in Model.ListWinesTastesSources)
     {
-        <a asp-controller="Tastes" asp-action="InsertClickValues" asp-route-colourId="@wine.ColourId" asp-route-sourceId="@wine.SourceId" asp-route-sweetId="@wine.SweetnesId">@wine.Name</a>
+        <form asp-controller="Wines" asp-action="Details">
+            <input type="hidden" name="id" value="@wine.Id" />
+            <input type="image" src="~/img/wines/@wine.Image" />
+        </form>
+        <p>@wine.Colour.ColourType,@wine.Sweetnes.SweetnesType,@wine.Source.SourceType</p>
+        <br />
 
     }
 
+    <p>Otras Denominaciones de Origen que quizá te interesen...</p>
     @foreach (Source source in Model.ListSources)
     {
-        <p>@source.SourceType</p>
+
+        <form asp-controller="Wines" asp-action="SourcePreferences">
+            <input type="hidden" name="sourceId" value="@source.Id" />
+            <input type="image" src="~/img/dologo/@source.Image" />
+        </form>
+        <br />
     }
 </div>
 
 
 
-<!--Los name de los formularios NO CAMBIAR solo el value-->
-<!--Añadir esta ruta cuando haga CLICK en un vino-->
-<form asp-controller="Tastes" asp-action="InsertClickValues">
-    <input type="hidden" name="sourceId" value="Model.Source.Id" />
-    <input type="hidden" name="colourId" value="Model.Colour.Id" />
-    <input type="hidden" name="sweetId" value="Model.Sweetnes.Id" />
-    <input type="submit" value="NOMBRE" />
-    <!--Si quieres poner una foto, EJEMPLO:-->
-    <input type="image" src="~/img/wines/img1.jpg" alt="wine.Name" width="50" />
-</form>
-
-
-<!--Añadir esta ruta cuando haga CLICK en una denominación de origen-->
-<form asp-controller="Tastes" asp-action="InsertClickValues">
-    <input type="hidden" name="sourceId" value="Model.Source.Id" />
-    <input type="submit" value="NOMBRE" />
-    <!--Si quieres poner una foto-->
-    <input type="image" src="~/img/wines/img1.jpg" alt="wine.Name" width="50" />
-</form>
-
-
-<!--Añadir esta ruta cuando AÑADA A FAVORITOS (o una wineList) un vino-->
-<form asp-controller="Tastes" asp-action="InsertFavouriteValues">
-    <input type="hidden" name="sourceId" value="Model.Source.Id" />
-    <input type="hidden" name="colourId" value="Model.Colour.Id" />
-    <input type="hidden" name="sweetId" value="Model.Sweetnes.Id" />
-    <input type="submit" value="NOMBRE" />
-    <!--Si quieres poner una foto, EJEMPLO:-->
-    <input type="image" src="~/img/wines/img1.jpg" alt="wine.Name" width="50" />
-</form>
-
-
-<!--Añadir esta ruta cuando VALORE un vino-->
-<form asp-controller="Tastes" asp-action="InsertLikeValues">
-    <input type="hidden" name="sourceId" value="Model.Source.Id" />
-    <input type="hidden" name="colourId" value="Model.Colour.Id" />
-    <input type="hidden" name="sweetId" value="Model.Sweetnes.Id" />
-    <input type="submit" value="NOMBRE" />
-    <!--Si quieres poner una foto, EJEMPLO:-->
-    <input type="image" src="~/img/wines/img1.jpg" alt="wine.Name" width="50" />
-</form>
 
 
 
