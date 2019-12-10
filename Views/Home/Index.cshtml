@@ -32,7 +32,7 @@
 
 
 <div>
-    <h3>VINOS</h3>
+    <h4>VINOS</h4>
 
     @if (_signInManager.IsSignedIn(User))
     {
@@ -52,7 +52,7 @@
     {
         <form asp-controller="Wines" asp-action="Details">
             <input type="hidden" name="id" value="@wine.Id" />
-            <input type="image" src="~/img/wines/@wine.Image" />
+            <input type="image" src="~/img/wines/@wine.Image"  height="150" />
         </form>
         <p>@wine.Colour.ColourType,@wine.Sweetnes.SweetnesType,@wine.Source.SourceType</p>
 
