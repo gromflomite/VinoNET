@@ -5,6 +5,12 @@
   padding-bottom: 3%;  
 }
 
+h3.card-header {
+  padding-left: 45px;
+  background-color: #404040;
+  color: white;
+}
+
 .doblock, .winesblock {
   padding-top: 5%;
   width: 80%;  
@@ -12,21 +18,25 @@
 }
 
 .doblock form {   
-  width: 45%;  
-  height: 450px;
-  margin: 0 auto;
-  padding-top: 5%;
+  width: 50%;  
+  height: 460px;
+  margin: 0 auto;  
+}
+
+input.doimages {
+  height: 440px;
+  width: 440px;
 }
 
 .winesblock form {
-  height: 900px;
+  width: 50%;
+  height: 500px;
   margin: 0 auto;
 }
 
-input.doimages {  
-  max-height: 800px;
-  width: auto;
-  padding-left: 4%;
+input.winesimages {
+  height: 500px;
+  width: 500px;  
 }
 
 p.list-group-item {

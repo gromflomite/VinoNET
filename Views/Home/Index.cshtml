@@ -39,7 +39,7 @@
                         <div class="carousel-item active">
                             <form asp-controller="Wines" asp-action="SourcePreferences">
                                 <input type="hidden" name="sourceId" value="@source.Id" />
-                                <input type="image" src="~/img/dologo/@source.Logo" />
+                                <input class="doimages" type="image" src="~/img/dologo/@source.Logo" />
                             </form>
                         </div>
 
@@ -50,7 +50,7 @@
                         <div class="carousel-item">
                             <form asp-controller="Wines" asp-action="SourcePreferences">
                                 <input type="hidden" name="sourceId" value="@source.Id" />
-                                <input type="image" src="~/img/dologo/@source.Logo" />
+                                <input class="doimages" type="image" src="~/img/dologo/@source.Logo" />
                             </form>
                         </div>
                     }
@@ -90,11 +90,11 @@
                         <div class="carousel-item active">
                             <form asp-controller="Wines" asp-action="Details">
                                 <input type="hidden" name="id" value="@wine.Id" />
-                                <input class="doimages" type="image" src="~/img/wines/@wine.Image" />
-                                <div class="card-body">
-                                    <p class="list-group-item">@wine.Name  (@wine.Colour.ColourType - @wine.Sweetnes.SweetnesType - Denominación de origen @wine.Source.SourceType)</p>
-                                </div>
+                                <input class="winesimages" type="image" src="~/img/wines/@wine.Image" />
                             </form>
+                            <div class="card-body">
+                                <p class="list-group-item">@wine.Name  (@wine.Colour.ColourType - @wine.Sweetnes.SweetnesType - Denominación de origen @wine.Source.SourceType)</p>
+                            </div>
                         </div>
 
                         counterwines++;
@@ -104,11 +104,11 @@
                         <div class="carousel-item">
                             <form asp-controller="Wines" asp-action="Details">
                                 <input type="hidden" name="id" value="@wine.Id" />
-                                <input class="doimages" type="image" src="~/img/wines/@wine.Image" />
-                                <div class="card-body">
-                                    <p class="list-group-item">@wine.Name  (@wine.Colour.ColourType - @wine.Sweetnes.SweetnesType - Denominación de origen @wine.Source.SourceType)</p>
-                                </div>
+                                <input class="winesimages" type="image" src="~/img/wines/@wine.Image" />
                             </form>
+                            <div class="card-body">
+                                <p class="list-group-item">@wine.Name  (@wine.Colour.ColourType - @wine.Sweetnes.SweetnesType - Denominación de origen @wine.Source.SourceType)</p>
+                            </div>
                         </div>
 
                     }
@@ -120,7 +120,7 @@
 
 <!---------------------------------------------------------------------------------------------------------------------------------------------------->
 
-<hr class="hrdown"/>
+<hr class="hrdown" />
 
 <div class="eventsblock">
     <h2 class="eventstitle">Eventos</h2>
