@@ -5,67 +5,125 @@
 @inject ITastes  _tastesServices
 @model Wineapp.Models.ViewModels.WinesVM
 
+@section Styles {
+    <link href="@Url.Content("~/css/homeIndex.css")" rel="stylesheet" type="text/css" />
+}
+
 @{
     ViewData["Title"] = "Inicio";
 }
 
 <h1 class="test">Bienvenido la web del proyecto VinoNET</h1>
 
+<!---------------------------------------------------------------------------------------------------------------------------------------------------->
 
-<div>
-    <h3>DENOMINACIONES DE ORIGEN</h3>
+<div class="doblock">
 
-    <!--El método en HomeController ya crea la lista según si el usuario está registrado o no-->
-    <!--La lista solo tiene 3 elementos por lo que si queremos añadir más hay que cambiar el HomeController-->
+    <h2 class="dotitle">Denominaciones de Origen</h2>
 
-    @foreach (Source source in Model.ListSources)
-    {
 
-        <form asp-controller="Wines" asp-action="SourcePreferences">
-            <input type="hidden" name="sourceId" value="@source.Id"/>
-            <input type="image" src="~/img/dologo/@source.Logo"/>
-        </form>
-        <!--La etiqueta <a> es solo para indicaros la ruta a la que hay que mandar el id cuando pincha la imagen-->
-    }
+    <div id="carouseldo" class="carousel slide" data-interval="2000" data-ride="carousel">
+        <div class="carousel-inner">
+
+            @{
+                int counterdo = 1;
+            }
+
+            @foreach (Source source in Model.ListSources)
+            {
+
+                if (counterdo == 1)
+                {
+                    <div class="carousel-item active">
+                        <form asp-controller="Wines" asp-action="SourcePreferences">
+                            <input type="hidden" name="sourceId" value="@source.Id" />
+                            <input type="image" src="~/img/dologo/@source.Logo" />
+                        </form>
+                    </div>
+
+                    counterdo++;
+                }
+                else if (counterdo > 1)
+                {
+                    <div class="carousel-item">
+                        <form asp-controller="Wines" asp-action="SourcePreferences">
+                            <input type="hidden" name="sourceId" value="@source.Id" />
+                            <input type="image" src="~/img/dologo/@source.Logo" />
+                        </form>
+                    </div>
+                }
+            }
+        </div>
+    </div>
 </div>
 
+<!---------------------------------------------------------------------------------------------------------------------------------------------------->
 
+<div class="winesblock">
 
-<div>
-    <h3>VINOS</h3>
+    <h2 class="winestitle">Vinos</h2>
 
     @if (_signInManager.IsSignedIn(User))
     {
         <!--PARA EL USUARIO REGISTRADO-->
-        <h3>TE RECOMENDAMOS</h3>
+        <h3>También te gustarán</h3>
     }
     else
     {
         <!--NO REGISTRADO-->
-        <h3>LO MÁS VISTO</h3>
+        <h3>Los vinos más vistos</h3>
     }
 
-    <!--El método en HomeController ya crea la lista según si el usuario está registrado o no-->
-    <!--La lista solo tiene 3 elementos-->
+    <div id="carouselwines" class="carousel slide" data-interval="2000" data-ride="carousel">
+        <div class="carousel-inner">
 
-    @foreach (Wine wine in Model.ListWineTaste)
-    {
-        <form asp-controller="Wines" asp-action="Details">
-            <input type="hidden" name="id" value="@wine.Id" />
-            <input type="image" src="~/img/wines/@wine.Image" />
-        </form>
-        <p>@wine.Colour.ColourType,@wine.Sweetnes.SweetnesType,@wine.Source.SourceType</p>
+            @{
+                int counterwines = 1;
+            }
 
-        <!--La etiqueta <a> es solo para indicaros la ruta-->
-    }
+            @foreach (Wine wine in Model.ListWineTaste)
+            {
 
+                if (counterwines == 1)
+                {
+                    <div class="carousel-item active">
+                        <form asp-controller="Wines" asp-action="Details">
+                            <input type="hidden" name="id" value="@wine.Id" />
+                            <input type="image" src="~/img/wines/@wine.Image" />
+                        </form>
+
+                        <div class="carousel-caption d-none d-md-block">
+                            <p>Tipo: @wine.Colour.ColourType, Dulzor: @wine.Sweetnes.SweetnesType, D.O.: @wine.Source.SourceType</p>
+                        </div>
+                    </div>
+
+                    counterwines++;
+                }
+                else if (counterwines > 1)
+                {
+                    <div class="carousel-item">
+                        <form asp-controller="Wines" asp-action="Details">
+                            <input type="hidden" name="id" value="@wine.Id" />
+                            <input type="image" src="~/img/wines/@wine.Image" />
+                        </form>
+                        <p>Tipo: @wine.Colour.ColourType, Dulzor: @wine.Sweetnes.SweetnesType, D.O.: @wine.Source.SourceType</p>
+                    </div>
+                }
+            }
+        </div>
+    </div>
 </div>
 
+<!---------------------------------------------------------------------------------------------------------------------------------------------------->
 
 
+@*@foreach (wine wine in model.listwinetaste)
+    {
+        <form asp-controller="wines" asp-action="details">
+            <input type="hidden" name="id" value="@wine.id" />
+            <input type="image" src="~/img/wines/@wine.image" />
+        </form>
+        <p>@wine.colour.colourtype,@wine.sweetnes.sweetnestype,@wine.source.sourcetype</p>
 
-
-
-
-
-
+        la etiqueta <a> es solo para indicaros la ruta
+    }*@
