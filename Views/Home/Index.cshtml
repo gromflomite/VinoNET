@@ -15,12 +15,15 @@
 
 <h1 class="test">Bienvenido la web del proyecto VinoNET</h1>
 
+<p class="uptext">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pretium, mi sed pellentesque sagittis, ante tortor ultricies lorem, id pharetra augue purus sed turpis. Etiam eget consectetur tellus, at bibendum enim. Pellentesque et diam elementum, rutrum tortor tincidunt, maximus magna. Ut in consequat tellus. Phasellus dictum purus dui, at vestibulum neque blandit ac. Pellentesque at mi tellus. Fusce metus quam, mattis eu tortor scelerisque, ornare dapibus est. Duis vestibulum in nibh nec aliquet. Mauris vehicula sed sem a pellentesque. Phasellus quis venenatis ex. Donec nibh lacus, ultricies dignissim turpis vel, scelerisque rhoncus justo. Nunc eget suscipit sapien. Praesent eu vehicula enim. </p>
+
 <!---------------------------------------------------------------------------------------------------------------------------------------------------->
+
+<hr />
 
 <div class="doblock">
 
     <h2 class="dotitle">Denominaciones de Origen</h2>
-
 
     <div id="carouseldo" class="carousel slide" data-interval="2000" data-ride="carousel">
         <div class="carousel-inner">
@@ -59,19 +62,19 @@
 
 <!---------------------------------------------------------------------------------------------------------------------------------------------------->
 
-<div class="winesblock">
+<hr />
 
-    <h2 class="winestitle">Vinos</h2>
+<div class="winesblock">
 
     @if (_signInManager.IsSignedIn(User))
     {
         <!--PARA EL USUARIO REGISTRADO-->
-        <h3>También te gustarán</h3>
+        <h2 class="winestitle">Vinos que también te gustarán</h2>
     }
     else
     {
         <!--NO REGISTRADO-->
-        <h3>Los vinos más vistos</h3>
+        <h3 class="winestitle">Nuestros vinos más vistos</h3>
     }
 
     <div id="carouselwines" class="carousel slide" data-interval="2000" data-ride="carousel">
@@ -91,12 +94,9 @@
                             <input type="hidden" name="id" value="@wine.Id" />
                             <input type="image" src="~/img/wines/@wine.Image" />
                         </form>
-
-                        <div class="carousel-caption d-none d-md-block">
-                            <p>Tipo: @wine.Colour.ColourType, Dulzor: @wine.Sweetnes.SweetnesType, D.O.: @wine.Source.SourceType</p>
-                        </div>
+                        <p class="winename">@wine.Name</p>
+                        <p class="winedetails">@wine.Colour.ColourType - @wine.Sweetnes.SweetnesType - Denominación de origen @wine.Source.SourceType</p>
                     </div>
-
                     counterwines++;
                 }
                 else if (counterwines > 1)
@@ -106,7 +106,8 @@
                             <input type="hidden" name="id" value="@wine.Id" />
                             <input type="image" src="~/img/wines/@wine.Image" />
                         </form>
-                        <p>Tipo: @wine.Colour.ColourType, Dulzor: @wine.Sweetnes.SweetnesType, D.O.: @wine.Source.SourceType</p>
+                        <p class="winename">@wine.Name</p>
+                        <p class="winedetails">@wine.Colour.ColourType - @wine.Sweetnes.SweetnesType - Denominación de origen @wine.Source.SourceType</p>
                     </div>
                 }
             }
@@ -114,16 +115,12 @@
     </div>
 </div>
 
+
 <!---------------------------------------------------------------------------------------------------------------------------------------------------->
 
+<hr />
 
-@*@foreach (wine wine in model.listwinetaste)
-    {
-        <form asp-controller="wines" asp-action="details">
-            <input type="hidden" name="id" value="@wine.id" />
-            <input type="image" src="~/img/wines/@wine.image" />
-        </form>
-        <p>@wine.colour.colourtype,@wine.sweetnes.sweetnestype,@wine.source.sourcetype</p>
-
-        la etiqueta <a> es solo para indicaros la ruta
-    }*@
+<div class="eventsblock">
+    <h2 class="eventstitle">Eventos</h2>
+    <p class="uptext">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pretium, mi sed pellentesque sagittis, ante tortor ultricies lorem, id pharetra augue purus sed turpis. Etiam eget consectetur tellus, at bibendum enim. Pellentesque et diam elementum, rutrum tortor tincidunt, maximus magna. Ut in consequat tellus. Phasellus dictum purus dui, at vestibulum neque blandit ac. Pellentesque at mi tellus. Fusce metus quam, mattis eu tortor scelerisque, ornare dapibus est. Duis vestibulum in nibh nec aliquet. Mauris vehicula sed sem a pellentesque. Phasellus quis venenatis ex. Donec nibh lacus, ultricies dignissim turpis vel, scelerisque rhoncus justo. Nunc eget suscipit sapien. Praesent eu vehicula enim. </p>
+</div>

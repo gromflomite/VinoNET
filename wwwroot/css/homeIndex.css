@@ -1,1 +1,33 @@
-﻿
+.uptext {
+  font-family: 'Ibarra Real Nova', serif;
+  text-align: justify;
+}
+
+.doblock {
+  font-family: 'Ibarra Real Nova', serif;  
+  width: 90%;
+  padding-top: 5%;
+  padding-left: 10%;  
+}
+
+.doblock input {
+  padding-top: 5%;
+  padding-left: 5%;
+  height: 500px;
+  width: 60%;
+}
+
+.winesblock {
+   font-family: 'Ibarra Real Nova', serif;  
+  width: 90%;
+  padding-top: 5%;
+  padding-left: 10%;  
+}
+
+.winesblock input {
+  padding-top: 5%;
+  padding-left: 5%;
+  height: 550px;
+  width: 60%;
+}
+
