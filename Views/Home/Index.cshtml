@@ -17,108 +17,114 @@
 
 <p class="uptext">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pretium, mi sed pellentesque sagittis, ante tortor ultricies lorem, id pharetra augue purus sed turpis. Etiam eget consectetur tellus, at bibendum enim. Pellentesque et diam elementum, rutrum tortor tincidunt, maximus magna. Ut in consequat tellus. Phasellus dictum purus dui, at vestibulum neque blandit ac. Pellentesque at mi tellus. Fusce metus quam, mattis eu tortor scelerisque, ornare dapibus est. Duis vestibulum in nibh nec aliquet. Mauris vehicula sed sem a pellentesque. Phasellus quis venenatis ex. Donec nibh lacus, ultricies dignissim turpis vel, scelerisque rhoncus justo. Nunc eget suscipit sapien. Praesent eu vehicula enim. </p>
 
-<!---------------------------------------------------------------------------------------------------------------------------------------------------->
-
 <hr />
+
+<!---------------------------------------------------------------------------------------------------------------------------------------------------->
 
 <div class="doblock">
+    <div class="card mb-3">
+        <h3 class="card-header">Denominaciones de Origen</h3>
 
-    <h2 class="dotitle">Denominaciones de Origen</h2>
-
-    <div id="carouseldo" class="carousel slide" data-interval="2000" data-ride="carousel">
-        <div class="carousel-inner">
-
-            @{
-                int counterdo = 1;
-            }
-
-            @foreach (Source source in Model.ListSources)
-            {
-
-                if (counterdo == 1)
-                {
-                    <div class="carousel-item active">
-                        <form asp-controller="Wines" asp-action="SourcePreferences">
-                            <input type="hidden" name="sourceId" value="@source.Id" />
-                            <input type="image" src="~/img/dologo/@source.Logo" />
-                        </form>
-                    </div>
-
-                    counterdo++;
+        <div id="carouseldo" class="carousel slide" data-interval="2000" data-ride="carousel">
+            <div class="carousel-inner">
+                @{
+                    int counterdo = 1;
                 }
-                else if (counterdo > 1)
+
+                @foreach (Source source in Model.ListSources)
                 {
-                    <div class="carousel-item">
-                        <form asp-controller="Wines" asp-action="SourcePreferences">
-                            <input type="hidden" name="sourceId" value="@source.Id" />
-                            <input type="image" src="~/img/dologo/@source.Logo" />
-                        </form>
+
+                    if (counterdo == 1)
+                    {
+                <div class="carousel-item active">
+                    <form asp-controller="Wines" asp-action="SourcePreferences">
+                        <input type="hidden" name="sourceId" value="@source.Id" />
+                        <input type="image" src="~/img/dologo/@source.Logo" />
+                    </form>
+
+                    <div class="card-body">
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                     </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Cras justo odio</li>
+                        <li class="list-group-item">Dapibus ac facilisis in</li>
+                        <li class="list-group-item">Vestibulum at eros</li>
+                    </ul>
+
+                </div>
+
+                        counterdo++;
+                    }
+                    else if (counterdo > 1)
+                    {
+                        <div class="carousel-item">
+                            <form asp-controller="Wines" asp-action="SourcePreferences">
+                                <input type="hidden" name="sourceId" value="@source.Id" />
+                                <input type="image" src="~/img/dologo/@source.Logo" />
+                            </form>
+                        </div>
+                    }
                 }
-            }
+            </div>
         </div>
     </div>
 </div>
 
 <!---------------------------------------------------------------------------------------------------------------------------------------------------->
-
-<hr />
 
 <div class="winesblock">
+    <div class="card mb-3 ">
+        @if (_signInManager.IsSignedIn(User))
+        {
+            <!--PARA EL USUARIO REGISTRADO-->
+            <h3 class="card-header">Vinos que también te gustarán</h3>
+        }
+        else
+        {
+            <!--NO REGISTRADO-->
+            <h3 class="card-header">Nuestros vinos más vistos</h3>
+        }
 
-    @if (_signInManager.IsSignedIn(User))
-    {
-        <!--PARA EL USUARIO REGISTRADO-->
-        <h2 class="winestitle">Vinos que también te gustarán</h2>
-    }
-    else
-    {
-        <!--NO REGISTRADO-->
-        <h3 class="winestitle">Nuestros vinos más vistos</h3>
-    }
+        <div id="carouselwines" class="carousel slide" data-interval="2000" data-ride="carousel">
+            <div class="carousel-inner">
 
-    <div id="carouselwines" class="carousel slide" data-interval="2000" data-ride="carousel">
-        <div class="carousel-inner">
-
-            @{
-                int counterwines = 1;
-            }
-
-            @foreach (Wine wine in Model.ListWineTaste)
-            {
-
-                if (counterwines == 1)
-                {
-                    <div class="carousel-item active">
-                        <form asp-controller="Wines" asp-action="Details">
-                            <input type="hidden" name="id" value="@wine.Id" />
-                            <input type="image" src="~/img/wines/@wine.Image" />
-                        </form>
-                        <p class="winename">@wine.Name</p>
-                        <p class="winedetails">@wine.Colour.ColourType - @wine.Sweetnes.SweetnesType - Denominación de origen @wine.Source.SourceType</p>
-                    </div>
-                    counterwines++;
+                @{
+                    int counterwines = 1;
                 }
-                else if (counterwines > 1)
+
+                @foreach (Wine wine in Model.ListWineTaste)
                 {
-                    <div class="carousel-item">
-                        <form asp-controller="Wines" asp-action="Details">
-                            <input type="hidden" name="id" value="@wine.Id" />
-                            <input type="image" src="~/img/wines/@wine.Image" />
-                        </form>
-                        <p class="winename">@wine.Name</p>
-                        <p class="winedetails">@wine.Colour.ColourType - @wine.Sweetnes.SweetnesType - Denominación de origen @wine.Source.SourceType</p>
-                    </div>
+
+                    if (counterwines == 1)
+                    {
+                        <div class="carousel-item active">
+                            <form asp-controller="Wines" asp-action="Details">
+                                <input type="hidden" name="id" value="@wine.Id" />
+                                <input type="image" src="~/img/wines/@wine.Image" />
+                            </form>
+                            <p class="winename">@wine.Name</p>
+                            <p class="winedetails">@wine.Colour.ColourType - @wine.Sweetnes.SweetnesType - Denominación de origen @wine.Source.SourceType</p>
+                        </div>
+                        counterwines++;
+                    }
+                    else if (counterwines > 1)
+                    {
+                        <div class="carousel-item">
+                            <form asp-controller="Wines" asp-action="Details">
+                                <input type="hidden" name="id" value="@wine.Id" />
+                                <input type="image" src="~/img/wines/@wine.Image" />
+                            </form>
+                            <p class="winename">@wine.Name</p>
+                            <p class="winedetails">@wine.Colour.ColourType - @wine.Sweetnes.SweetnesType - Denominación de origen @wine.Source.SourceType</p>
+                        </div>
+                    }
                 }
-            }
+            </div>
         </div>
     </div>
 </div>
 
-
 <!---------------------------------------------------------------------------------------------------------------------------------------------------->
-
-<hr />
 
 <div class="eventsblock">
     <h2 class="eventstitle">Eventos</h2>
