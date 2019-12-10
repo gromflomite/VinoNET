@@ -76,8 +76,8 @@
 
                 <tr>
                     <td>
-                       
-                        <img src="~/img/wines/@wine.Image" height="100"/>
+
+                        <img src="~/img/wines/@wine.Image" height="100" />
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => wine.Name)
@@ -106,11 +106,11 @@
                     <td>
                         @Html.DisplayFor(modelItem => wine.Year)
                     </td>
-                    @*<td>
-            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-            <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-        </td>*@
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@wine.Id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@wine.Id">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@wine.Id">Delete</a>
+                    </td>
                 </tr>
                 }
             </tbody>
