@@ -4,103 +4,117 @@
     ViewData["Title"] = "Index";
 }
 
-<h1 class="vinoos"  >Vin<img  class="imavino" src="https://3.bp.blogspot.com/-Fg10o7nPw2o/WrpJmT62ZPI/AAAAAAADaWU/dLkM9HxU1Lk5kcKUpvqBlMixCOO04mVWwCLcBGAs/s640/eda46789875ac5842146914d846ea0f5.gif" alt=""/>s
+        <h1 class="vinoos">Vinos</h1>
 
- </h1> 
+        <p>
+            <a asp-action="Create">Crear nuevos</a>
+        </p>
 
-<p>
-    <a asp-action="Create">Crear nuevos</a>
-</p>
-<table class="table">
-    <thead>
-        <tr class="table-danger">
-            <th>
-                <h5>
-                  Nombre
-                </h5>
-            </th>
-            <th>
-                <h5>
-                  Color
-                </h5>
-            </th>
-            <th>
-                <h5>
-                Dulzor
-                </h5>
-            </th>
-            <th>
-                <h5>
-               D.Origen
-                </h5>
-            </th>
-            <th>
-                <h5>
-                 Compañia
-                </h5>
-            </th>
-            <th>
-                <h5>
-                 Espumoso
-                </h5>
-            </th>
-            <th>
-                <h5>
-                 Publicado
-                </h5>
-            </th>
-            <th>
-                <h5>                    
-                 Precio€
-                </h5>
-            </th>
-            <th>
-                <h5>
-                 Año
-                </h5>
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
+    <div class="container-fluid" style="width:100%">
 
-        <tr >
-        
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Colour.ColourType)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Sweetnes.SweetnesType)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Source.SourceType)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Company)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Sparkling)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Publish)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Year)
-            </td>
-            @*<td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>*@
-        </tr>
-}
-    </tbody>
-</table>
+        <table class="table">
+            <thead>
+                <tr class="table-danger">
+                    <th>
+                        <h5>
+                          
+                        </h5>
 
+
+                    </th>
+                    <th>
+                        <h5>
+                            Nombre
+                        </h5>
+                    </th>
+                    <th>
+                        <h5>
+                            Color
+                        </h5>
+                    </th>
+                    <th>
+                        <h5>
+                            Dulzor
+                        </h5>
+                    </th>
+                    <th>
+                        <h5>
+                            D.Origen
+                        </h5>
+                    </th>
+                    <th>
+                        <h5>
+                            Compañia
+                        </h5>
+                    </th>
+                    <th>
+                        <h5>
+                            Espumoso
+                        </h5>
+                    </th>
+                    <th>
+                        <h5>
+                            Publicado
+                        </h5>
+                    </th>
+                    <th>
+                        <h5>
+                            Precio€
+                        </h5>
+                    </th>
+                    <th>
+                        <h5>
+                            Año
+                        </h5>
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (Wine wine in Model)
+                {
+
+                <tr>
+                    <td>
+                       
+                        <img src="~/img/wines/@wine.Image" height="100"/>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => wine.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => wine.Colour.ColourType)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => wine.Sweetnes.SweetnesType)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => wine.Source.SourceType)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => wine.Company)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => wine.Sparkling)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => wine.Publish)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => wine.Price)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => wine.Year)
+                    </td>
+                    @*<td>
+            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+            <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+        </td>*@
+                </tr>
+                }
+            </tbody>
+        </table>
+
+
+    </div>
