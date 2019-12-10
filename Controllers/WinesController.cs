@@ -152,6 +152,7 @@ namespace Wineapp.Controllers
                 wvm.ListWinesTastesSources = wines;
             }
 
+                return View(wvm);
 
             }
             else
@@ -160,7 +161,7 @@ namespace Wineapp.Controllers
                 wvm.Source = await _filtersServices.GetSourceByIdAsync(sourceId);
                 wvm.ListWinesTastesSources = await _winesServices.GetWinesAsync();
                 wvm.ListWinesTastesSources = wvm.ListWinesTastesSources.Where(x=>x.SourceId==sourceId).ToList();
-                wvm.ListWinesTastesSources = wvm.ListWineUserScore.OrderByDescending(x => x.Score).ToList().GetRange(0, 5);
+                wvm.ListWinesTastesSources = wvm.ListWinesTastesSources.OrderByDescending(x => x.Score).ToList().GetRange(0, 5);
                 wvm.ListSources = await _filtersServices.GetSourceAsync();
                 wvm.ListSources = wvm.ListSources.GetRange(0, 6);
 

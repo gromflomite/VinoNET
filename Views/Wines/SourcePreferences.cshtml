@@ -23,6 +23,7 @@
     @foreach (Source source in Model.ListSources)
     {
 
+        <p>@source.SourceType</p>
         <form asp-controller="Wines" asp-action="SourcePreferences">
             <input type="hidden" name="sourceId" value="@source.Id" />
             <input type="image" src="~/img/dologo/@source.Image" />
