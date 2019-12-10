@@ -1,4 +1,11 @@
-.doblock {
+.uptext {
+  font-family: 'Ibarra Real Nova', serif;
+  text-align: justify;
+  font-size: 1.3rem;
+  padding-bottom: 3%;  
+}
+
+.doblock, .winesblock {
   padding-top: 5%;
   width: 80%;  
   margin: 0 auto;
@@ -11,6 +18,31 @@
   padding-top: 5%;
 }
 
+.winesblock form {
+  height: 900px;
+  margin: 0 auto;
+}
 
+input.doimages {  
+  max-height: 800px;
+  width: auto;
+  padding-left: 4%;
+}
 
+p.list-group-item {
+  font-family: 'Ibarra Real Nova', serif;
+  text-align: center;
+  font-size: 1.4rem;
+  background-color: #722f37;
+  color: white;
+}
+
+.hrdown {
+  margin-top: 5%;
+  padding-top: 5%;
+}
+
+.eventstitle {
+padding-bottom: 3%;  
+}
 
