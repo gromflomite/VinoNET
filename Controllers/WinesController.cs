@@ -19,12 +19,15 @@ namespace Wineapp.Controllers
         private readonly IWines _winesServices;
         private readonly IFilters _filtersServices;
         private readonly ILike _likeServices;
+        private readonly IWineLists _wineListsServices;
+
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
 
 
-        public WinesController(ILike likeServices,ITastes tastesServices, IWines winesServices, IFilters filtersServices, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
+        public WinesController(IWineLists wineListsServices,ILike likeServices,ITastes tastesServices, IWines winesServices, IFilters filtersServices, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
         {
+            _wineListsServices = wineListsServices;
             _tastesServices = tastesServices;
             _winesServices = winesServices;
             _filtersServices = filtersServices;
@@ -298,8 +301,12 @@ namespace Wineapp.Controllers
         }
         public async Task<IActionResult> ViewsFavorite(int? id)
         {
+            AppUser user = await _userManager.FindByEmailAsync(User.Identity.Name);
+
+
             Wine wine = await _winesServices.GetWineByIdAsync(id);
             WinesVM wvm = new WinesVM();
+            wvm.ListWinesLists = await _wineListsServices.GetWineListsByUserIdAsync(user.Id);            
             wvm.Wine = wine;
             return View(wvm);
         }

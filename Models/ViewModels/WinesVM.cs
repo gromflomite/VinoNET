@@ -28,5 +28,9 @@ namespace Wineapp.Models.ViewModels
         //Lista de vinos Tastes in View Sources--> WinesController 
         public List<Wine> ListWinesTastesSources { get; set; }
 
+        public List<WineList> ListWinesLists { get; set; }
+        public List<WineListWine> ListWinesListWines { get; set; }
+
+
     }
 }
