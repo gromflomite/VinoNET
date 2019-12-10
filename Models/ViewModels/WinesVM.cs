@@ -7,6 +7,7 @@ namespace Wineapp.Models.ViewModels
 {
     public class WinesVM
     {
+        public AppUser AppUser { get; set; }
         public Wine Wine { get; set; }
         public Source Source { get; set; }
         public List<Source> ListSources { get; set; }
@@ -30,6 +31,8 @@ namespace Wineapp.Models.ViewModels
 
         public List<WineList> ListWinesLists { get; set; }
         public List<WineListWine> ListWinesListWines { get; set; }
+        public WineListWine WineListWine { get; set; }
+        public bool WinelistsWineExit { get; set; }
 
 
     }

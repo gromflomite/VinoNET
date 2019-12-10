@@ -5,6 +5,7 @@
 @inject SignInManager<AppUser> _signInManager
 @inject UserManager<AppUser> _userManager
 @inject ILike _likeServices;
+@inject IWineLists _wineListsServices;
 
 @{
     ViewData["Title"] = "ViewsFavorite";
@@ -13,16 +14,18 @@
 }
 
 
-<div style="display: flex;justify-content: space-around;">
+<div style="display: flex;">
     @if (!_likeServices.Exit(user.Id, @Model.Wine.Id))
     {
-        <form asp-controller="Wines" asp-action="InsertLikeValues">
+        <form asp-controller="Wines" asp-action="InsertLikeValues" style="margin-right: 30px;">
             <input type="hidden" name="sourceId" value="@Model.Wine.SourceId" />
             <input type="hidden" name="colourId" value="@Model.Wine.ColourId" />
             <input type="hidden" name="sweetId" value="@Model.Wine.SweetnesId" />
             <input type="hidden" name="idWine" value="@Model.Wine.Id" />
             <input type="hidden" name="url" value="https://localhost:44320/Wines/ViewsFavorite/@Model.Wine.Id" />
-            <input type="submit" value="Like" class="btn btn-info" />
+            <button type="submit" class="btn btn-secondary" data-toggle="tooltip" data-placement="left" title="Like">
+                <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+            </button>
             <!--Si quieres poner una foto, EJEMPLO:-->
         </form>
     }
@@ -34,21 +37,55 @@
             <input type="hidden" name="sweetId" value="@Model.Wine.SweetnesId" />
             <input type="hidden" name="idWine" value="@Model.Wine.Id" />
             <input type="hidden" name="url" value="https://localhost:44320/Wines/ViewsFavorite/@Model.Wine.Id" />
-            <input type="submit" value="Quitar like" class="btn btn-danger" />
+            <button type="submit" class="btn btn-secondary" data-toggle="tooltip" data-placement="left" title="Quitar like">
+                <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+            </button>
         </form>
     }
-    <div class="btn-group">
-        <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Listas
-        </button>
-        <div class="dropdown-menu" style="overflow-x:hidden;max-height: 120px;">
-            @foreach (WineList wineList in @Model.ListWinesLists)
-            {
-                <a class="dropdown-item" href="#">@wineList.ListName</a>
-            }
 
+
+    @if (!Model.WinelistsWineExit)
+    {
+
+        <div class="btn-group">
+            <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Listas
+            </button>
+            <form asp-controller="Wines" asp-action="AddWineInLists">
+                <div class="dropdown-menu">
+                    <div class="row" style="overflow-x:hidden;max-height: 90px;">
+                        <div class="col-sm-10">
+                            @foreach (WineList wineList in @Model.ListWinesLists)
+                            {
+                                <div class="form-check">
+                                    <input type="radio" id="@wineList.ListName" name="lista" value="@wineList.ListName"  />
+                                    <label class="form-check-label" for="@wineList.ListName">@wineList.ListName</label>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="dropdown-divider"></div>
+                    <input type="hidden" name="url" value="https://localhost:44320/Wines/ViewsFavorite/@Model.Wine.Id" />
+                    <input type="hidden" name="idWine" value="@Model.Wine.Id" />
+                    <button type="submit" class="btn btn-info" title="Añadir">
+                        Añadir
+                    </button>
+
+                </div>
+            </form>
         </div>
-    </div>
+    }
+    else
+    {
+        <form asp-controller="Wines" asp-action="DelateWineListWineValues">
+            <input type="hidden" name="wineListWineId" value="@Model.WineListWine.Id" />
+            <input type="hidden" name="idWine" value="@Model.Wine.Id" />
+            <input type="hidden" name="url" value="https://localhost:44320/Wines/ViewsFavorite/@Model.Wine.Id" />
+            <button type="submit" class="btn btn-danger" title="Añadir">
+                Quitar de la lista @Model.WineListWine.WineList.ListName
+            </button>
+        </form>
+    }
 </div>
 
 @section Scripts{

@@ -303,11 +303,19 @@ namespace Wineapp.Controllers
         {
             AppUser user = await _userManager.FindByEmailAsync(User.Identity.Name);
 
+            bool exitWineListsWine = _wineListsServices.Exit(id,user.Id);
 
             Wine wine = await _winesServices.GetWineByIdAsync(id);
-            WinesVM wvm = new WinesVM();
-            wvm.ListWinesLists = await _wineListsServices.GetWineListsByUserIdAsync(user.Id);            
-            wvm.Wine = wine;
+            WinesVM wvm = new WinesVM
+            {
+                ListWinesLists = await _wineListsServices.GetWineListsByUserIdAsync(user.Id),
+                Wine = wine,
+                WinelistsWineExit = exitWineListsWine
+            };
+            if (exitWineListsWine ==true)
+            {
+                wvm.WineListWine = await _wineListsServices.IfExitWineListWine(id,user.Id);
+            }
             return View(wvm);
         }
         public async Task InsertLikeValues(int colourId, int sourceId, int sweetId, string url, int idWine)
@@ -341,7 +349,32 @@ namespace Wineapp.Controllers
 
             Response.Redirect(url);
         }
+        public async Task AddWineInLists(string lista, string url,int idWine)
+        {
+            Wine wine = await _winesServices.GetWineByIdAsync(idWine);
+            AppUser user = await _userManager.FindByEmailAsync(User.Identity.Name);
+            await _tastesServices.InsertClickValues(wine.ColourId, wine.SourceId, wine.SweetnesId, 4, user.Id);
+            WineList wineList = await _wineListsServices.GetWineListByNameListAsync(lista);
+            WineListWine wineListWine = new WineListWine
+            {
+                WineId = idWine,
+                WineListId = wineList.Id
+            };
+            await _wineListsServices.AddWineInWineListAsync(wineListWine);
+            Response.Redirect(url);
+        }
+        [HttpPost]
+        public async Task DelateWineListWineValues(int wineListWineId, string url, int idWine)
+        {
+            Wine wine = await _winesServices.GetWineByIdAsync(idWine);
+            AppUser user = await _userManager.FindByEmailAsync(User.Identity.Name);
+            await _tastesServices.DelateWineListWineValues(wine.ColourId, wine.SourceId, wine.SweetnesId, user.Id);        
 
+
+            await _wineListsServices.DeleteWineListWineAsync(await _wineListsServices.GetWineListWineByIdAsync(wineListWineId));            
+
+            Response.Redirect(url);
+        }
 
 
         //GET: Wines
