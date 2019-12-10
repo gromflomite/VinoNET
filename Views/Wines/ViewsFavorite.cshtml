@@ -17,7 +17,7 @@
 
 @if (!_likeServices.Exit(user.Id, @Model.Wine.Id))
 {
-    <form asp-controller="Tastes" asp-action="InsertLikeValues">
+    <form asp-controller="Wines" asp-action="InsertLikeValues">
         <input type="hidden" name="sourceId" value="@Model.Wine.SourceId" />
         <input type="hidden" name="colourId" value="@Model.Wine.ColourId" />
         <input type="hidden" name="sweetId" value="@Model.Wine.SweetnesId" />
@@ -29,7 +29,7 @@
 }
 else
 {
-    <form asp-controller="Tastes" asp-action="DelateLikeValues">
+    <form asp-controller="Wines" asp-action="DelateLikeValues">
         <input type="hidden" name="sourceId" value="@Model.Wine.SourceId" />
         <input type="hidden" name="colourId" value="@Model.Wine.ColourId" />
         <input type="hidden" name="sweetId" value="@Model.Wine.SweetnesId" />
@@ -42,3 +42,4 @@ else
 @section Scripts{
     <script src="~/js/Favorite.js"></script>
 }
+

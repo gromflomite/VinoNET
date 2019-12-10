@@ -11,8 +11,8 @@ namespace Wineapp.Services
         public Task<List<UserScore>> GetColourAsync();
         public Task Create(UserScore userScore);
         public Task<UserScore> Edit(int? idUserScore);
-        public Task Delete(int idWine, string idUserScore);        
+        public Task Delete(int idWine, string idUserScore);
         public bool Exit(string usuarioId, int wineId);
-        
+
     }
 }

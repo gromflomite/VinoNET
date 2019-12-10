@@ -20,12 +20,12 @@ namespace Wineapp.Services
             await _context.AddAsync(userScore);
 
             await _context.SaveChangesAsync();
-           
+
         }
 
         public async Task Delete(int idWine, string idUserScore)
         {
-            UserScore userScore =  _context.UserScores.FirstOrDefault(x => x.AppUserId == idUserScore && x.WineId == idWine);
+            UserScore userScore = _context.UserScores.ToList().Last(x => x.AppUserId == idUserScore && x.WineId == idWine);
             _context.Remove(userScore);
             await _context.SaveChangesAsync();
         }
@@ -36,7 +36,7 @@ namespace Wineapp.Services
         }
 
         public bool Exit(string usuarioId, int wineId)
-        {          
+        {
             return _context.UserScores.Where(x => x.AppUserId == usuarioId).Any(e => e.WineId == wineId);
         }
 
