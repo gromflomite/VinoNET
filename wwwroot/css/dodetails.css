@@ -5,7 +5,9 @@ section.home {
 
 .logoblock {
     width: 80%;
-    margin: 0 auto;  
+    margin: 0 auto;
+    padding-top: 50px;
+    
 }
 
 .logoblock p {    

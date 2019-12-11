@@ -9,6 +9,7 @@
 
 @section Styles {
     <link href="@Url.Content("~/css/dodetails.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/css/imagegallery.css")" rel="stylesheet" type="text/css" />
 }
 
 <div class="row align-items-center logoblock">
@@ -36,12 +37,69 @@
 <hr />
 
 
+    <div class="doimagegallery">
+
+        <h2>Slideshow Gallery</h2>
+
+
+        @foreach (Wine wine in Model.ListWinesTastesSources)
+        {
+            <div class="row mySlides">
+                <div class="card mb-3">
+                    <div class="row no-gutters" style="width:100%;">
+                        <div class="col-md-6">
+                            <img src="~/img/wines/@wine.Image" class="card-img" style="width:30%;">
+                        </div>
+                        <div class="col-md-12">
+                            <div class="card-body">
+                                <h5 class="card-title">@wine.Name (@wine.Year)</h5>
+                                <p class="card-text">@wine.Price €</p>
+                                <iframe class="card-text" id="inlineFrame"
+                                        title="Inline Frame Example"
+                                        width="300"
+                                        height="200"
+                                        src="https://localhost:44320/Wines/ViewsFavorite/@wine.Id">
+                                </iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+            <a class="prev" onclick="plusSlides(-1)">❮</a>
+            <a class="next" onclick="plusSlides(1)">❯</a>
+
+            <div class="caption-container">
+                <p id="caption"></p>
+            </div>
+
+            <div class="row">
+                @{ int cont = 1;
+                    foreach (Wine wine in Model.ListWinesTastesSources)
+                    {
+                    <div class="column">
+                        <img class="demo cursor" src="~/img/wines/@wine.Image" style="width:100%" onclick="currentSlide(@cont)" alt="@wine.Name">
+                        <h6>@wine.Name</h6>
+                        <p>@wine.Colour.ColourType, @wine.Sweetnes.SweetnesType, @wine.Source.SourceType</p>
+                    </div>
+                        cont++;
+                    }
+                    }
+                </div>
+        </div>
+
+
+
+
+
+
 
 
 
 
 <!--Nombre de la denominación de origen que ha seleccionado-->
-<h1>@Model.Source.SourceType</h1>
+@*<h1>@Model.Source.SourceType</h1>
 
 <div>
     <p>Nuestra mejor selección de vinos de @Model.Source.SourceType</p>
@@ -67,4 +125,4 @@
         </form>
         <br />
     }
-</div>
+</div>*@
