@@ -34,9 +34,9 @@ namespace Wineapp.Controllers
         //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> Index()
         {
-            //AdminVM avm = await TopFiveWinesWeek();
-
-            return View();
+            AdminVM avm = await MostVisitedWines();
+            
+            return View(avm);
         }
         public async Task<AdminVM> MostVisitedWines()
         {
@@ -52,16 +52,15 @@ namespace Wineapp.Controllers
                 {
                     if (colourTaste.ColourId == i)
                     {
-                        avm.colourScores[i] += colourTaste.Score;
+                        avm.colourScores[i-1] += colourTaste.Score;
                     }
                 }
             }
 
-            return avm;
+            return await MostVisitedSources(avm);
         }
-        public async Task<AdminVM> MostVisitedSources()
-        {
-            AdminVM avm = await MostVisitedWines();
+        public async Task<AdminVM> MostVisitedSources(AdminVM avm)
+        {           
             List<SourceTaste> sourceTasteList = await _tastesServices.GetSourceTastesAsync();
 
             avm.sourceNames = sourceTasteList.Select(x => x.Source.SourceType).Distinct().ToArray();
@@ -73,28 +72,25 @@ namespace Wineapp.Controllers
                 {
                     if (sourceTaste.SourceId == i)
                     {
-                        avm.sourceScores[i] += sourceTaste.Score;
+                        avm.sourceScores[i-1] += sourceTaste.Score;
                     }
                 }
 
             }
-            return avm;
+            return await TopWines(avm);
         }
 
-        public async Task<AdminVM> TopWines()
-        {
-            AdminVM avm = await MostVisitedSources();
+        public async Task<AdminVM> TopWines(AdminVM avm)
+        {           
 
             avm.topWines = await _winesServices.GetWinesAsync();
             avm.topWines = avm.topWines.OrderByDescending(x => x.Score).ToList().GetRange(0, 10);
 
-            return avm;
+            return await TopFiveWinesWeek(avm);
 
         }
-        public async Task<AdminVM> TopFiveWinesWeek()
-        {
-            AdminVM avm = await TopWines();
-
+        public async Task<AdminVM> TopFiveWinesWeek(AdminVM avm)
+        {           
             List<UserScore> userScores = await _likeServices.GetUserScoreAsync();
             userScores = userScores.Where(x => x.VoteDate < DateTime.Now.AddDays(-7)).ToList();
 
