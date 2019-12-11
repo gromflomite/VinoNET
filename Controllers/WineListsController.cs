@@ -58,6 +58,15 @@ namespace Wineapp.Controllers
 
             return RedirectToAction("Index");
         }
+        public async Task<IActionResult> DelateWineListWineValues(int wineListWineId, int idWine)
+        {
+            Wine wine = await _winesServices.GetWineByIdAsync(idWine);
+            AppUser user = await _userManager.FindByEmailAsync(User.Identity.Name);
+            await _tastesServices.DelateWineListWineValues(wine.ColourId, wine.SourceId, wine.SweetnesId, user.Id);     
+            await _wineListsServices.DeleteWineListWineAsync(await _wineListsServices.GetWineListWineByIdAsync(wineListWineId));
+
+            return RedirectToAction("Index");
+        }
 
 
         // GET: WineLists/Details/5

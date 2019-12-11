@@ -76,7 +76,23 @@
                             listWineListWines = await _wineListsServices.GetWineListsWinesByWineLisIdAsync(wineList.Id);
                             @foreach (WineListWine wineListWine in listWineListWines)
                             {
-                                <li>@wineListWine.Wine.Name</li>
+                                <li>
+                                    <table>                                        
+                                        <tr>
+                                            <td style="width: 300px;">@wineListWine.Wine.Name</td>
+                                            <td>
+                                                <form asp-controller="WineLists" asp-action="DelateWineListWineValues">
+                                                    <input type="hidden" name="idWine" value="@wineListWine.Wine.Id" />
+                                                    <input type="hidden" name="wineListWineId" value="@wineListWine.Id" />                                                                                              
+                                                    <button type="submit" class="btn btn-secondary" title="Borrar">
+                                                        Borrar
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                
+                                </li>
                             }
                         }
                     </ul>
