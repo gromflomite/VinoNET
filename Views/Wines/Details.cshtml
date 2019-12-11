@@ -6,27 +6,31 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<h1></h1>
 
 <h1>@Model.Wine.Name</h1>
+
+    
 @if (_signInManager.IsSignedIn(User))
 {
-    <h3>Tablas de Vino segun gustos 5 segun el vino selecionado,3 segun los tres fitros de Taste y 2 sefun D.O</h3>
+    <h3>Tablas de Vino segun gustos 5 segun el vino selecionado,3 segun los tres fitros de Taste y 2 segun D.O</h3>
+
     <table>
         <thead>
             <tr>
                 <th scope="col">Nombre</th>
-                <th scope="col">Colour</th>
-                <th scope="col">Sweetness</th>
-                <th scope="col">Source</th>
-                <th scope="col">Score</th>
+                <th scope="col">Color</th>
+                <th scope="col">Dulzor</th>
+                <th scope="col">D.Origen</th>
+                <th scope="col">Puntuación</th>
             </tr>
         </thead>
         <tbody>
             @foreach (Wine wine in Model.ListWinesTastesDetails)
             {
                 <tr>
-                    <th>@wine.Name</th>
+                    
+                    <td>@wine.Name</td>
                     <td>@wine.Colour.ColourType</td>
                     <td>@wine.Sweetnes.SweetnesType</td>
                     <td>@wine.Source.SourceType</td>
@@ -37,31 +41,40 @@
     </table>
 
 }
+    
+
 
 <h3>Tablas segun la puntucion de los vinos</h3>
+
+<div class="table">
 <table>
     <thead>
         <tr>
+            <td></td>
             <th scope="col">Nombre</th>
-            <th scope="col">Colour</th>
-            <th scope="col">Sweetness</th>
-            <th scope="col">Source</th>
-            <th scope="col">Score</th>
+            <th scope="col">Color</th>
+            <th scope="col">Dulzor</th>
+            <th scope="col">D.Origen</th>
+            <th scope="col">Puntuación</th>
         </tr>
     </thead>
     <tbody>
         @foreach (Wine wine in Model.ListWineUserScore)
         {
-            <tr>
-                <th>@wine.Name</th>
-                <td>@wine.Colour.ColourType</td>
-                <td>@wine.Sweetnes.SweetnesType</td>
-                <td>@wine.Source.SourceType</td>
-                <td>@wine.Score</td>
-            </tr>
+        <tr>
+           <td>   
+            <img src="~/img/wines/@wine.Image" height="100" />
+            </td> 
+            <td>@wine.Name</td>
+            <td>@wine.Colour.ColourType</td>
+            <td>@wine.Sweetnes.SweetnesType</td>
+            <td>@wine.Source.SourceType</td>
+            <td>@wine.Score</td>
+        </tr>
         }
     </tbody>
 </table>
+</div>
 
 @if (_signInManager.IsSignedIn(User))
 {
@@ -76,9 +89,9 @@
 
 
 
-@*<iframe id="inlineFrameExample"
+<iframe id="inlineFrameExample"
             title="Inline Frame Example"
             width="300"
             height="200"
             src="https://www.openstreetmap.org/export/embed.html?bbox=-0.004017949104309083%2C51.47612752641776%2C0.00030577182769775396%2C51.478569861898606&layer=mapnik">
-    </iframe>*@
+    </iframe>
