@@ -13,9 +13,6 @@
 }
     <script src="https://kit.fontawesome.com/fae805ac08.js" crossorigin="anonymous"></script>
 
-<h1>@Model.Wine.Name</h1>
-
-
 @if (!_likeServices.Exit(user.Id, @Model.Wine.Id))
 {
     <form asp-controller="Wines" asp-action="InsertLikeValues">
