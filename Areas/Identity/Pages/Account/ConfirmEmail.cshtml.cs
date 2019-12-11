@@ -19,13 +19,15 @@ namespace Wineapp.Areas.Identity.Pages.Account
         private readonly UserManager<AppUser> _userManager;
         private readonly ITastes _tasteServices;
         private readonly IFilters _filtersServices;
+        private readonly IWineLists _wineListsServices;
 
 
-        public ConfirmEmailModel(UserManager<AppUser> userManager, ITastes tasteServices, IFilters filtersServices)
+        public ConfirmEmailModel(UserManager<AppUser> userManager, ITastes tasteServices, IFilters filtersServices, IWineLists wineListsServices)
         {
             _userManager = userManager;
             _tasteServices = tasteServices;
             _filtersServices = filtersServices;
+            _wineListsServices = wineListsServices;
         }
 
         [TempData]
@@ -69,6 +71,16 @@ namespace Wineapp.Areas.Identity.Pages.Account
                 await _tasteServices.CreateSweetnessTasteAsync(sweetnessTaste);
 
             }
+
+            WineList wineList = new WineList
+            {
+                AppUserId = userId,
+                ListDate = DateTime.Now,
+                ListName = "Favoritos",
+                Description = "Vinos favoritos"
+            };
+
+            await _wineListsServices.CreateWineListAsync(wineList);
 
             code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
             var result = await _userManager.ConfirmEmailAsync(user, code);

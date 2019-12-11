@@ -38,5 +38,7 @@ namespace Wineapp.Services
 
         public Task InsertClickValues(int? colourId, int? sourceId, int? sweetId, int value, string userId);
         public Task DelateLikeValues(int? colourId, int? sourceId, int? sweetId, string userId);
+        public Task DelateWineListWineValues(int? colourId, int? sourceId, int? sweetId, string userId);
     }
+    
 }

@@ -10,7 +10,6 @@ namespace Wineapp.Models
         public int Id { get; set; }
         public int VoteValue { get; set; }
         public DateTime VoteDate { get; set; }
-
         public string AppUserId { get; set; }
         public AppUser AppUser { get; set; }
         public int WineId { get; set; }

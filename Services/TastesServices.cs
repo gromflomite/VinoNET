@@ -251,6 +251,66 @@ namespace Wineapp.Services
 
         }
 
+        public async Task DelateWineListWineValues(int? colourId, int? sourceId, int? sweetId, string userId)
+        {
+
+            List<ColourTaste> colourTastes = await GetColourTasteesByUserIdAsync(userId);
+            List<SourceTaste> sourceTastes = await GetSourceTasteesByUserIdAsync(userId);
+            List<SweetnessTaste> sweetnessTastes = await GetSweetnessTasteesByUserIdAsync(userId);
+
+            if (colourId != 0)
+            {
+                ColourTaste colourTaste = colourTastes.FirstOrDefault(x => x.ColourId == colourId);
+                if (colourTaste.Score < 10)
+                {
+                    colourTaste.Score -= 4;
+                    await UpdateColourTasteAsync(colourTaste);
+                }
+                else if (colourTaste.Score >= 10)
+                {
+                    double root = Convert.ToDouble(colourTaste.Score.ToString().Substring(0, 1)) + 1;
+                    double addScore = Math.Sqrt(3 / (Math.Pow(root, root)));
+                    colourTaste.Score -= addScore;
+                }
+            }
+
+            if (sourceId != 0)
+            {
+                SourceTaste sourceTaste = sourceTastes.FirstOrDefault(x => x.SourceId == sourceId);
+
+                if (sourceTaste.Score < 10)
+                {
+                    sourceTaste.Score -= 4;
+                    await UpdateSourceTasteAsync(sourceTaste);
+                }
+                else if (sourceTaste.Score >= 10)
+                {
+                    double root = Convert.ToDouble(sourceTaste.Score.ToString().Substring(0, 1)) + 1;
+                    double addScore = Math.Sqrt(3 / (Math.Pow(root, root)));
+                    sourceTaste.Score -= addScore;
+                    await UpdateSourceTasteAsync(sourceTaste);
+                }
+            }
+
+            if (sweetId != 0)
+            {
+                SweetnessTaste sweetnessTaste = sweetnessTastes.FirstOrDefault(x => x.SweetnesId == sweetId);
+
+                if (sweetnessTaste.Score < 10)
+                {
+                    sweetnessTaste.Score -= 4;
+                    await UpdateSweetnessTasteAsync(sweetnessTaste);
+                }
+                else if (sweetnessTaste.Score >= 10)
+                {
+                    double root = Convert.ToDouble(sweetnessTaste.Score.ToString().Substring(0, 1)) + 1;
+                    double addScore = Math.Sqrt(4 / (Math.Pow(root, root)));
+                    sweetnessTaste.Score -= addScore;
+                    await UpdateSweetnessTasteAsync(sweetnessTaste);
+                }
+            }
+
+        }
 
 
 
