@@ -88,29 +88,30 @@ namespace Wineapp.Controllers
         //        return View(wineList);
         //    }
 
-        //    // GET: WineLists/Create
-        //    public IActionResult Create()
-        //    {
-        //        ViewData["AppUserId"] = new SelectList(_context.Set<AppUser>(), "Id", "Id");
-        //        return View();
-        //    }
+        // GET: WineLists/Create
+        public IActionResult Create()
+        {            
+            return View(new WineList());
+        }
 
-        //    // POST: WineLists/Create
-        //    // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        //    // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //    [HttpPost]
-        //    [ValidateAntiForgeryToken]
-        //    public async Task<IActionResult> Create([Bind("Id,ListName,Description,ListDate,AppUserId")] WineList wineList)
-        //    {
-        //        if (ModelState.IsValid)
-        //        {
-        //            _context.Add(wineList);
-        //            await _context.SaveChangesAsync();
-        //            return RedirectToAction(nameof(Index));
-        //        }
-        //        ViewData["AppUserId"] = new SelectList(_context.Set<AppUser>(), "Id", "Id", wineList.AppUserId);
-        //        return View(wineList);
-        //    }
+        // POST: WineLists/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("Id,ListName,Description")] WineList wineList)
+        {
+            var user = await _userManager.FindByEmailAsync(User.Identity.Name);
+            wineList.AppUserId = user.Id;
+            wineList.ListDate = DateTime.Now;
+            if (ModelState.IsValid)
+            {
+               await _wineListsServices.CreateWineListAsync(wineList);                
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(wineList);
+        }
 
         //    // GET: WineLists/Edit/5
         //    public async Task<IActionResult> Edit(int? id)
