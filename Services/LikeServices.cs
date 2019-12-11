@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -40,9 +41,9 @@ namespace Wineapp.Services
             return _context.UserScores.Where(x => x.AppUserId == usuarioId).Any(e => e.WineId == wineId);
         }
 
-        public Task<List<UserScore>> GetColourAsync()
+        public Task<List<UserScore>> GetUserScoreAsync()
         {
-            throw new NotImplementedException();
+            return _context.UserScores.ToListAsync();
         }
     }
 }
