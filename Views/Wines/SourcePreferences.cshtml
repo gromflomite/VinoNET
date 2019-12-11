@@ -2,9 +2,46 @@
 @inject SignInManager<AppUser> _signInManager
 @inject UserManager<AppUser> _userManager
 @model Wineapp.Models.ViewModels.WinesVM
+
+@{
+    ViewData["Title"] = "D.O.";
+}
+
+@section Styles {
+    <link href="@Url.Content("~/css/dodetails.css")" rel="stylesheet" type="text/css" />
+}
+
+<div class="row align-items-center logoblock">
+    <div class="col">
+        <img class="dologo" src="~/img/dologo/@Model.Source.Logo" alt="Logo de la D.O. @Model.Source.SourceType" />
+    </div>
+    <div class="col">
+        <p>D.O. @Model.Source.SourceType</p>
+    </div>
+</div>
+
+<hr />
+
+<div class="row align-items-center mapblock">
+
+    <div class="col dodescription">
+        <p>@Model.Source.Description</p>
+    </div>
+
+    <div class="col">
+        <img src="~/img/domaps/@Model.Source.Image" alt="Localización de la D.O. @Model.Source.SourceType" />
+    </div>
+</div>
+
+<hr />
+
+
+
+
+
+
 <!--Nombre de la denominación de origen que ha seleccionado-->
 <h1>@Model.Source.SourceType</h1>
-
 
 <div>
     <p>Nuestra mejor selección de vinos de @Model.Source.SourceType</p>
@@ -31,9 +68,3 @@
         <br />
     }
 </div>
-
-
-
-
-
-

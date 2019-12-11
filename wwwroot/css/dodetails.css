@@ -1,0 +1,35 @@
+section.home {
+    background-image: url("../img/navbarbackground5.jpg");
+    height: 250px;
+}
+
+.logoblock {
+    width: 80%;
+    margin: 0 auto;  
+}
+
+.logoblock p {    
+    font-size: 2.5rem;    
+    text-align: center;     
+}
+
+.logoblock img {
+    width: 400px;
+    height: 400px;    
+}
+
+.mapblock {    
+    padding-top: 20px;    
+}
+
+.mapblock img {
+    width: 400px;
+    height: 400px;
+    margin-left: 60px;
+}
+
+.mapblock p {
+    font-family: 'Ibarra Real Nova', serif;
+    text-align: justify;
+    font-size: 1.3rem;
+}
