@@ -42,7 +42,7 @@ namespace Wineapp.Controllers
         {
             var user = await _userManager.FindByEmailAsync(User.Identity.Name);
 
-            List<WineList> listWineList = await _wineListsServices.GetWineListsByUserIdAsync(user.Id);
+            List<WineList> listWineList = await _wineListsServices.GetWineListsByUserIdAsync(user.Id);           
             WinesVM wvm = new WinesVM
             {
                 ListWinesLists = listWineList,

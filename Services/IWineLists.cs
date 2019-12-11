@@ -15,7 +15,7 @@ namespace Wineapp.Services
         public Task DeleteWineListWineAsync(WineListWine wineListWine);
         public Task<List<WineList>> GetWineListsByUserIdAsync(string userId);
         public Task<List<WineListWine>> GetWineListWineAsync();
-        public Task<List<WineListWine>> GetWineListsWinesByUserIdAsync(int? WineListId);
+        public Task<List<WineListWine>> GetWineListsWinesByWineLisIdAsync(int wineListId);
         public bool Exit(int? wineId, string userId);
         public Task CreateWineListAsync(WineList wineList);
         public Task DeleteWineListAsync(WineList wineList);

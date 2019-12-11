@@ -103,9 +103,9 @@ namespace Wineapp.Services
             return await _context.WineLists.Where(x=>x.AppUserId == userId).ToListAsync();
         }
 
-        public async Task<List<WineListWine>> GetWineListsWinesByUserIdAsync(int? WineListId)
+        public async Task<List<WineListWine>> GetWineListsWinesByWineLisIdAsync(int wineListId)
         {
-            return await _context.WineListWines.ToListAsync();
+            return await _context.WineListWines.Where(x=>x.WineListId == wineListId).Include(x=>x.Wine).ToListAsync();
         }
     }
 }

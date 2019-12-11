@@ -1,10 +1,22 @@
 ﻿@model Wineapp.Models.ViewModels.WinesVM
 
+@using Microsoft.AspNetCore.Identity
+@using Wineapp.Services
+@inject SignInManager<AppUser> _signInManager
+@inject UserManager<AppUser> _userManager
+@inject IWineLists _wineListsServices
+
 @{
     ViewData["Title"] = "Index";
+    List<WineListWine> listWineListWines = await _wineListsServices.GetWineListWineAsync();
 }
 
 <h1>Index</h1>
+<style type="text/css">
+    li {
+        list-style: none;
+    }
+</style>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -20,14 +32,14 @@
             </th>
             <th>
                 ListDate
-            </th>            
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
         @foreach (WineList wineList in Model.ListWinesLists)
         {
-            <tr>
+            <tr class="imageCollapse" >
                 <td>
                     @Html.DisplayFor(modelItem => wineList.ListName)
                 </td>
@@ -37,20 +49,44 @@
                 <td>
                     @Html.DisplayFor(modelItem => wineList.ListDate)
                 </td>
-                
+
                 <td>
                     <a asp-action="Edit" asp-route-id="@wineList.Id">Edit</a> |
                     <a asp-action="Details" asp-route-id="@wineList.Id">Details</a> |
 
                     <form asp-controller="WineLists" asp-action="DeleteWineList">
                         <input type="hidden" name="winwListId" value="@wineList.Id" />
-                        <button type="submit" class="btn btn-secondary"  title="Borrar">
+                        <button type="submit" class="btn btn-secondary" title="Borrar">
                             Borrar
                         </button>
                     </form>
-                  
+
                 </td>
+            </tr>
+            <tr class="collapse listaCollapse">
+                <td colspan="4">
+                    <ul>
+
+                        @if (listWineListWines.Where(x => x.WineListId == wineList.Id).Count() == 0)
+                        {
+                            <li>Lista Vacia</li>
+                        }
+                        else
+                        {
+                            listWineListWines = await _wineListsServices.GetWineListsWinesByWineLisIdAsync(wineList.Id);
+                            @foreach (WineListWine wineListWine in listWineListWines)
+                            {
+                                <li>@wineListWine.Wine.Name</li>
+                            }
+                        }
+                    </ul>
+                </td>
+
             </tr>
         }
     </tbody>
 </table>
+
+@section Scripts{
+    <script src="~/js/WineList.js"></script>
+}
