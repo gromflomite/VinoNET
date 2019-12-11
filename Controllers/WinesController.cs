@@ -349,16 +349,15 @@ namespace Wineapp.Controllers
 
             Response.Redirect(url);
         }
-        public async Task AddWineInLists(string lista, string url,int idWine)
+        public async Task AddWineInLists(int listaId, string url,int idWine)
         {
             Wine wine = await _winesServices.GetWineByIdAsync(idWine);
             AppUser user = await _userManager.FindByEmailAsync(User.Identity.Name);
             await _tastesServices.InsertClickValues(wine.ColourId, wine.SourceId, wine.SweetnesId, 4, user.Id);
-            WineList wineList = await _wineListsServices.GetWineListByNameListAsync(lista);
             WineListWine wineListWine = new WineListWine
             {
                 WineId = idWine,
-                WineListId = wineList.Id
+                WineListId = listaId
             };
             await _wineListsServices.AddWineInWineListAsync(wineListWine);
             Response.Redirect(url);

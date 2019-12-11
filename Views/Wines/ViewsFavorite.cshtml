@@ -58,7 +58,7 @@
                             @foreach (WineList wineList in @Model.ListWinesLists)
                             {
                                 <div class="form-check">
-                                    <input type="radio" id="@wineList.ListName" name="lista" value="@wineList.ListName"  />
+                                    <input type="radio" id="@wineList.ListName" name="listaId" value="@wineList.Id"  />
                                     <label class="form-check-label" for="@wineList.ListName">@wineList.ListName</label>
                                 </div>
                             }
@@ -80,7 +80,7 @@
         <form asp-controller="Wines" asp-action="DelateWineListWineValues">
             <input type="hidden" name="wineListWineId" value="@Model.WineListWine.Id" />
             <input type="hidden" name="idWine" value="@Model.Wine.Id" />
-            <input type="hidden" name="url" value="https://localhost:44320/Wines/ViewsFavorite/@Model.Wine.Id" />
+            <input type="hidden" name="url" value="https://localhost/Wines/ViewsFavorite/@Model.Wine.Id" />
             <button type="submit" class="btn btn-danger" title="Añadir">
                 Quitar de la lista @Model.WineListWine.WineList.ListName
             </button>
