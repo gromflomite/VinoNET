@@ -80,7 +80,7 @@
         <form asp-controller="Wines" asp-action="DelateWineListWineValues">
             <input type="hidden" name="wineListWineId" value="@Model.WineListWine.Id" />
             <input type="hidden" name="idWine" value="@Model.Wine.Id" />
-            <input type="hidden" name="url" value="https://localhost/Wines/ViewsFavorite/@Model.Wine.Id" />
+            <input type="hidden" name="url" value="https://localhost:44320/Wines/ViewsFavorite/@Model.Wine.Id" />
             <button type="submit" class="btn btn-danger" title="Añadir">
                 Quitar de la lista @Model.WineListWine.WineList.ListName
             </button>
