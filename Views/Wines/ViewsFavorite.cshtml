@@ -55,7 +55,7 @@
                 <div class="dropdown-menu">
                     <div class="row" style="overflow-x:hidden;max-height: 90px;">
                         <div class="col-sm-10">
-                            @foreach (WineList wineList in @Model.ListWinesLists)
+                            @foreach (WineList wineList in Model.ListWinesLists)
                             {
                                 <div class="form-check">
                                     <input type="radio" id="@wineList.ListName" name="listaId" value="@wineList.Id"  />
