@@ -36,22 +36,12 @@
 
                     if (counterdo == 1)
                     {
-                <div class="carousel-item active">
-                    <form asp-controller="Wines" asp-action="SourcePreferences">
-                        <input type="hidden" name="sourceId" value="@source.Id" />
-                        <input type="image" src="~/img/dologo/@source.Logo" />
-                    </form>
-
-                    <div class="card-body">
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">Cras justo odio</li>
-                        <li class="list-group-item">Dapibus ac facilisis in</li>
-                        <li class="list-group-item">Vestibulum at eros</li>
-                    </ul>
-
-                </div>
+                        <div class="carousel-item active">
+                            <form asp-controller="Wines" asp-action="SourcePreferences">
+                                <input type="hidden" name="sourceId" value="@source.Id" />
+                                <input class="doimages" type="image" src="~/img/dologo/@source.Logo" />
+                            </form>
+                        </div>
 
                         counterdo++;
                     }
@@ -60,7 +50,7 @@
                         <div class="carousel-item">
                             <form asp-controller="Wines" asp-action="SourcePreferences">
                                 <input type="hidden" name="sourceId" value="@source.Id" />
-                                <input type="image" src="~/img/dologo/@source.Logo" />
+                                <input class="doimages" type="image" src="~/img/dologo/@source.Logo" />
                             </form>
                         </div>
                     }
@@ -100,11 +90,13 @@
                         <div class="carousel-item active">
                             <form asp-controller="Wines" asp-action="Details">
                                 <input type="hidden" name="id" value="@wine.Id" />
-                                <input type="image" src="~/img/wines/@wine.Image" />
+                                <input class="winesimages" type="image" src="~/img/wines/@wine.Image" />
                             </form>
-                            <p class="winename">@wine.Name</p>
-                            <p class="winedetails">@wine.Colour.ColourType - @wine.Sweetnes.SweetnesType - Denominación de origen @wine.Source.SourceType</p>
+                            <div class="card-body">
+                                <p class="list-group-item">@wine.Name  (@wine.Colour.ColourType - @wine.Sweetnes.SweetnesType - Denominación de origen @wine.Source.SourceType)</p>
+                            </div>
                         </div>
+
                         counterwines++;
                     }
                     else if (counterwines > 1)
@@ -112,11 +104,13 @@
                         <div class="carousel-item">
                             <form asp-controller="Wines" asp-action="Details">
                                 <input type="hidden" name="id" value="@wine.Id" />
-                                <input type="image" src="~/img/wines/@wine.Image" />
+                                <input class="winesimages" type="image" src="~/img/wines/@wine.Image" />
                             </form>
-                            <p class="winename">@wine.Name</p>
-                            <p class="winedetails">@wine.Colour.ColourType - @wine.Sweetnes.SweetnesType - Denominación de origen @wine.Source.SourceType</p>
+                            <div class="card-body">
+                                <p class="list-group-item">@wine.Name  (@wine.Colour.ColourType - @wine.Sweetnes.SweetnesType - Denominación de origen @wine.Source.SourceType)</p>
+                            </div>
                         </div>
+
                     }
                 }
             </div>
@@ -125,6 +119,8 @@
 </div>
 
 <!---------------------------------------------------------------------------------------------------------------------------------------------------->
+
+<hr class="hrdown" />
 
 <div class="eventsblock">
     <h2 class="eventstitle">Eventos</h2>

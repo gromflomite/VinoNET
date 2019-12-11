@@ -1,16 +1,58 @@
-.doblock {
+.uptext {
+  font-family: 'Ibarra Real Nova', serif;
+  text-align: justify;
+  font-size: 1.3rem;
+  padding-bottom: 3%;  
+}
+
+h3.card-header {
+  padding-left: 45px;
+  background-color: #404040;
+  color: white;
+}
+
+.doblock, .winesblock {
   padding-top: 5%;
   width: 80%;  
   margin: 0 auto;
 }
 
 .doblock form {   
-  width: 45%;  
-  height: 450px;
+  width: 50%;  
+  height: 460px;
+  margin: 0 auto;  
+}
+
+input.doimages {
+  height: 440px;
+  width: 440px;
+}
+
+.winesblock form {
+  width: 50%;
+  height: 500px;
   margin: 0 auto;
+}
+
+input.winesimages {
+  height: 500px;
+  width: 500px;  
+}
+
+p.list-group-item {
+  font-family: 'Ibarra Real Nova', serif;
+  text-align: center;
+  font-size: 1.4rem;
+  background-color: #722f37;
+  color: white;
+}
+
+.hrdown {
+  margin-top: 5%;
   padding-top: 5%;
 }
 
-
-
+.eventstitle {
+padding-bottom: 3%;  
+}
 
