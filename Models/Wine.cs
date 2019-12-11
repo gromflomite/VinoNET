@@ -9,7 +9,6 @@ namespace Wineapp.Models
     public class Wine
     {
         public int Id { get; set; }
-
         public int? ColourId { get; set; }
         public Colour Colour { get; set; }
         public int? SweetnesId { get; set; }

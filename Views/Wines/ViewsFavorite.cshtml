@@ -5,44 +5,88 @@
 @inject SignInManager<AppUser> _signInManager
 @inject UserManager<AppUser> _userManager
 @inject ILike _likeServices;
+@inject IWineLists _wineListsServices;
 
 @{
     ViewData["Title"] = "ViewsFavorite";
     AppUser user = await _userManager.FindByEmailAsync(User.Identity.Name);
 
 }
-    <script src="https://kit.fontawesome.com/fae805ac08.js" crossorigin="anonymous"></script>
-
-<h1>@Model.Wine.Name</h1>
 
 
-@if (!_likeServices.Exit(user.Id, @Model.Wine.Id))
-{
-    <form asp-controller="Wines" asp-action="InsertLikeValues">
-        <input type="hidden" name="sourceId" value="@Model.Wine.SourceId" />
-        <input type="hidden" name="colourId" value="@Model.Wine.ColourId" />
-        <input type="hidden" name="sweetId" value="@Model.Wine.SweetnesId" />
-        <input type="hidden" name="idWine" value="@Model.Wine.Id" />
-        <input type="hidden" name="url" value="https://localhost:44320/Wines/ViewsFavorite/@Model.Wine.Id" />
-        <button type="submit" class="btn btn-secondary" data-toggle="tooltip" data-placement="left" title="Like">
-            <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
-        </button>
-        <!--Si quieres poner una foto, EJEMPLO:-->
-    </form>
-}
-else
-{
-<form asp-controller="Wines" asp-action="DelateLikeValues">
-    <input type="hidden" name="sourceId" value="@Model.Wine.SourceId" />
-    <input type="hidden" name="colourId" value="@Model.Wine.ColourId" />
-    <input type="hidden" name="sweetId" value="@Model.Wine.SweetnesId" />
-    <input type="hidden" name="idWine" value="@Model.Wine.Id" />
-    <input type="hidden" name="url" value="https://localhost:44320/Wines/ViewsFavorite/@Model.Wine.Id" />
-    <button type="submit" class="btn btn-secondary" data-toggle="tooltip" data-placement="left" title="Quitar like">
-        <i class="fa fa-thumbs-up" aria-hidden="true"></i>
-    </button>
-</form>
-}
+<div style="display: flex;">
+    @if (!_likeServices.Exit(user.Id, @Model.Wine.Id))
+    {
+        <form asp-controller="Wines" asp-action="InsertLikeValues" style="margin-right: 30px;">
+            <input type="hidden" name="sourceId" value="@Model.Wine.SourceId" />
+            <input type="hidden" name="colourId" value="@Model.Wine.ColourId" />
+            <input type="hidden" name="sweetId" value="@Model.Wine.SweetnesId" />
+            <input type="hidden" name="idWine" value="@Model.Wine.Id" />
+            <input type="hidden" name="url" value="https://localhost:44320/Wines/ViewsFavorite/@Model.Wine.Id" />
+            <button type="submit" class="btn btn-secondary" data-toggle="tooltip" data-placement="left" title="Like">
+                <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+            </button>
+            <!--Si quieres poner una foto, EJEMPLO:-->
+        </form>
+    }
+    else
+    {
+        <form asp-controller="Wines" asp-action="DelateLikeValues" style="margin-right: 30px;">
+            <input type="hidden" name="sourceId" value="@Model.Wine.SourceId" />
+            <input type="hidden" name="colourId" value="@Model.Wine.ColourId" />
+            <input type="hidden" name="sweetId" value="@Model.Wine.SweetnesId" />
+            <input type="hidden" name="idWine" value="@Model.Wine.Id" />
+            <input type="hidden" name="url" value="https://localhost:44320/Wines/ViewsFavorite/@Model.Wine.Id" />
+            <button type="submit" class="btn btn-secondary" data-toggle="tooltip" data-placement="left" title="Quitar like">
+                <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+            </button>
+        </form>
+    }
+
+
+    @if (!Model.WinelistsWineExit)
+    {
+
+        <div class="btn-group">
+            <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Listas
+            </button>
+            <form asp-controller="Wines" asp-action="AddWineInLists">
+                <div class="dropdown-menu">
+                    <div class="row" style="overflow-x:hidden;max-height: 90px;">
+                        <div class="col-sm-10">
+                            @foreach (WineList wineList in @Model.ListWinesLists)
+                            {
+                                <div class="form-check">
+                                    <input type="radio" id="@wineList.ListName" name="listaId" value="@wineList.Id"  />
+                                    <label class="form-check-label" for="@wineList.ListName">@wineList.ListName</label>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="dropdown-divider"></div>
+                    <input type="hidden" name="url" value="https://localhost:44320/Wines/ViewsFavorite/@Model.Wine.Id" />
+                    <input type="hidden" name="idWine" value="@Model.Wine.Id" />
+                    <button type="submit" class="btn btn-info" title="Añadir">
+                        Añadir
+                    </button>
+
+                </div>
+            </form>
+        </div>
+    }
+    else
+    {
+        <form asp-controller="Wines" asp-action="DelateWineListWineValues">
+            <input type="hidden" name="wineListWineId" value="@Model.WineListWine.Id" />
+            <input type="hidden" name="idWine" value="@Model.Wine.Id" />
+            <input type="hidden" name="url" value="https://localhost:44320/Wines/ViewsFavorite/@Model.Wine.Id" />
+            <button type="submit" class="btn btn-danger" title="Añadir">
+                Quitar de la lista @Model.WineListWine.WineList.ListName
+            </button>
+        </form>
+    }
+</div>
 
 @section Scripts{
     <script src="~/js/Favorite.js"></script>

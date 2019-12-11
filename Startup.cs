@@ -41,6 +41,7 @@ namespace Wineapp
             services.AddTransient<ITastes, TastesServices>();
             services.AddTransient<IWines, WinesServices>();
             services.AddTransient<ILike, LikeServices>();
+            services.AddTransient<IWineLists, WineListsServices>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
