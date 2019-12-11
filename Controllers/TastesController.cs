@@ -89,7 +89,7 @@ namespace Wineapp.Controllers
             user.Survey = true;
             await _userManager.UpdateAsync(user);
 
-            return RedirectToAction(nameof(HomeController));
+            return RedirectToActionPreserveMethod("Index","Home");
         }
 
        
