@@ -6,84 +6,6 @@
     ViewData["Title"] = "Details";
 }
 
-@*<h1>Details</h1>
-
-<h1>@Model.Wine.Name</h1>
-@if (_signInManager.IsSignedIn(User))
-{
-    <h3>Tablas de Vino segun gustos 5 segun el vino selecionado,3 segun los tres fitros de Taste y 2 sefun D.O</h3>
-    <table>
-        <thead>
-            <tr>
-                <th scope="col">Nombre</th>
-                <th scope="col">Colour</th>
-                <th scope="col">Sweetness</th>
-                <th scope="col">Source</th>
-                <th scope="col">Score</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (Wine wine in Model.ListWinesTastesDetails)
-            {
-                <tr>
-                    <th>@wine.Name</th>
-                    <td>@wine.Colour.ColourType</td>
-                    <td>@wine.Sweetnes.SweetnesType</td>
-                    <td>@wine.Source.SourceType</td>
-                    <td>@wine.Score</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-
-}
-
-<h3>Tablas segun la puntucion de los vinos</h3>
-<table>
-    <thead>
-        <tr>
-            <th scope="col">Nombre</th>
-            <th scope="col">Colour</th>
-            <th scope="col">Sweetness</th>
-            <th scope="col">Source</th>
-            <th scope="col">Score</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (Wine wine in Model.ListWineUserScore)
-        {
-            <tr>
-                <th>@wine.Name</th>
-                <td>@wine.Colour.ColourType</td>
-                <td>@wine.Sweetnes.SweetnesType</td>
-                <td>@wine.Source.SourceType</td>
-                <td>@wine.Score</td>
-            </tr>
-        }
-    </tbody>
-</table>
-
-@if (_signInManager.IsSignedIn(User))
-{
-    <iframe id="inlineFrameExample"
-            title="Inline Frame Example"
-            width="300"
-            height="200"
-            src="https://localhost:44320/Wines/ViewsFavorite/@Model.Wine.Id"
-            style="border:none">
-    </iframe>
-}*@
-
-
-
-@*<iframe id="inlineFrameExample"
-            title="Inline Frame Example"
-            width="300"
-            height="200"
-            src="https://www.openstreetmap.org/export/embed.html?bbox=-0.004017949104309083%2C51.47612752641776%2C0.00030577182769775396%2C51.478569861898606&layer=mapnik">
-    </iframe>*@
-
-
 
 
 <!DOCTYPE html>
@@ -205,14 +127,17 @@
                             <div class="card-body">
                                 <h5 class="card-title">@wine.Name (@wine.Year)</h5>
                                 <p class="card-text">@wine.Price €</p>
-                                <iframe class="card-text" id="inlineFrameExample"
-                                        title="Inline Frame Example"
-                                        width="300"
-                                        height="200"
-                                        src="https://localhost:44320/Wines/ViewsFavorite/@wine.Id"
-                                        style="border:none">
-                                </iframe>
-                            </div>
+                                @if (_signInManager.IsSignedIn(User))
+                                {
+                                    <iframe class="card-text" id="inlineFrameExample"
+                                            title="Inline Frame Example"
+                                            width="300"
+                                            height="200"
+                                            src="https://localhost:44320/Wines/ViewsFavorite/@wine.Id"
+                                            style="border:none">
+                                    </iframe>
+                                }
+                                </div>
                         </div>
                     </div>
                 </div>

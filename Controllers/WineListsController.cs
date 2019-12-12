@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -38,6 +39,7 @@ namespace Wineapp.Controllers
         }
 
         // GET: WineLists
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             var user = await _userManager.FindByEmailAsync(User.Identity.Name);
@@ -97,6 +99,7 @@ namespace Wineapp.Controllers
         // POST: WineLists/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,ListName,Description")] WineList wineList)

@@ -92,25 +92,24 @@ namespace Wineapp.Controllers
         public async Task<AdminVM> TopFiveWinesWeek(AdminVM avm)
         {           
             List<UserScore> userScores = await _likeServices.GetUserScoreAsync();
-            userScores = userScores.Where(x => x.VoteDate < DateTime.Now.AddDays(-7)).ToList();
+            userScores = userScores.Where(x => x.VoteDate > DateTime.Now.AddDays(-7)).ToList();
 
             //Lista de tipo Wine
             avm.winesName = userScores.Select(x => x.Wine.Name).Distinct().ToList();
             //Array doble de int
             //avm.winesScore = new int[avm.winesName.Count, avm.winesName.Count];
-            avm.winesScore= new Dictionary<int, string>();
+            avm.winesScore= new Dictionary<string, int>();
 
-            foreach (UserScore userScore in userScores)
-            {
+
                 for (int i = 0; i < avm.winesName.Count; i++)
                 {
                     int score = userScores.Where(x => x.Wine.Name == avm.winesName[i]).Count();
                     string wine = avm.winesName[i];
-                    avm.winesScore.Add(score, wine);
+                    avm.winesScore.Add(wine, score);
                 }
-            }
+
             avm.winesScore = avm.winesScore.OrderByDescending(x => x.Key).ToDictionary(x=>x.Key,y=>y.Value);
-            avm.winesScore.Skip(0).Take(5).ToDictionary(x => x.Key, y => y.Value);
+            avm.winesScore= avm.winesScore.Skip(0).Take(5).ToDictionary(x => x.Key, y => y.Value);
             return avm;
         }
 
