@@ -127,8 +127,7 @@
                             <div class="card-body">
                                 <h5 class="card-title">@wine.Name (@wine.Year)</h5>
                                 <p class="card-text">@wine.Price €</p>
-                                @if (_signInManager.IsSignedIn(User))
-                                {
+                        
                                     <iframe class="card-text" id="inlineFrameExample"
                                             title="Inline Frame Example"
                                             width="300"
@@ -136,7 +135,7 @@
                                             src="https://localhost:44320/Wines/ViewsFavorite/@wine.Id"
                                             style="border:none">
                                     </iframe>
-                                }
+
                                 </div>
                         </div>
                     </div>

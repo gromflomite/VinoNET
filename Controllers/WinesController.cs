@@ -26,8 +26,9 @@ namespace Wineapp.Controllers
         private readonly SignInManager<AppUser> _signInManager;
 
 
-        public WinesController(ILike likeServices, ITastes tastesServices, IWines winesServices, IFilters filtersServices, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
+        public WinesController(IWineLists wineListsServices, ILike likeServices, ITastes tastesServices, IWines winesServices, IFilters filtersServices, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
         {
+            _wineListsServices = wineListsServices;
             _tastesServices = tastesServices;
             _winesServices = winesServices;
             _filtersServices = filtersServices;
