@@ -72,10 +72,17 @@ body {
 
 /* Footer icons
 ---------------------------------------------------------*/
-
+.social_icons_rounded{
+    height: 70px;
+}
 .social_icons_rounded ul {
     list-style: none;
-    padding-left: 38%; /*Really bad method to "center" the footer icons (created by Raúl)*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    margin-bottom: 0px;
+    /*padding-left: 38%;*/ /*Really bad method to "center" the footer icons (created by Raúl)*/
 }
 
     .social_icons_rounded ul li a {
