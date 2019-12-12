@@ -20,7 +20,7 @@ namespace Wineapp.Models.ViewModels
 
         //Top 5 de la semana de los vinos mejor valorados
         public List<string> winesName { get; set; }
-        public Dictionary<int, string> winesScore { get; set; }
+        public Dictionary<string, int> winesScore { get; set; }
 
 
         //Prueba

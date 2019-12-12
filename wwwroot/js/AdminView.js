@@ -14,13 +14,13 @@ var myCanvas = new Chart(ctx, {
 
     // The data for our dataset
     data: {
-        labels: topTenName ,
+        labels: topFiveWeekName ,
         datasets: [{
             label: 'Planes/día',
             backgroundColor: 'transparent',
             color: '#9a681d',
             borderColor: '#2e2e88d4',
-            data: topTenScore,
+            data: topFiveWeekScore,
         }]
     },
 
@@ -35,7 +35,7 @@ var myCanvas = new Chart(ctx, {
 });
 
 
-var ctx2 = document.getElementById('myDoughnutChart').getContext('2d');
+var ctx2 = document.getElementById('myDoughnutChart');
 var myDoughnutChart = new Chart(ctx2, {
     type: 'doughnut',
     data: {
