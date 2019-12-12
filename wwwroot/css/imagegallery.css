@@ -1,5 +1,11 @@
 .doimagegallery {
-    box-sizing: border-box;
+    box-sizing: border-box;    
+}
+
+.doimagegallery iframe {
+    border: none;
+    text-align: center;
+    
 }
 
 .doimagegallery img {
