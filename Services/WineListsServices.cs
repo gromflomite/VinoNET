@@ -116,5 +116,11 @@ namespace Wineapp.Services
                 .Include(x=>x.Wine).ThenInclude(x=>x.Sweetnes)
                 .ToListAsync();
         }
+        public async Task UpUpdate(WineList wineList)
+        {
+            _context.Update(wineList);
+            await _context.SaveChangesAsync();
+        }
+
     }
 }
