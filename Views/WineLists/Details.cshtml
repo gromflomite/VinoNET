@@ -1,42 +1,76 @@
-﻿@model Wineapp.Models.WineList
+﻿@model Wineapp.Models.ViewModels.WinesVM
 
 @{
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<h1>Lista:@Model.WineList.ListName</h1>
 
-<div>
-    <h4>WineList</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ListName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ListName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ListDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ListDate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.AppUser)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.AppUser.Id)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Nombre
+            </th>
+            <th>
+                Colour
+            </th>
+            <th>
+                Sweentnes
+            </th>
+            <th>
+                Source
+            </th>
+            <th>
+               Year
+            </th>
+            <th>
+                Compañy
+            </th>
+            <th>
+                Precio
+            </th>
+           
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (WineListWine wineListWine in Model.ListWinesListWines)
+        {
+            <tr>
+                <td>
+                   @wineListWine.Wine.Name
+                </td>
+                <td>
+                    @wineListWine.Wine.Colour.ColourType
+                </td>
+                <td>
+                    @wineListWine.Wine.Sweetnes.SweetnesType
+                </td>
+                <td>
+                    @wineListWine.Wine.Source.SourceType
+                </td>
+                <td>
+                    @wineListWine.Wine.Year
+                </td>
+                <td>
+                    @wineListWine.Wine.Price
+                </td>                
+                <td>
+                    <a asp-controller="Wines" asp-action="Details" asp-route-id="@wineListWine.Id">Details</a>  |                    
+                    <form asp-controller="Wines" asp-action="DelateWineListWineValues">
+                        <input type="hidden" name="wineListWineId" value="@wineListWine.Id" />
+                        <input type="hidden" name="idWine" value="@wineListWine.WineId" />
+                        <input type="hidden" name="url" value="https://localhost:44320/WineLists/Details?nameList=@Model.WineList.ListName" />
+                        <button type="submit" class="btn btn-danger" title="Añadir">
+                            Quitar de la lista 
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

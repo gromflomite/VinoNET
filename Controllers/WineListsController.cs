@@ -72,23 +72,31 @@ namespace Wineapp.Controllers
 
 
         // GET: WineLists/Details/5
-        //    public async Task<IActionResult> Details(int? id)
-        //    {
-        //        if (id == null)
-        //        {
-        //            return NotFound();
-        //        }
+        [Authorize]        
+        public async Task<IActionResult> Details(string nameList)
+        {
+            AppUser user = await _userManager.FindByEmailAsync(User.Identity.Name);
+            List<WineList> wineLists = await _wineListsServices.GetWineListsByUserIdAsync(user.Id);
+            WineList wineList = await _wineListsServices.GetWineListByNameListAsync(nameList);
 
-        //        var wineList = await _context.WineLists
-        //            .Include(w => w.AppUser)
-        //            .FirstOrDefaultAsync(m => m.Id == id);
-        //        if (wineList == null)
-        //        {
-        //            return NotFound();
-        //        }
+            if (wineList.Id == 0)
+            {
+                return NotFound();
+            }
 
-        //        return View(wineList);
-        //    }
+            WinesVM winesVMx = new WinesVM
+            {
+                WineList = wineList,
+                ListWinesListWines = await _wineListsServices.GetWineListsWinesByWineLisIdAsync(wineList.Id)            
+            };
+            
+            if (winesVMx == null)
+            {
+                return NotFound();
+            }
+
+            return View(winesVMx);
+        }
 
         // GET: WineLists/Create
         public IActionResult Create()

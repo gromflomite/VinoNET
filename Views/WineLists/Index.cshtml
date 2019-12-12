@@ -53,7 +53,8 @@
 
                 <td>
                     <a asp-action="Edit" asp-route-id="@wineList.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@wineList.Id">Details</a> |
+
+                    <a asp-controller="WineLists" asp-action="Details" asp-route-nameList="@wineList.ListName">Details</a>                    |
 
                     <form asp-controller="WineLists" asp-action="DeleteWineList">
                         <input type="hidden" name="winwListId" value="@wineList.Id" />
