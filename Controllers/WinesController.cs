@@ -102,7 +102,7 @@ namespace Wineapp.Controllers
                 Random numberRandom = new Random();
                 if (firstPreference.Count > 0)
                 {
-                    for (int i = 0; i < 3; i++)
+                    for (int i = 0; i < 4; i++)
                     {
                         if (firstPreference.Count != 0 && firstPreference.Count > i)
                         {
@@ -126,7 +126,7 @@ namespace Wineapp.Controllers
                 }
                 if (secondPreference.Count > 0)
                 {
-                    for (int i = 0; i < 1; i++)
+                    for (int i = 0; i < 2; i++)
                     {
                         if (firstPreference.Count != 0 && firstPreference.Count > i)
                         {
@@ -164,7 +164,7 @@ namespace Wineapp.Controllers
                 wvm.Source = await _filtersServices.GetSourceByIdAsync(sourceId);
                 wvm.ListWinesTastesSources = await _winesServices.GetWinesAsync();
                 wvm.ListWinesTastesSources = wvm.ListWinesTastesSources.Where(x => x.SourceId == sourceId).ToList();
-                wvm.ListWinesTastesSources = wvm.ListWinesTastesSources.OrderByDescending(x => x.Score).ToList().GetRange(0, 5);
+                wvm.ListWinesTastesSources = wvm.ListWinesTastesSources.OrderByDescending(x => x.Score).ToList().GetRange(0, 6);
                 wvm.ListSources = await _filtersServices.GetSourceAsync();
                 wvm.ListSources = wvm.ListSources.GetRange(0, 6);
 

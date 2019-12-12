@@ -2,6 +2,11 @@
 @model Wineapp.Models.ViewModels.AdminVM
 @inject UserManager<AppUser> _userManager
 
+@section Styles {
+    <link href="@Url.Content("~/css/adminstyle.css")" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://github.com/downloads/lafeber/world-flags-sprite/flags16.css" />
+}
+
 
 
 <h1>Actividad de la página</h1>
@@ -10,13 +15,15 @@
 <!--DESDE AQUI HASTA LA LÍNEA ... NO MODIFICAR, NO AFECTA AL DISEÑO-->
 <script type="text/javascript">
     /*Gráfico de los vinos mas visitados por la actividad de los usuarios */
-    @*var colourNames = JSON.parse('@Model.colourNames');*@
     var colourNames = [];
     var colourScores = [];
 
     /*Gráfico con las D.O */
-    var sourceNames =[];
-    var sourceScores =[];
+    var sourceNames = [];
+    var tintos = [];
+    var blancos = [];
+    var rosados = [];
+    var sourceScores = [];
 
     /*Top 10 global de los vinos mejor valorados */
     var topTenName = [];
@@ -28,6 +35,7 @@
 
 </script>
 
+<!--Introduce valores colourName para gráfico TIPOS DE VINOS MÁS VISITADOS POR LA ACTIVIDAD DE LOS USUARIOS-->
 @for (int i = 0; i < Model.colourNames.Length; i++)
 {
     <script type="text/javascript">
@@ -35,22 +43,11 @@
     </script>
 }
 
+<!--Introduce valores colourScore para gráfico TIPOS DE VINOS MÁS VISITADOS POR LA ACTIVIDAD DE LOS USUARIOS-->
 @for (int i = 0; i < Model.colourScores.Length; i++)
 {
     <script type="text/javascript">
-            colourScores.push('@Model.colourScores[i]');
-    </script>
-}
-
-@for (int i = 0; i < Model.sourceNames.Length; i++)
-{
-    <script type="text/javascript">
-            sourceNames.push('@Model.sourceNames[i]');
-    </script>
-}@for (int i = 0; i < Model.sourceScores.Length; i++)
-{
-    <script type="text/javascript">
-            sourceScores.push('@Model.sourceScores[i]');
+        colourScores.push(parseFloat(@Model.colourScores[i]));
     </script>
 }
 
@@ -58,35 +55,106 @@
 
 
 @foreach (Wine wine in Model.topWines)
-    {
-        <script type="text/javascript">
+{
+    <script type="text/javascript">
                 topTenName.push('@wine.Name');
                 topTenScore.push(@wine.Score);
-        </script>
-    }
+    </script>
+}
 
-    @foreach (var wine in Model.winesScore)
-    {
-        <script type="text/javascript">
+
+<!--Introduce valores sourceNames para gráfico D.O MÁS VISITADAS-->
+@foreach (var sourceScore in Model.sourceScores2)
+{
+    <script type="text/javascript">
+                var num = @Convert.ToInt32(sourceScore.Value);
+                sourceNames.push('@sourceScore.Key ('+num+'%)');
+    </script>
+}
+<!--Introduce valores tintos,blancos,rosados(indican cuantos hay en cada D.O) para gráfico D.O MÁS VISITADAS -->
+@foreach (int sourceTinto in Model.sourceTintos)
+{
+    <script type="text/javascript">
+        tintos.push(parseInt(@sourceTinto));
+    </script>
+}
+@foreach (int sourceBlanco in Model.sourceBlancos)
+{
+    <script type="text/javascript">
+        blancos.push(parseInt(@sourceBlanco));
+    </script>
+}
+@foreach (int sourceRosado in Model.sourceRosados)
+{
+    <script type="text/javascript">
+        rosados.push(parseInt(@sourceRosado));
+    </script>
+}
+
+
+
+
+@for (int i = 0; i < Model.sourceScores.Length; i++)
+{
+    <script type="text/javascript">
+            sourceNames.push('@Model.sourceNames[i]');
+    </script>
+}@for (int i = 0; i < Model.sourceScores.Length; i++)
+{
+    <script type="text/javascript">
+        sourceScores.push(parseFloat(@Model.sourceScores[i]));
+    </script>
+}
+
+
+
+
+<!--Introduce valores topName Y topTenScore para gráfico 10 VINOS MEJOR VALORADOS-->
+@foreach (Wine wine in Model.topWines)
+{
+    <script type="text/javascript">
+                topTenName.push('@wine.Name');
+                topTenScore.push(@wine.Score);
+    </script>
+}
+
+<!--Introduce valores  topFiveWeekName y topFiveWeekScore para gráfico TOP 5 DE LA SEMANA (Vinos mejor valorados)-->
+@foreach (var wine in Model.winesScore)
+{
+    <script type="text/javascript">
                 topFiveWeekName.push('@wine.Key');
                 topFiveWeekScore.push(@wine.Value);
-        </script>
-    }
+    </script>
+}
+
+
+
 
 <div id="resultado">
+
+    <!--Gráfico-->
     <div class="rdo"></div>
     <h6 class="tituloItinerario">TOP 5 DE LA SEMANA (Vinos mejor valorados)</h6>
     <div class="cajaGrafico">
         <canvas id="myCanvas"></canvas>
     </div>
+
+
     <div class="rdo"></div>
     <div class="cajaGrafico">
-        <h6 class="tituloItinerario">VINOS MÁS VISITADOS POR LA ACTIVIDAD DE LOS USUARIOS</h6>
+        <h6 class="tituloItinerario">TIPOS DE VINOS MÁS VISITADOS POR LA ACTIVIDAD DE LOS USUARIOS</h6>
         <canvas id="myDoughnutChart"></canvas>
     </div>
 </div>
 
+
+<div id="container"></div>
+
 @section Scripts{
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
     <script src="~/js/AdminView.js"></script>
 }
