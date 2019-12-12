@@ -21,5 +21,7 @@ namespace Wineapp.Services
         public Task DeleteWineListAsync(WineList wineList);
         public Task AddWineInWineListAsync(WineListWine wineListWine);
         public Task<WineListWine> IfExitWineListWine(int? wineId, string userId);
+        public Task MoveWine(WineListWine wineListWine);
+
     }
 }

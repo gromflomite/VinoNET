@@ -74,6 +74,12 @@ namespace Wineapp.Services
             }
             return null;
         }
+        public async Task MoveWine(WineListWine wineListWine)
+        {
+            _context.Update(wineListWine);
+            await _context.SaveChangesAsync();           
+        }
+
         //
         public async Task CreateWineListAsync(WineList wineList)
         {

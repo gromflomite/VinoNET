@@ -1,7 +1,10 @@
 ﻿@model Wineapp.Models.ViewModels.WinesVM
 
+@using Wineapp.Services
+@inject IWineLists _wineListsServices;
 @{
     ViewData["Title"] = "Details";
+    List<WineList> listWineLists = await _wineListsServices.GetWineListsByUserIdAsync(Model.AppUser.Id);
 }
 
 <h1>Lista:@Model.WineList.ListName</h1>
@@ -24,7 +27,7 @@
                 Source
             </th>
             <th>
-               Year
+                Year
             </th>
             <th>
                 Compañy
@@ -32,7 +35,7 @@
             <th>
                 Precio
             </th>
-           
+
             <th></th>
         </tr>
     </thead>
@@ -41,7 +44,7 @@
         {
             <tr>
                 <td>
-                   @wineListWine.Wine.Name
+                    @wineListWine.Wine.Name
                 </td>
                 <td>
                     @wineListWine.Wine.Colour.ColourType
@@ -57,15 +60,44 @@
                 </td>
                 <td>
                     @wineListWine.Wine.Price
-                </td>                
+                </td>
                 <td>
-                    <a asp-controller="Wines" asp-action="Details" asp-route-id="@wineListWine.Id">Details</a>  |                    
+                    <a asp-controller="Wines" asp-action="Details" asp-route-id="@wineListWine.Id">Details</a>  |
+                    @if (listWineLists.Count > 1)
+                    {
+                        <form asp-controller="WineLists" asp-action="MoveWine">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Cambiar de lista
+                                </button>
+                                <div class="dropdown-menu">
+                                    @foreach (WineList wineList in listWineLists)
+                                    {
+                                        if (wineList.ListName != Model.WineList.ListName)
+                                        {
+                                            <div class="form-check">
+                                                <input type="radio" id="@wineList.ListName" name="listaId" value="@wineList.Id" />
+                                                <label class="form-check-label" for="@wineList.ListName">@wineList.ListName</label>
+                                            </div>
+                                        }
+                                    }
+                                    <div class="dropdown-divider"></div>
+                                    <input type="hidden" name="wineListWineId" value="@wineListWine.Id" />
+                                    <input type="hidden" name="url" value="https://localhost:44320/WineLists/Details?nameList=@Model.WineList.ListName" />
+                                    <button type="submit" class="btn btn-success" title="Añadir">
+                                        Mover
+                                    </button>
+                                </div>
+                            </div>
+                        
+                        </form>
+                    }
                     <form asp-controller="Wines" asp-action="DelateWineListWineValues">
                         <input type="hidden" name="wineListWineId" value="@wineListWine.Id" />
                         <input type="hidden" name="idWine" value="@wineListWine.WineId" />
                         <input type="hidden" name="url" value="https://localhost:44320/WineLists/Details?nameList=@Model.WineList.ListName" />
                         <button type="submit" class="btn btn-danger" title="Añadir">
-                            Quitar de la lista 
+                            Quitar de la lista
                         </button>
                     </form>
                 </td>

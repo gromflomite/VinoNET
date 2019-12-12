@@ -87,6 +87,7 @@ namespace Wineapp.Controllers
             WinesVM winesVMx = new WinesVM
             {
                 WineList = wineList,
+                AppUser = user,
                 ListWinesListWines = await _wineListsServices.GetWineListsWinesByWineLisIdAsync(wineList.Id)            
             };
             
@@ -122,6 +123,22 @@ namespace Wineapp.Controllers
             }
 
             return View(wineList);
+        }
+        [Authorize]
+        public async Task MoveWine(string url, int listaId, int wineListWineId)
+        {
+            var user = await _userManager.FindByEmailAsync(User.Identity.Name);
+
+            WineListWine wineListWine = await _wineListsServices.GetWineListWineByIdAsync(wineListWineId);
+
+            wineListWine.WineListId = listaId;
+            if (ModelState.IsValid)
+            {
+                await _wineListsServices.MoveWine(wineListWine);
+                Response.Redirect(url);
+            }
+
+            Response.Redirect(url);
         }
 
         //    // GET: WineLists/Edit/5
