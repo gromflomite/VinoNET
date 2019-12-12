@@ -6,196 +6,169 @@
     ViewData["Title"] = "Details";
 }
 
+@section Styles {
+    <link href="@Url.Content("~/css/dodetails.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/css/imagegallery.css")" rel="stylesheet" type="text/css" />
+}
 
 
-<!DOCTYPE html>
-<html>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-<style>
-    body {
-        font-family: Arial;
-        margin: 0;
-    }
 
-    * {
-        box-sizing: border-box;
-    }
 
-    img {
-        vertical-align: middle;
-    }
+<h1>@Model.Wine.Name</h1>
 
-    /* Position the image container (needed to position the left and right arrows) */
-    .container {
-        position: relative;
-    }
 
-    /* Hide the images by default */
-    .mySlides {
-        display: flex;
-        flex-align: center;
-    }
 
-    /* Add a pointer when hovering over the thumbnail images */
-    .cursor {
-        cursor: pointer;
-    }
 
-    /* Next & previous buttons */
-    .prev,
-    .next {
-        cursor: pointer;
-        position: absolute;
-        top: 40%;
-        width: auto;
-        padding: 16px;
-        margin-top: -50px;
-        color: white;
-        font-weight: bold;
-        font-size: 20px;
-        border-radius: 0 3px 3px 0;
-        user-select: none;
-        -webkit-user-select: none;
-    }
 
-    /* Position the "next button" to the right */
-    .next {
-        right: 0;
-        border-radius: 3px 0 0 3px;
-    }
+<div class="slider">
 
-        /* On hover, add a black background color with a little bit see-through */
-        .prev:hover,
-        .next:hover {
-            background-color: rgba(0, 0, 0, 0.8);
-        }
 
-    /* Number text (1/3 etc) */
-    .numbertext {
-        color: #f2f2f2;
-        font-size: 12px;
-        padding: 8px 12px;
-        position: absolute;
-        top: 0;
-    }
+    <div class="upperframe">
 
-    /* Container for image text */
-    .caption-container {
-        text-align: center;
-        background-color: #222;
-        padding: 2px 16px;
-        color: white;
-    }
-
-    .row:after {
-        content: "";
-        display: table;
-        clear: both;
-    }
-
-    /* Six columns side by side */
-    .column {
-        float: left;
-        width: 16.66%;
-    }
-
-    /* Add a transparency effect for thumnbail images */
-    .demo {
-        opacity: 0.6;
-    }
-
-        .active,
-        .demo:hover {
-            opacity: 1;
-        }
-</style>
-<body>
-
-    <h2 style="text-align:center">Slideshow Gallery</h2>
-
-    <div class="container">
         @foreach (Wine wine in Model.ListWineUserScore)
         {
             <div class="row mySlides">
-                <div class="card mb-3">
-                    <div class="row no-gutters" style="width:100%;">
-                        <div class="col-md-6">
-                            <img src="~/img/wines/@wine.Image" class="card-img" style="width:30%;">
+                <div class="card bigpicturebox">
+                    <div class="row no-gutters">
+                        <div class="col">
+                            <img src="~/img/wines/@wine.Image" class="card-img">
                         </div>
-                        <div class="col-md-12">
-                            <div class="card-body">
-                                <h5 class="card-title">@wine.Name (@wine.Year)</h5>
-                                <p class="card-text">@wine.Price €</p>
-                        
-                                    <iframe class="card-text" id="inlineFrameExample"
-                                            title="Inline Frame Example"
-                                            width="300"
+                        <div class="col">
+                            <div class="card-body winedetails">
+                                <p class="card-title winedetailsname">@wine.Name (@wine.Year)</p>
+                                <p class="card-text">@wine.Colour.ColourType - @wine.Sweetnes.SweetnesType</p>
+                                <p class="card-text">Denominación de Origen @wine.Source.SourceType</p>
+                                <p class="card-text">Precio: @wine.Price €</p>
+                                @if (_signInManager.IsSignedIn(User))
+                                {
+                                    <iframe class="card-text wineiframe" id="inlineFrame"
+                                            title="Wines slider"
+                                            width="400"
                                             height="200"
-                                            src="https://localhost:44320/Wines/ViewsFavorite/@wine.Id"
-                                            style="border:none">
+                                            src="https://localhost:44320/Wines/ViewsFavorite/@wine.Id">
                                     </iframe>
 
-                                </div>
+                                }
+
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         }
 
-            <a class="prev" onclick="plusSlides(-1)">❮</a>
-            <a class="next" onclick="plusSlides(1)">❯</a>
+        <a class="prev" onclick="plusSlides(-1)">❮</a>
+        <a class="next" onclick="plusSlides(1)">❯</a>
 
-            <div class="caption-container">
-                <p id="caption"></p>
+    </div>
+
+
+
+    <div class="row slidewinelist">
+        @{ int cont = 1;
+            foreach (Wine wine in Model.ListWineUserScore)
+            {
+                <div class="column">
+                    <img class="demo cursor" src="~/img/wines/@wine.Image" style="width:100%" onclick="currentSlide(@cont)" alt="@wine.Name">
+                    <h5>@wine.Name</h5>
+                    <p>@wine.Colour.ColourType - @wine.Sweetnes.SweetnesType</p>
+                </div>
+                cont++;
+            }
+        }
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+@*@foreach (Wine wine in Model.ListWineUserScore)
+            {
+                <div class="row mySlides">
+                    <div class="card mb-3">
+                        <div class="row no-gutters" style="width:100%;">
+                            <div class="col-md-6">
+                                <img src="~/img/wines/@wine.Image" class="card-img" style="width:30%;">
+                            </div>
+                            <div class="col-md-12">
+                                <div class="card-body">
+                                    <h5 class="card-title">@wine.Name (@wine.Year)</h5>
+                                    <p class="card-text">@wine.Price €</p>
+
+                                        <iframe class="card-text" id="inlineFrameExample"
+                                                title="Inline Frame Example"
+                                                width="300"
+                                                height="200"
+                                                src="https://localhost:44320/Wines/ViewsFavorite/@wine.Id"
+                                                style="border:none">
+                                        </iframe>
+
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+                <a class="prev" onclick="plusSlides(-1)">❮</a>
+                <a class="next" onclick="plusSlides(1)">❯</a>
+
+                <div class="caption-container">
+                    <p id="caption"></p>
+                </div>
+
+                <div class="row">
+                    @{ int cont = 1;
+                        foreach (Wine wine in Model.ListWineUserScore)
+                        {
+                        <div class="column">
+                            <img class="demo cursor" src="~/img/wines/@wine.Image" style="width:100%" onclick="currentSlide(@cont)" alt="@wine.Name">
+                            <h6>@wine.Name</h6>
+                            <p>@wine.Colour.ColourType, @wine.Sweetnes.SweetnesType, @wine.Source.SourceType</p>
+                        </div>
+                            cont++;
+
+                        }
+                        }
+                    </div>
             </div>
 
-            <div class="row">
-                @{ int cont = 1;
-                    foreach (Wine wine in Model.ListWineUserScore)
-                    {
-                    <div class="column">
-                        <img class="demo cursor" src="~/img/wines/@wine.Image" style="width:100%" onclick="currentSlide(@cont)" alt="@wine.Name">
-                        <h6>@wine.Name</h6>
-                        <p>@wine.Colour.ColourType, @wine.Sweetnes.SweetnesType, @wine.Source.SourceType</p>
-                    </div>
-                        cont++;
+        <script>
+    var slideIndex = 1;
+    showSlides(slideIndex);
 
-                    }
-                    }
-                </div>
-        </div>
+    function plusSlides(n) {
+      showSlides(slideIndex += n);
+    }
 
-    <script>
-var slideIndex = 1;
-showSlides(slideIndex);
+    function currentSlide(n) {
+      showSlides(slideIndex = n);
+    }
 
-function plusSlides(n) {
-  showSlides(slideIndex += n);
-}
+    function showSlides(n) {
+      var i;
+      var slides = document.getElementsByClassName("mySlides");
+      var dots = document.getElementsByClassName("demo");
+      var captionText = document.getElementById("caption");
+      if (n > slides.length) {slideIndex = 1}
+      if (n < 1) {slideIndex = slides.length}
+      for (i = 0; i < slides.length; i++) {
+          slides[i].style.display = "none";
+      }
+      for (i = 0; i < dots.length; i++) {
+          dots[i].className = dots[i].className.replace(" active", "");
+      }
+      slides[slideIndex-1].style.display = "block";
+      dots[slideIndex-1].className += " active";
+      captionText.innerHTML = dots[slideIndex-1].alt;
+    }
+        </script>
 
-function currentSlide(n) {
-  showSlides(slideIndex = n);
-}
-
-function showSlides(n) {
-  var i;
-  var slides = document.getElementsByClassName("mySlides");
-  var dots = document.getElementsByClassName("demo");
-  var captionText = document.getElementById("caption");
-  if (n > slides.length) {slideIndex = 1}
-  if (n < 1) {slideIndex = slides.length}
-  for (i = 0; i < slides.length; i++) {
-      slides[i].style.display = "none";
-  }
-  for (i = 0; i < dots.length; i++) {
-      dots[i].className = dots[i].className.replace(" active", "");
-  }
-  slides[slideIndex-1].style.display = "block";
-  dots[slideIndex-1].className += " active";
-  captionText.innerHTML = dots[slideIndex-1].alt;
-}
-    </script>
-
-</body>
-</html>
+    </body>
+    </html>*@

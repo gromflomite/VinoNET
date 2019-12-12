@@ -36,48 +36,46 @@
 
 <hr />
 
-
-<div class="doimagegallery">
+<div class="slider">
 
     <h2 class="slidertitle">Vinos recomendados de la D.O. @Model.Source.SourceType</h2>
 
+    <div class="upperframe">
 
-    @foreach (Wine wine in Model.ListWinesTastesSources)
-    {
-        <div class="row mySlides">
-            <div class="card bigpicturebox">
-                <div class="row no-gutters">
-                    <div class="col">
-                        <img src="~/img/wines/@wine.Image" class="card-img">
-                    </div>
-                    <div class="col winedetails">
-                        <div class="card-body">
-                            <h5 class="card-title">@wine.Name (@wine.Year)</h5>
-                            <p class="card-text">@wine.Price €</p>
-                            @if (_signInManager.IsSignedIn(User))
-                            {
-                                <iframe class="card-text wineiframe" id="inlineFrame"
-                                        title="Wines slider"
-                                        width="300"
-                                        height="200"
-                                        src="https://localhost:44320/Wines/ViewsFavorite/@wine.Id">
-                                </iframe>
+        @foreach (Wine wine in Model.ListWinesTastesSources)
+        {
+            <div class="row mySlides">
+                <div class="card bigpicturebox">
+                    <div class="row no-gutters">
+                        <div class="col">
+                            <img src="~/img/wines/@wine.Image" class="card-img">
+                        </div>
+                        <div class="col">
+                            <div class="card-body winedetails">
+                                <p class="card-title winedetailsname">@wine.Name (@wine.Year)</p>
+                                <p class="card-text">@wine.Colour.ColourType - @wine.Sweetnes.SweetnesType</p>
+                                <p class="card-text">Denominación de Origen @wine.Source.SourceType</p>
+                                <p class="card-text">Precio: @wine.Price €</p>
+                                @if (_signInManager.IsSignedIn(User))
+                                {
+                                    <iframe class="card-text wineiframe" id="inlineFrame"
+                                            title="Wines slider"
+                                            width="400"
+                                            height="200"
+                                            src="https://localhost:44320/Wines/ViewsFavorite/@wine.Id">
+                                    </iframe>
 
-                            }
-
+                                }
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    }
+        }
 
-    <a class="prev" onclick="plusSlides(-1)">❮</a>
-    <a class="next" onclick="plusSlides(1)">❯</a>
-
-    @*<div class="caption-container">
-            <p id="caption"></p>
-        </div>*@
+        <a class="prev" onclick="plusSlides(-1)">❮</a>
+        <a class="next" onclick="plusSlides(1)">❯</a>
+    </div>
 
     <div class="row slidewinelist">
         @{ int cont = 1;
@@ -93,15 +91,6 @@
         }
     </div>
 </div>
-
-
-
-
-
-
-
-
-
 
 <!--Nombre de la denominación de origen que ha seleccionado-->
 @*<h1>@Model.Source.SourceType</h1>
