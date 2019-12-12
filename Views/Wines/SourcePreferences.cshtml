@@ -37,57 +37,62 @@
 <hr />
 
 
-    <div class="doimagegallery">
+<div class="doimagegallery">
 
-        <h2>Vinos recomendados de la D.O. @Model.Source.SourceType</h2>
+    <h2 class="slidertitle">Vinos recomendados de la D.O. @Model.Source.SourceType</h2>
 
 
-        @foreach (Wine wine in Model.ListWinesTastesSources)
-        {
-            <div class="row mySlides">
-                <div class="card mb-3">
-                    <div class="row no-gutters" style="width:100%;">
-                        <div class="col-md-6">
-                            <img src="~/img/wines/@wine.Image" class="card-img" style="width:30%;">
-                        </div>
-                        <div class="col-md-12">
-                            <div class="card-body">
-                                <h5 class="card-title">@wine.Name (@wine.Year)</h5>
-                                <p class="card-text">@wine.Price €</p>
-                                <iframe class="card-text" id="inlineFrame"
-                                        title="Inline Frame Example"
+    @foreach (Wine wine in Model.ListWinesTastesSources)
+    {
+        <div class="row mySlides">
+            <div class="card bigpicturebox">
+                <div class="row no-gutters">
+                    <div class="col">
+                        <img src="~/img/wines/@wine.Image" class="card-img">
+                    </div>
+                    <div class="col winedetails">
+                        <div class="card-body">
+                            <h5 class="card-title">@wine.Name (@wine.Year)</h5>
+                            <p class="card-text">@wine.Price €</p>
+                            @if (_signInManager.IsSignedIn(User))
+                            {
+                                <iframe class="card-text wineiframe" id="inlineFrame"
+                                        title="Wines slider"
                                         width="300"
                                         height="200"
                                         src="https://localhost:44320/Wines/ViewsFavorite/@wine.Id">
                                 </iframe>
-                            </div>
+
+                            }
+
                         </div>
                     </div>
                 </div>
             </div>
-        }
-
-            <a class="prev" onclick="plusSlides(-1)">❮</a>
-            <a class="next" onclick="plusSlides(1)">❯</a>
-
-            @*<div class="caption-container">
-                <p id="caption"></p>
-            </div>*@
-
-            <div class="row">
-                @{ int cont = 1;
-                    foreach (Wine wine in Model.ListWinesTastesSources)
-                    {
-                    <div class="column">
-                        <img class="demo cursor" src="~/img/wines/@wine.Image" style="width:100%" onclick="currentSlide(@cont)" alt="@wine.Name">
-                        <h6>@wine.Name</h6>
-                        <p>@wine.Colour.ColourType, @wine.Sweetnes.SweetnesType, @wine.Source.SourceType</p>
-                    </div>
-                        cont++;
-                    }
-                    }
-                </div>
         </div>
+    }
+
+    <a class="prev" onclick="plusSlides(-1)">❮</a>
+    <a class="next" onclick="plusSlides(1)">❯</a>
+
+    @*<div class="caption-container">
+            <p id="caption"></p>
+        </div>*@
+
+    <div class="row slidewinelist">
+        @{ int cont = 1;
+            foreach (Wine wine in Model.ListWinesTastesSources)
+            {
+                <div class="column">
+                    <img class="demo cursor" src="~/img/wines/@wine.Image" style="width:100%" onclick="currentSlide(@cont)" alt="@wine.Name">
+                    <h5>@wine.Name</h5>
+                    <p>@wine.Colour.ColourType - @wine.Sweetnes.SweetnesType</p>
+                </div>
+                cont++;
+            }
+        }
+    </div>
+</div>
 
 
 
@@ -101,28 +106,28 @@
 <!--Nombre de la denominación de origen que ha seleccionado-->
 @*<h1>@Model.Source.SourceType</h1>
 
-<div>
-    <p>Nuestra mejor selección de vinos de @Model.Source.SourceType</p>
-    @foreach (Wine wine in Model.ListWinesTastesSources)
-    {
-        <form asp-controller="Wines" asp-action="Details">
-            <input type="hidden" name="id" value="@wine.Id" />
-            <input type="image" src="~/img/wines/@wine.Image" />
-        </form>
-        <p>@wine.Colour.ColourType,@wine.Sweetnes.SweetnesType,@wine.Source.SourceType</p>
-        <br />
+    <div>
+        <p>Nuestra mejor selección de vinos de @Model.Source.SourceType</p>
+        @foreach (Wine wine in Model.ListWinesTastesSources)
+        {
+            <form asp-controller="Wines" asp-action="Details">
+                <input type="hidden" name="id" value="@wine.Id" />
+                <input type="image" src="~/img/wines/@wine.Image" />
+            </form>
+            <p>@wine.Colour.ColourType,@wine.Sweetnes.SweetnesType,@wine.Source.SourceType</p>
+            <br />
 
-    }
+        }
 
-    <p>Otras Denominaciones de Origen que quizá te interesen...</p>
-    @foreach (Source source in Model.ListSources)
-    {
+        <p>Otras Denominaciones de Origen que quizá te interesen...</p>
+        @foreach (Source source in Model.ListSources)
+        {
 
-        <p>@source.SourceType</p>
-        <form asp-controller="Wines" asp-action="SourcePreferences">
-            <input type="hidden" name="sourceId" value="@source.Id" />
-            <input type="image" src="~/img/dologo/@source.Image" />
-        </form>
-        <br />
-    }
-</div>*@
+            <p>@source.SourceType</p>
+            <form asp-controller="Wines" asp-action="SourcePreferences">
+                <input type="hidden" name="sourceId" value="@source.Id" />
+                <input type="image" src="~/img/dologo/@source.Image" />
+            </form>
+            <br />
+        }
+    </div>*@

@@ -25,8 +25,8 @@ section.home {
 }
 
 .mapblock img {
-    width: 400px;
-    height: 400px;
+    width: 500px;
+    height: 500px;
     margin-left: 60px;
 }
 
@@ -34,4 +34,38 @@ section.home {
     font-family: 'Ibarra Real Nova', serif;
     text-align: justify;
     font-size: 1.3rem;
+}
+
+.doimagegallery {
+    font-family: 'Ibarra Real Nova', serif;
+    padding-top: 50px;
+}
+
+.slidertitle {
+    padding-bottom: 25px;
+}
+
+.wineiframe {
+    border: none;
+}
+
+.winedetails {
+    padding-top: 100px;   
+}
+
+.bigpicturebox {
+    border: none;
+}
+
+.bigpicturebox img {
+    width: 400px;   
+}
+
+.slidewinelist {
+    padding-top: 30px;
+    text-align: center;
+}
+
+.slidewinelist h5 {
+    padding-top: 10px;
 }
