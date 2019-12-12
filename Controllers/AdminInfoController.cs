@@ -68,7 +68,7 @@ namespace Wineapp.Controllers
 
             foreach (SourceTaste sourceTaste in sourceTasteList)
             {
-                for (int i = 1; i <= avm.colourNames.Length; i++)
+                for (int i = 1; i <= avm.sourceNames.Length; i++)
                 {
                     if (sourceTaste.SourceId == i)
                     {

@@ -88,7 +88,7 @@ Highcharts.chart(document.getElementById('container'), {
             step: 1,
             y: 4,
             style: {
-                fontSize: '12px'
+                fontSize: '14px'
             }
         },
         lineWidth: 0,
