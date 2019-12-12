@@ -8,7 +8,7 @@ namespace Wineapp.Services
 {
     public interface ILike
     {
-        public Task<List<UserScore>> GetColourAsync();
+        public Task<List<UserScore>> GetUserScoreAsync();
         public Task Create(UserScore userScore);
         public Task<UserScore> Edit(int? idUserScore);
         public Task Delete(int idWine, string idUserScore);

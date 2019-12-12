@@ -1,0 +1,92 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model Wineapp.Models.ViewModels.AdminVM
+@inject UserManager<AppUser> _userManager
+
+
+
+<h1>Actividad de la página</h1>
+
+
+<!--DESDE AQUI HASTA LA LÍNEA ... NO MODIFICAR, NO AFECTA AL DISEÑO-->
+<script type="text/javascript">
+    /*Gráfico de los vinos mas visitados por la actividad de los usuarios */
+    @*var colourNames = JSON.parse('@Model.colourNames');*@
+    var colourNames = [];
+    var colourScores = [];
+
+    /*Gráfico con las D.O */
+    var sourceNames =[];
+    var sourceScores =[];
+
+    /*Top 10 global de los vinos mejor valorados */
+    var topTenName = [];
+    var topTenScore = [];
+
+    /*Top 5 de la semana de los vinos mejor valorados */
+    var topFiveWeekName = [];
+    var topFiveWeekScore = [];
+
+</script>
+
+@for (int i = 0; i < Model.colourNames.Length; i++)
+{
+    <script type="text/javascript">
+            colourNames.push('@Model.colourNames[i]');
+    </script>
+}
+
+@for (int i = 0; i < Model.colourScores.Length; i++)
+{
+    <script type="text/javascript">
+            colourScores.push('@Model.colourScores[i]');
+    </script>
+}
+
+@for (int i = 0; i < Model.sourceNames.Length; i++)
+{
+    <script type="text/javascript">
+            sourceNames.push('@Model.sourceNames[i]');
+    </script>
+}@for (int i = 0; i < Model.sourceScores.Length; i++)
+{
+    <script type="text/javascript">
+            sourceScores.push('@Model.sourceScores[i]');
+    </script>
+}
+
+
+
+
+@foreach (Wine wine in Model.topWines)
+    {
+        <script type="text/javascript">
+                topTenName.push('@wine.Name');
+                topTenScore.push(@wine.Score);
+        </script>
+    }
+
+    @foreach (var wine in Model.winesScore)
+    {
+        <script type="text/javascript">
+                topFiveWeekName.push('@wine.Key');
+                topFiveWeekScore.push(@wine.Value);
+        </script>
+    }
+
+<div id="resultado">
+    <div class="rdo"></div>
+    <h6 class="tituloItinerario">TOP 5 DE LA SEMANA (Vinos mejor valorados)</h6>
+    <div class="cajaGrafico">
+        <canvas id="myCanvas"></canvas>
+    </div>
+    <div class="rdo"></div>
+    <div class="cajaGrafico">
+        <h6 class="tituloItinerario">VINOS MÁS VISITADOS POR LA ACTIVIDAD DE LOS USUARIOS</h6>
+        <canvas id="myDoughnutChart"></canvas>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script src="~/js/AdminView.js"></script>
+}
