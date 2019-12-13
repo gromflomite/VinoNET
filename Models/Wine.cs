@@ -33,6 +33,7 @@ namespace Wineapp.Models
         [MaxLength(4)]
         public int Year { get; set; }
         public bool Publish { get; set; }
+        public bool Sponsor { get; set; }
 
     }
 }

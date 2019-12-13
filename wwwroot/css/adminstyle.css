@@ -1,8 +1,26 @@
-﻿
-#container {
+﻿section.home {
+    background-image: url("../img/navbarbackground2.jpg");
+    height: 250px;
+}
+
+.adminTitles {
+    font-family: 'Ibarra Real Nova', serif;
+    display:flex;
+    justify-content:center;
+    padding-top:6%;
+}
+
+#sources {
     min-width: 310px;
-    max-width: 1200px;
+    max-width: 800px;
     height: 800px;
     margin: 0 auto;
+    font-family: 'Ibarra Real Nova', serif;
+}
+#colourTaste {
+    min-width: 310px;
+    height: 800px;
+    max-width: 800px;
+    margin: 0 auto;  
 }
 

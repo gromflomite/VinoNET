@@ -56,6 +56,12 @@ namespace Wineapp.Controllers
                     }
                 }
             }
+            double colourScoresSum = avm.colourScores.Sum();
+            for (int i = 0; i < avm.colourScores.Length; i++)
+            {
+                double score = (avm.colourScores[i] * 100) / colourScoresSum;
+                avm.colourScores[i] = score;
+            }
 
             return await MostVisitedSources(avm);
         }
@@ -136,6 +142,14 @@ namespace Wineapp.Controllers
             avm.winesScore= avm.winesScore.Skip(0).Take(5).ToDictionary(x => x.Key, y => y.Value);
             return avm;
         }
+
+        public async Task<IActionResult> Sponsor()
+        {
+            //Lista de vinos
+
+            return View();
+        }
+
 
     }
 }
