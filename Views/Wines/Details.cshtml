@@ -104,7 +104,7 @@ else
 
         <div class="row slidewinelist">
             @{ int cont2 = 1;
-                foreach (Wine wine in Model.ListWineUserScore)
+                foreach (Wine wine in Model.ListWinesTastesDetails)
                 {
                     <div class="column">
                         <img class="demo cursor" src="~/img/wines/@wine.Image" style="width:100%" onclick="currentSlide(@cont2)" alt="@wine.Name">

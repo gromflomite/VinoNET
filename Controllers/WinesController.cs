@@ -232,7 +232,7 @@ namespace Wineapp.Controllers
 
                 Random rnd = new Random();
                 wvm.ListWinesTastesDetails = new List<Wine>();
-                for (int i = 0; i < 5; i++)
+                for (int i = 0; i < 6; i++)
                 {
                     if (listOne.Count != 0 && listOne.Count > i)
                     {
@@ -252,7 +252,7 @@ namespace Wineapp.Controllers
                         break;
                     }
                 }
-                for (int i = 0; i < 3; i++)
+                for (int i = 0; i < 4; i++)
                 {
                     if (listTwo.Count != 0 && listTwo.Count > i)
                     {
