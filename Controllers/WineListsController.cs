@@ -72,23 +72,32 @@ namespace Wineapp.Controllers
 
 
         // GET: WineLists/Details/5
-        //    public async Task<IActionResult> Details(int? id)
-        //    {
-        //        if (id == null)
-        //        {
-        //            return NotFound();
-        //        }
+        [Authorize]        
+        public async Task<IActionResult> Details(string nameList)
+        {
+            AppUser user = await _userManager.FindByEmailAsync(User.Identity.Name);
+            List<WineList> wineLists = await _wineListsServices.GetWineListsByUserIdAsync(user.Id);
+            WineList wineList = await _wineListsServices.GetWineListByNameListAsync(nameList);
 
-        //        var wineList = await _context.WineLists
-        //            .Include(w => w.AppUser)
-        //            .FirstOrDefaultAsync(m => m.Id == id);
-        //        if (wineList == null)
-        //        {
-        //            return NotFound();
-        //        }
+            if (wineList.Id == 0)
+            {
+                return NotFound();
+            }
 
-        //        return View(wineList);
-        //    }
+            WinesVM winesVMx = new WinesVM
+            {
+                WineList = wineList,
+                AppUser = user,
+                ListWinesListWines = await _wineListsServices.GetWineListsWinesByWineLisIdAsync(wineList.Id)            
+            };
+            
+            if (winesVMx == null)
+            {
+                return NotFound();
+            }
+
+            return View(winesVMx);
+        }
 
         // GET: WineLists/Create
         public IActionResult Create()
@@ -114,6 +123,22 @@ namespace Wineapp.Controllers
             }
 
             return View(wineList);
+        }
+        [Authorize]
+        public async Task MoveWine(string url, int listaId, int wineListWineId)
+        {
+            var user = await _userManager.FindByEmailAsync(User.Identity.Name);
+
+            WineListWine wineListWine = await _wineListsServices.GetWineListWineByIdAsync(wineListWineId);
+
+            wineListWine.WineListId = listaId;
+            if (ModelState.IsValid)
+            {
+                await _wineListsServices.MoveWine(wineListWine);
+                Response.Redirect(url);
+            }
+
+            Response.Redirect(url);
         }
 
         //    // GET: WineLists/Edit/5

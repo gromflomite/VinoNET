@@ -74,6 +74,12 @@ namespace Wineapp.Services
             }
             return null;
         }
+        public async Task MoveWine(WineListWine wineListWine)
+        {
+            _context.Update(wineListWine);
+            await _context.SaveChangesAsync();           
+        }
+
         //
         public async Task CreateWineListAsync(WineList wineList)
         {
@@ -105,7 +111,10 @@ namespace Wineapp.Services
 
         public async Task<List<WineListWine>> GetWineListsWinesByWineLisIdAsync(int wineListId)
         {
-            return await _context.WineListWines.Where(x=>x.WineListId == wineListId).Include(x=>x.Wine).ToListAsync();
+            return await _context.WineListWines.Where(x=>x.WineListId == wineListId).Include(x=>x.Wine).ThenInclude(x=>x.Colour)
+                .Include(x=>x.Wine).ThenInclude(x=>x.Source)
+                .Include(x=>x.Wine).ThenInclude(x=>x.Sweetnes)
+                .ToListAsync();
         }
     }
 }

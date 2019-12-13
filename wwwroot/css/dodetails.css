@@ -6,8 +6,7 @@ section.home {
 .logoblock {
     width: 80%;
     margin: 0 auto;
-    padding-top: 50px;
-    
+    padding-top: 50px;    
 }
 
 .logoblock p {    
@@ -25,8 +24,8 @@ section.home {
 }
 
 .mapblock img {
-    width: 400px;
-    height: 400px;
+    width: 500px;
+    height: 500px;
     margin-left: 60px;
 }
 
@@ -34,4 +33,48 @@ section.home {
     font-family: 'Ibarra Real Nova', serif;
     text-align: justify;
     font-size: 1.3rem;
+}
+
+.slider {
+    font-family: 'Ibarra Real Nova', serif;
+    padding-top: 50px;    
+}
+
+.slidertitle {
+    padding-bottom: 25px;
+}
+
+.wineiframe {
+    border: none;
+    padding-left: 50px;
+    padding-top: 25px;
+}
+
+.bigpicturebox {
+    border: none;
+}
+
+.bigpicturebox img {
+    width: 400px;
+    margin-left: 100px;
+}
+
+.winedetails {
+    font-size: 1.5rem;
+    text-align: center;
+    padding-right: 150px;
+    padding-top: 50px;
+}
+
+.winedetailsname {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.slidewinelist {    
+    text-align: center;
+}
+
+.slidewinelist h5 {
+    padding-top: 10px;
 }
