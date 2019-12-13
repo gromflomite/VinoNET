@@ -7,102 +7,188 @@
     List<WineList> listWineLists = await _wineListsServices.GetWineListsByUserIdAsync(Model.AppUser.Id);
 }
 
+@section Styles {    
+    <link href="@Url.Content("~/css/wineLists.css")" rel="stylesheet" type="text/css" />
+}
 <h1>Lista:@Model.WineList.ListName</h1>
 
 
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Nombre
-            </th>
-            <th>
-                Colour
-            </th>
-            <th>
-                Sweentnes
-            </th>
-            <th>
-                Source
-            </th>
-            <th>
-                Year
-            </th>
-            <th>
-                Compañy
-            </th>
-            <th>
-                Precio
-            </th>
+@if (Model.ListWinesListWines.Count() > 0)
+{
+    <div class="row">
 
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (WineListWine wineListWine in Model.ListWinesListWines)
+        @foreach (WineListWine wineListWine in Model.ListWinesListWines)//<!--A la hora -->
         {
-            <tr>
-                <td>
-                    @wineListWine.Wine.Name
-                </td>
-                <td>
-                    @wineListWine.Wine.Colour.ColourType
-                </td>
-                <td>
-                    @wineListWine.Wine.Sweetnes.SweetnesType
-                </td>
-                <td>
-                    @wineListWine.Wine.Source.SourceType
-                </td>
-                <td>
-                    @wineListWine.Wine.Year
-                </td>
-                <td>
-                    @wineListWine.Wine.Price
-                </td>
-                <td>
-                    <a asp-controller="Wines" asp-action="Details" asp-route-id="@wineListWine.Id">Details</a>  |
-                    @if (listWineLists.Count > 1)
-                    {
-                        <form asp-controller="WineLists" asp-action="MoveWine">
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Cambiar de lista
-                                </button>
-                                <div class="dropdown-menu">
-                                    @foreach (WineList wineList in listWineLists)
-                                    {
-                                        if (wineList.ListName != Model.WineList.ListName)
-                                        {
-                                            <div class="form-check">
-                                                <input type="radio" id="@wineList.ListName" name="listaId" value="@wineList.Id" />
-                                                <label class="form-check-label" for="@wineList.ListName">@wineList.ListName</label>
-                                            </div>
-                                        }
-                                    }
-                                    <div class="dropdown-divider"></div>
-                                    <input type="hidden" name="wineListWineId" value="@wineListWine.Id" />
-                                    <input type="hidden" name="url" value="https://localhost:44320/WineLists/Details?nameList=@Model.WineList.ListName" />
-                                    <button type="submit" class="btn btn-success" title="Añadir">
-                                        Mover
-                                    </button>
-                                </div>
-                            </div>
-                        
+            <div class="card col-lg-4 col-sm-6 col-12 ">
+                <div class="imageCollapse">
+                    <img src="~/img/wines/@wineListWine.Wine.Image" class="card-img-top imagenProducto " alt="@wineListWine.Wine.Name">
+                    <div class="card-body">
+                        <h5 class="card-title">@wineListWine.Wine.Name</h5>
+                    </div>
+                </div>
+                <div class="containerMirar">
+                    <a asp-controller="Wines" asp-action="Details" asp-route-id="@wineListWine.Id" >
+                        <i class="fa fa-eye"></i>
+                    </a>
+                </div>
+                
+                <ul class="list-group list-group-flush collapse listaCollapse">
+                    <li class="list-group-item">@wineListWine.Wine.Colour.ColourType</li>
+                    <li class="list-group-item">@wineListWine.Wine.Sweetnes.SweetnesType</li>
+                    <li class="list-group-item">@wineListWine.Wine.Source.SourceType</li>
+                    <li class="list-group-item">Fecha de caducidad @wineListWine.Wine.Year</li>
+                    <li class="list-group-item">Precio @wineListWine.Wine.Price</li>
+                </ul>
+                <div class="card-body">                    
+                        <form asp-controller="Wines" asp-action="DelateWineListWineValues">
+                            <input type="hidden" name="wineListWineId" value="@wineListWine.Id" />
+                            <input type="hidden" name="idWine" value="@wineListWine.WineId" />
+                            <input type="hidden" name="url" value="https://localhost:44320/WineLists/Details?nameList=@Model.WineList.ListName" />
+                            <button type="submit" class="btn btn-danger buttonDelate" title="Añadir">
+                                Quitar de la lista
+                            </button>
                         </form>
-                    }
-                    <form asp-controller="Wines" asp-action="DelateWineListWineValues">
-                        <input type="hidden" name="wineListWineId" value="@wineListWine.Id" />
-                        <input type="hidden" name="idWine" value="@wineListWine.WineId" />
-                        <input type="hidden" name="url" value="https://localhost:44320/WineLists/Details?nameList=@Model.WineList.ListName" />
-                        <button type="submit" class="btn btn-danger" title="Añadir">
-                            Quitar de la lista
-                        </button>
-                    </form>
-                </td>
-            </tr>
+
+                        @if (listWineLists.Count > 1)
+                        {
+                            <form asp-controller="WineLists" asp-action="MoveWine">
+                                <div class="btn-group buttonMove">
+                                    <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Cambiar de lista
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        @foreach (WineList wineList in listWineLists)
+                                        {
+                                            if (wineList.ListName != Model.WineList.ListName)
+                                            {
+                                                <div class="form-check">
+                                                    <input type="radio" id="@wineList.ListName" name="listaId" value="@wineList.Id" />
+                                                    <label class="form-check-label" for="@wineList.ListName">@wineList.ListName</label>
+                                                </div>
+                                            }
+                                        }
+                                        <div class="dropdown-divider"></div>
+                                        <input type="hidden" name="wineListWineId" value="@wineListWine.Id" />
+                                        <input type="hidden" name="url" value="https://localhost:44320/WineLists/Details?nameList=@Model.WineList.ListName" />
+                                        <button type="submit" class="btn btn-success buttonMove" title="Añadir">
+                                            Mover
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </form>
+                        }
+                    
+                </div>
+            </div>
         }
-    </tbody>
-</table>
+    </div>
+}
+else
+{
+    <h1>No hay nada</h1>
+}
+
+
+@section Scripts{
+    <script src="~/js/WineList.js"></script>
+}
+
+@*****************************************************@
+
+@*<table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Nombre
+                </th>
+                <th>
+                    Colour
+                </th>
+                <th>
+                    Sweentnes
+                </th>
+                <th>
+                    Source
+                </th>
+                <th>
+                    Year
+                </th>
+                <th>
+                    Compañy
+                </th>
+                <th>
+                    Precio
+                </th>
+
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (WineListWine wineListWine in Model.ListWinesListWines)
+            {
+                <tr>
+                    <td>
+                        @wineListWine.Wine.Name
+                    </td>
+                    <td>
+                        @wineListWine.Wine.Colour.ColourType
+                    </td>
+                    <td>
+                        @wineListWine.Wine.Sweetnes.SweetnesType
+                    </td>
+                    <td>
+                        @wineListWine.Wine.Source.SourceType
+                    </td>
+                    <td>
+                        @wineListWine.Wine.Year
+                    </td>
+                    <td>
+                        @wineListWine.Wine.Price
+                    </td>
+                    <td>
+                        <a asp-controller="Wines" asp-action="Details" asp-route-id="@wineListWine.Id">Details</a>  |
+                        @if (listWineLists.Count > 1)
+                        {
+                            <form asp-controller="WineLists" asp-action="MoveWine">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Cambiar de lista
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        @foreach (WineList wineList in listWineLists)
+                                        {
+                                            if (wineList.ListName != Model.WineList.ListName)
+                                            {
+                                                <div class="form-check">
+                                                    <input type="radio" id="@wineList.ListName" name="listaId" value="@wineList.Id" />
+                                                    <label class="form-check-label" for="@wineList.ListName">@wineList.ListName</label>
+                                                </div>
+                                            }
+                                        }
+                                        <div class="dropdown-divider"></div>
+                                        <input type="hidden" name="wineListWineId" value="@wineListWine.Id" />
+                                        <input type="hidden" name="url" value="https://localhost:44320/WineLists/Details?nameList=@Model.WineList.ListName" />
+                                        <button type="submit" class="btn btn-success" title="Añadir">
+                                            Mover
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </form>
+                        }
+                        <form asp-controller="Wines" asp-action="DelateWineListWineValues">
+                            <input type="hidden" name="wineListWineId" value="@wineListWine.Id" />
+                            <input type="hidden" name="idWine" value="@wineListWine.WineId" />
+                            <input type="hidden" name="url" value="https://localhost:44320/WineLists/Details?nameList=@Model.WineList.ListName" />
+                            <button type="submit" class="btn btn-danger" title="Añadir">
+                                Quitar de la lista
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>*@
 

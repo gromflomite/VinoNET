@@ -77,7 +77,7 @@ namespace Wineapp.Controllers
         {
             AppUser user = await _userManager.FindByEmailAsync(User.Identity.Name);
             List<WineList> wineLists = await _wineListsServices.GetWineListsByUserIdAsync(user.Id);
-            WineList wineList = await _wineListsServices.GetWineListByNameListAsync(nameList);
+            WineList wineList = await _wineListsServices.GetWineListByNameListAsync(nameList , user.Id);
 
             if (wineList.Id == 0)
             {
