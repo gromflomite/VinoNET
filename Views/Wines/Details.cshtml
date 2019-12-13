@@ -3,7 +3,7 @@
 @inject SignInManager<AppUser> _signInManager
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "";
 }
 
 @section Styles {
@@ -28,7 +28,7 @@
 
                 <p class="p1winedetails"><span class="ptitle">Tipo:</span>  @Model.Wine.Colour.ColourType</p>
                 <p class="p2winedetails"><span class="ptitle">Dulzor:</span>  @Model.Wine.Sweetnes.SweetnesType</p>
-                <p class="p3winedetails"><span class="ptitle">Denominación de Origen:</span> @Model.Wine.Source.SourceType</p>
+                <p class="p3winedetails"><span class="ptitle">Denominación de Origen:</span><a asp-controller="Wines" asp-action="SourcePreferences" asp-route-sourceId="@Model.Wine.Source.Id"> @Model.Wine.Source.SourceType</a></p>
                 <p class="p4winedetails"><span class="ptitle">Precio:</span> @Model.Wine.Price €</p>
 
                 <div class="card-body iframeblock">
