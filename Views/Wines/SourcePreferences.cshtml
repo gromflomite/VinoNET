@@ -91,32 +91,3 @@
         }
     </div>
 </div>
-
-<!--Nombre de la denominación de origen que ha seleccionado-->
-@*<h1>@Model.Source.SourceType</h1>
-
-    <div>
-        <p>Nuestra mejor selección de vinos de @Model.Source.SourceType</p>
-        @foreach (Wine wine in Model.ListWinesTastesSources)
-        {
-            <form asp-controller="Wines" asp-action="Details">
-                <input type="hidden" name="id" value="@wine.Id" />
-                <input type="image" src="~/img/wines/@wine.Image" />
-            </form>
-            <p>@wine.Colour.ColourType,@wine.Sweetnes.SweetnesType,@wine.Source.SourceType</p>
-            <br />
-
-        }
-
-        <p>Otras Denominaciones de Origen que quizá te interesen...</p>
-        @foreach (Source source in Model.ListSources)
-        {
-
-            <p>@source.SourceType</p>
-            <form asp-controller="Wines" asp-action="SourcePreferences">
-                <input type="hidden" name="sourceId" value="@source.Id" />
-                <input type="image" src="~/img/dologo/@source.Image" />
-            </form>
-            <br />
-        }
-    </div>*@

@@ -68,15 +68,39 @@ namespace Wineapp.Controllers
 
             foreach (SourceTaste sourceTaste in sourceTasteList)
             {
-                for (int i = 1; i <= avm.colourNames.Length; i++)
+                for (int i = 1; i <= avm.sourceNames.Length; i++)
                 {
                     if (sourceTaste.SourceId == i)
                     {
                         avm.sourceScores[i-1] += sourceTaste.Score;
                     }
                 }
-
             }
+
+            double sourceScoreSum = avm.sourceScores.Sum();
+            avm.sourceScores2 = new Dictionary<string, double>();
+
+            for (int i = 1; i <= avm.sourceNames.Length; i++)
+            {
+                double score = (avm.sourceScores[i-1]*100)/sourceScoreSum;
+                string source = avm.sourceNames[i-1];
+                avm.sourceScores2.Add(source, score);
+            }
+            avm.sourceScores2 = avm.sourceScores2.OrderByDescending(x=>x.Value).ToDictionary(x => x.Key, y => y.Value);
+            avm.sourceScores2 = avm.sourceScores2.Take(11).ToDictionary(x => x.Key, y => y.Value);
+            List<Wine> wines = await _winesServices.GetWinesAsync();
+
+            avm.sourceTintos = new List<int>();
+            avm.sourceBlancos = new List<int>();
+            avm.sourceRosados = new List<int>();
+
+            foreach (var sourceScores2 in avm.sourceScores2)
+            {
+                avm.sourceTintos.Add(wines.Where(x=>x.Source.SourceType== sourceScores2.Key && x.ColourId==1).Count());
+                avm.sourceBlancos.Add(wines.Where(x=>x.Source.SourceType== sourceScores2.Key && x.ColourId==2).Count());
+                avm.sourceRosados.Add(wines.Where(x=>x.Source.SourceType== sourceScores2.Key && x.ColourId==3).Count());
+            }
+
             return await TopWines(avm);
         }
 
@@ -108,7 +132,7 @@ namespace Wineapp.Controllers
                     avm.winesScore.Add(wine, score);
                 }
 
-            avm.winesScore = avm.winesScore.OrderByDescending(x => x.Key).ToDictionary(x=>x.Key,y=>y.Value);
+            avm.winesScore = avm.winesScore.OrderByDescending(x => x.Value).ToDictionary(x=>x.Key,y=>y.Value);
             avm.winesScore= avm.winesScore.Skip(0).Take(5).ToDictionary(x => x.Key, y => y.Value);
             return avm;
         }

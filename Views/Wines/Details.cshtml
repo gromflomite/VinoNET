@@ -3,172 +3,165 @@
 @inject SignInManager<AppUser> _signInManager
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "";
 }
 
 @section Styles {
-    <link href="@Url.Content("~/css/dodetails.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/css/winedetails.css")" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/css/imagegallery.css")" rel="stylesheet" type="text/css" />
 }
 
+<h2 class="winedetailstoph1">Más información del vino @Model.Wine.Name</h2>
 
+<div class="container-fluid w-100 no-gutters">
+    <div class="row winedetailsblock">
 
+        <div class="col-4">
+            <img class="wineimage" src="~/img/wines/@Model.Wine.Image" alt="Imagen del vino @Model.Wine.Name" />
+        </div>
 
-<h1>@Model.Wine.Name</h1>
+        <div class="col-6 offset-2 align-items-center">
+            <img class="dologoimage" src="~/img/dologo/@Model.Wine.Source.Logo" alt="Logo de la D.O. @Model.Wine.Source.SourceType" />
+            <img class="domapimage" src="~/img/domaps/@Model.Wine.Source.Image" alt="Localización de la D.O. @Model.Wine.Source.SourceType" />
 
+            <div class="textwinedetails">
 
+                <p class="p1winedetails"><span class="ptitle">Tipo:</span>  @Model.Wine.Colour.ColourType</p>
+                <p class="p2winedetails"><span class="ptitle">Dulzor:</span>  @Model.Wine.Sweetnes.SweetnesType</p>
+                <p class="p3winedetails"><span class="ptitle">Denominación de Origen:</span><a asp-controller="Wines" asp-action="SourcePreferences" asp-route-sourceId="@Model.Wine.Source.Id"> @Model.Wine.Source.SourceType</a></p>
+                <p class="p4winedetails"><span class="ptitle">Precio:</span> @Model.Wine.Price €</p>
 
+                <div class="card-body iframeblock">
+                    @if (_signInManager.IsSignedIn(User))
+                    {
+                        <iframe class="card-text winedetailsiframe" id="inlineFrame"
+                                title="Wines slider"
+                                width="400"
+                                height="200"
+                                src="https://localhost:44320/Wines/ViewsFavorite/@Model.Wine.Id">
+                        </iframe>
 
-
-<div class="slider">
-
-
-    <div class="upperframe">
-
-        @foreach (Wine wine in Model.ListWineUserScore)
-        {
-            <div class="row mySlides">
-                <div class="card bigpicturebox">
-                    <div class="row no-gutters">
-                        <div class="col">
-                            <img src="~/img/wines/@wine.Image" class="card-img">
-                        </div>
-                        <div class="col">
-                            <div class="card-body winedetails">
-                                <p class="card-title winedetailsname">@wine.Name (@wine.Year)</p>
-                                <p class="card-text">@wine.Colour.ColourType - @wine.Sweetnes.SweetnesType</p>
-                                <p class="card-text">Denominación de Origen @wine.Source.SourceType</p>
-                                <p class="card-text">Precio: @wine.Price €</p>
-                                @if (_signInManager.IsSignedIn(User))
-                                {
-                                    <iframe class="card-text wineiframe" id="inlineFrame"
-                                            title="Wines slider"
-                                            width="400"
-                                            height="200"
-                                            src="https://localhost:44320/Wines/ViewsFavorite/@wine.Id">
-                                    </iframe>
-
-                                }
-
-                            </div>
-                        </div>
-                    </div>
+                    }
                 </div>
             </div>
-        }
-
-        <a class="prev" onclick="plusSlides(-1)">❮</a>
-        <a class="next" onclick="plusSlides(1)">❯</a>
-
-    </div>
-
-
-
-    <div class="row slidewinelist">
-        @{ int cont = 1;
-            foreach (Wine wine in Model.ListWineUserScore)
-            {
-                <div class="column">
-                    <img class="demo cursor" src="~/img/wines/@wine.Image" style="width:100%" onclick="currentSlide(@cont)" alt="@wine.Name">
-                    <h5>@wine.Name</h5>
-                    <p>@wine.Colour.ColourType - @wine.Sweetnes.SweetnesType</p>
-                </div>
-                cont++;
-            }
-        }
+        </div>
     </div>
 </div>
 
+<hr />
 
+@if (_signInManager.IsSignedIn(User))
+{
+    <!--PARA EL USUARIO REGISTRADO-->
+    <h3>Vinos que también te gustarán</h3>
+}
+else
+{
+    <!--NO REGISTRADO-->
+    <h3>Nuestros vinos más votados</h3>
+}
 
+@if (_signInManager.IsSignedIn(User))
+{
+    <div class="slider">
 
+        <div class="upperframe">
 
-
-
-
-
-
-@*@foreach (Wine wine in Model.ListWineUserScore)
+            @foreach (Wine wine in @Model.ListWinesTastesDetails)
             {
                 <div class="row mySlides">
-                    <div class="card mb-3">
-                        <div class="row no-gutters" style="width:100%;">
-                            <div class="col-md-6">
-                                <img src="~/img/wines/@wine.Image" class="card-img" style="width:30%;">
+                    <div class="card bigpicturebox">
+                        <div class="row no-gutters">
+                            <div class="col">
+                                <img src="~/img/wines/@wine.Image" class="card-img">
                             </div>
-                            <div class="col-md-12">
-                                <div class="card-body">
-                                    <h5 class="card-title">@wine.Name (@wine.Year)</h5>
-                                    <p class="card-text">@wine.Price €</p>
-
-                                        <iframe class="card-text" id="inlineFrameExample"
-                                                title="Inline Frame Example"
-                                                width="300"
+                            <div class="col">
+                                <div class="card-body winedetails">
+                                    <p class="card-title winedetailsname">@wine.Name (@wine.Year)</p>
+                                    <p class="card-text">@wine.Colour.ColourType - @wine.Sweetnes.SweetnesType</p>
+                                    <p class="card-text">Denominación de Origen @wine.Source.SourceType</p>
+                                    <p class="card-text">Precio: @wine.Price €</p>
+                                    @if (_signInManager.IsSignedIn(User))
+                                    {
+                                        <iframe class="card-text wineiframe" id="inlineFrame"
+                                                title="Wines slider"
+                                                width="400"
                                                 height="200"
-                                                src="https://localhost:44320/Wines/ViewsFavorite/@wine.Id"
-                                                style="border:none">
+                                                src="https://localhost:44320/Wines/ViewsFavorite/@wine.Id">
                                         </iframe>
 
-                                    </div>
+                                    }
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             }
 
-                <a class="prev" onclick="plusSlides(-1)">❮</a>
-                <a class="next" onclick="plusSlides(1)">❯</a>
+            <a class="prev" onclick="plusSlides(-1)">❮</a>
+            <a class="next" onclick="plusSlides(1)">❯</a>
+        </div>
 
-                <div class="caption-container">
-                    <p id="caption"></p>
-                </div>
-
-                <div class="row">
-                    @{ int cont = 1;
-                        foreach (Wine wine in Model.ListWineUserScore)
-                        {
-                        <div class="column">
-                            <img class="demo cursor" src="~/img/wines/@wine.Image" style="width:100%" onclick="currentSlide(@cont)" alt="@wine.Name">
-                            <h6>@wine.Name</h6>
-                            <p>@wine.Colour.ColourType, @wine.Sweetnes.SweetnesType, @wine.Source.SourceType</p>
-                        </div>
-                            cont++;
-
-                        }
-                        }
+        <div class="row slidewinelist">
+            @{ int cont2 = 1;
+                foreach (Wine wine in Model.ListWinesTastesDetails)
+                {
+                    <div class="column">
+                        <img class="demo cursor" src="~/img/wines/@wine.Image" style="width:100%" onclick="currentSlide(@cont2)" alt="@wine.Name">
+                        <h5>@wine.Name</h5>
+                        <p>@wine.Colour.ColourType - @wine.Sweetnes.SweetnesType</p>
                     </div>
-            </div>
+                    cont2++;
+                }
+            }
+        </div>
+    </div>
+}
+else
+{
 
-        <script>
-    var slideIndex = 1;
-    showSlides(slideIndex);
+    <div class="slider">
 
-    function plusSlides(n) {
-      showSlides(slideIndex += n);
-    }
+        <div class="upperframe">
 
-    function currentSlide(n) {
-      showSlides(slideIndex = n);
-    }
+            @foreach (Wine wine in Model.ListWineUserScore)
+            {
+                <div class="row mySlides">
+                    <div class="card bigpicturebox">
+                        <div class="row no-gutters">
+                            <div class="col">
+                                <img src="~/img/wines/@wine.Image" class="card-img">
+                            </div>
+                            <div class="col">
+                                <div class="card-body winedetails">
+                                    <p class="card-title winedetailsname">@wine.Name (@wine.Year)</p>
+                                    <p class="card-text">@wine.Colour.ColourType - @wine.Sweetnes.SweetnesType</p>
+                                    <p class="card-text">Denominación de Origen @wine.Source.SourceType</p>
+                                    <p class="card-text">Precio: @wine.Price €</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
 
-    function showSlides(n) {
-      var i;
-      var slides = document.getElementsByClassName("mySlides");
-      var dots = document.getElementsByClassName("demo");
-      var captionText = document.getElementById("caption");
-      if (n > slides.length) {slideIndex = 1}
-      if (n < 1) {slideIndex = slides.length}
-      for (i = 0; i < slides.length; i++) {
-          slides[i].style.display = "none";
-      }
-      for (i = 0; i < dots.length; i++) {
-          dots[i].className = dots[i].className.replace(" active", "");
-      }
-      slides[slideIndex-1].style.display = "block";
-      dots[slideIndex-1].className += " active";
-      captionText.innerHTML = dots[slideIndex-1].alt;
-    }
-        </script>
+            <a class="prev" onclick="plusSlides(-1)">❮</a>
+            <a class="next" onclick="plusSlides(1)">❯</a>
+        </div>
 
-    </body>
-    </html>*@
+        <div class="row slidewinelist">
+            @{ int cont = 1;
+                foreach (Wine wine in Model.ListWineUserScore)
+                {
+                    <div class="column">
+                        <img class="demo cursor" src="~/img/wines/@wine.Image" style="width:100%" onclick="currentSlide(@cont)" alt="@wine.Name">
+                        <h5>@wine.Name</h5>
+                        <p>@wine.Colour.ColourType - @wine.Sweetnes.SweetnesType</p>
+                    </div>
+                    cont++;
+                }
+            }
+        </div>
+    </div>
+
+}
