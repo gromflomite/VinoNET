@@ -34,4 +34,11 @@ header {
 .containerMirar {
     text-align: center;
 }
-
+.titleWineListsWine {
+    text-align: center;
+    margin-top: 30px;
+}
+.containerFlex {
+    display:flex;
+    justify-content:space-between;
+}
