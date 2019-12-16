@@ -11,11 +11,31 @@
     <link href="@Url.Content("~/css/wineLists.css")" rel="stylesheet" type="text/css" />
 }
 
-<h1>Lista:@Model.WineList.ListName</h1>
+
+@if (listWineLists.Count == 0)
+{    
+    <h1>Lista:@Model.WineList.ListName</h1>
+}
+else
+{
+    <form action="https://localhost:44320/WineLists/Details?">
+        <select name="nameList">
+            <option value="@Model.WineList.ListName" selected>Tus Listas</option>
+            @foreach (WineList wineList in listWineLists)
+            {
+                if (wineList.ListName != Model.WineList.ListName)
+                {
+                    <option value="@wineList.ListName">@wineList.ListName</option>
+                }
+            }
+        </select>
+        <button type="submit">Cambiar</button>
+    </form>
+}
 
 <div>
     <div style="display:flex; justify-content:center;">
-        <ul class="nav nav-tabs xavi" style="background-color:white;position: static; z-index: 3; width:auto; height:auto;">
+        <ul class="nav nav-tabs xavi" style="background-color:white;position: static; z-index: 1; width:auto; height:auto;">
             <li class="nav-item">
                 <a class="nav-link active" data-toggle="tab" href="#todos">Todos</a>
             </li>
@@ -57,7 +77,7 @@
                                     <li class="list-group-item">@wineListWine.Wine.Colour.ColourType</li>
                                     <li class="list-group-item">@wineListWine.Wine.Sweetnes.SweetnesType</li>
                                     <li class="list-group-item">@wineListWine.Wine.Source.SourceType</li>
-                                    <li class="list-group-item">Fecha de caducidad @wineListWine.Wine.Year</li>
+                                    <li class="list-group-item">@wineListWine.Wine.Year</li>
                                     <li class="list-group-item">Precio @wineListWine.Wine.Price</li>
                                 </ul>
                                 <div class="card-body">
@@ -133,11 +153,11 @@
                                 </div>
 
                                 <ul class="list-group list-group-flush collapse listaCollapse">
-                                    <li class="list-group-item">@wineListWine.Wine.Colour.ColourType</li>
-                                    <li class="list-group-item">@wineListWine.Wine.Sweetnes.SweetnesType</li>
-                                    <li class="list-group-item">@wineListWine.Wine.Source.SourceType</li>
-                                    <li class="list-group-item">Fecha de caducidad @wineListWine.Wine.Year</li>
-                                    <li class="list-group-item">Precio @wineListWine.Wine.Price</li>
+                                    <li class="list-group-item">Color: @wineListWine.Wine.Colour.ColourType</li>
+                                    <li class="list-group-item">Dulzor: @wineListWine.Wine.Sweetnes.SweetnesType</li>
+                                    <li class="list-group-item">D.O: @wineListWine.Wine.Source.SourceType</li>
+                                    <li class="list-group-item">Añada: @wineListWine.Wine.Year</li>
+                                    <li class="list-group-item">Precio: @wineListWine.Wine.Price</li>
                                 </ul>
                                 <div class="card-body">
                                     <form asp-controller="Wines" asp-action="DelateWineListWineValues">
@@ -212,11 +232,11 @@
                                 </div>
 
                                 <ul class="list-group list-group-flush collapse listaCollapse">
-                                    <li class="list-group-item">@wineListWine.Wine.Colour.ColourType</li>
-                                    <li class="list-group-item">@wineListWine.Wine.Sweetnes.SweetnesType</li>
-                                    <li class="list-group-item">@wineListWine.Wine.Source.SourceType</li>
-                                    <li class="list-group-item">Fecha de caducidad @wineListWine.Wine.Year</li>
-                                    <li class="list-group-item">Precio @wineListWine.Wine.Price</li>
+                                    <li class="list-group-item">Color: @wineListWine.Wine.Colour.ColourType</li>
+                                    <li class="list-group-item">Dulzor: @wineListWine.Wine.Sweetnes.SweetnesType</li>
+                                    <li class="list-group-item">D.O: @wineListWine.Wine.Source.SourceType</li>
+                                    <li class="list-group-item">Añada: @wineListWine.Wine.Year</li>
+                                    <li class="list-group-item">Precio: @wineListWine.Wine.Price</li>
                                 </ul>
                                 <div class="card-body">
                                     <form asp-controller="Wines" asp-action="DelateWineListWineValues">
@@ -291,11 +311,11 @@
                                 </div>
 
                                 <ul class="list-group list-group-flush collapse listaCollapse">
-                                    <li class="list-group-item">@wineListWine.Wine.Colour.ColourType</li>
-                                    <li class="list-group-item">@wineListWine.Wine.Sweetnes.SweetnesType</li>
-                                    <li class="list-group-item">@wineListWine.Wine.Source.SourceType</li>
-                                    <li class="list-group-item">Fecha de caducidad @wineListWine.Wine.Year</li>
-                                    <li class="list-group-item">Precio @wineListWine.Wine.Price</li>
+                                    <li class="list-group-item">Color: @wineListWine.Wine.Colour.ColourType</li>
+                                    <li class="list-group-item">Dulzor: @wineListWine.Wine.Sweetnes.SweetnesType</li>
+                                    <li class="list-group-item">D.O: @wineListWine.Wine.Source.SourceType</li>
+                                    <li class="list-group-item">Añada: @wineListWine.Wine.Year</li>
+                                    <li class="list-group-item">Precio: @wineListWine.Wine.Price</li>
                                 </ul>
                                 <div class="card-body">
                                     <form asp-controller="Wines" asp-action="DelateWineListWineValues">
@@ -356,100 +376,5 @@
     <script src="~/js/WineList.js"></script>
 }
 
-@*****************************************************@
 
-@*<table class="table">
-        <thead>
-            <tr>
-                <th>
-                    Nombre
-                </th>
-                <th>
-                    Colour
-                </th>
-                <th>
-                    Sweentnes
-                </th>
-                <th>
-                    Source
-                </th>
-                <th>
-                    Year
-                </th>
-                <th>
-                    Compañy
-                </th>
-                <th>
-                    Precio
-                </th>
-
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (WineListWine wineListWine in Model.ListWinesListWines)
-            {
-                <tr>
-                    <td>
-                        @wineListWine.Wine.Name
-                    </td>
-                    <td>
-                        @wineListWine.Wine.Colour.ColourType
-                    </td>
-                    <td>
-                        @wineListWine.Wine.Sweetnes.SweetnesType
-                    </td>
-                    <td>
-                        @wineListWine.Wine.Source.SourceType
-                    </td>
-                    <td>
-                        @wineListWine.Wine.Year
-                    </td>
-                    <td>
-                        @wineListWine.Wine.Price
-                    </td>
-                    <td>
-                        <a asp-controller="Wines" asp-action="Details" asp-route-id="@wineListWine.Id">Details</a>  |
-                        @if (listWineLists.Count > 1)
-                        {
-                            <form asp-controller="WineLists" asp-action="MoveWine">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Cambiar de lista
-                                    </button>
-                                    <div class="dropdown-menu">
-                                        @foreach (WineList wineList in listWineLists)
-                                        {
-                                            if (wineList.ListName != Model.WineList.ListName)
-                                            {
-                                                <div class="form-check">
-                                                    <input type="radio" id="@wineList.ListName" name="listaId" value="@wineList.Id" />
-                                                    <label class="form-check-label" for="@wineList.ListName">@wineList.ListName</label>
-                                                </div>
-                                            }
-                                        }
-                                        <div class="dropdown-divider"></div>
-                                        <input type="hidden" name="wineListWineId" value="@wineListWine.Id" />
-                                        <input type="hidden" name="url" value="https://localhost:44320/WineLists/Details?nameList=@Model.WineList.ListName" />
-                                        <button type="submit" class="btn btn-success" title="Añadir">
-                                            Mover
-                                        </button>
-                                    </div>
-                                </div>
-
-                            </form>
-                        }
-                        <form asp-controller="Wines" asp-action="DelateWineListWineValues">
-                            <input type="hidden" name="wineListWineId" value="@wineListWine.Id" />
-                            <input type="hidden" name="idWine" value="@wineListWine.WineId" />
-                            <input type="hidden" name="url" value="https://localhost:44320/WineLists/Details?nameList=@Model.WineList.ListName" />
-                            <button type="submit" class="btn btn-danger" title="Añadir">
-                                Quitar de la lista
-                            </button>
-                        </form>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>*@
 

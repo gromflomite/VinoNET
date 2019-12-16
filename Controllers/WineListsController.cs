@@ -79,7 +79,7 @@ namespace Wineapp.Controllers
             List<WineList> wineLists = await _wineListsServices.GetWineListsByUserIdAsync(user.Id);
             WineList wineList = await _wineListsServices.GetWineListByNameListAsync(nameList , user.Id);
 
-            if (wineList.Id == 0)
+            if (wineList == null)
             {
                 return NotFound();
             }
