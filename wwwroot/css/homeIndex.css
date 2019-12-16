@@ -26,6 +26,7 @@ h3.card-header {
 input.doimages {
   height: 440px;
   width: 440px;
+  padding-top:1%;
 }
 
 .winesblock form {
@@ -54,5 +55,64 @@ p.list-group-item {
 
 .eventstitle {
 padding-bottom: 3%;  
+}
+
+
+
+/*Sponsored wines*/
+.sponsorblock {
+    background-color: #e4db97;
+    border:solid;
+    border-color:darkred;
+}
+
+.sponsorContainer {
+    position: relative;
+    width: 50%;
+}
+
+.sponsorImage {
+    opacity: 1;
+    display: block;
+    width: 100%;
+    height: auto;
+    transition: .5s ease;
+    backface-visibility: hidden;
+}
+
+.middle {
+    transition: .5s ease;
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.sponsorContainer:hover .sponsorImage {
+    opacity: 0.3;
+}
+
+.sponsorContainer:hover .middle {
+    opacity: 1;
+}
+
+.sponsorText {
+    background-color: #882641;
+    color: white;
+    font-size: 16px;
+    padding: 16px 32px;
+}
+.sponsorCards {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'Ibarra Real Nova', serif;
+}
+.sponsorCardText {
+    background-color: #882641;
+    padding: 3px;
+    color: #f3f0eb;
 }
 
