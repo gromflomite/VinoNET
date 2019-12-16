@@ -11,26 +11,37 @@
     <link href="@Url.Content("~/css/wineLists.css")" rel="stylesheet" type="text/css" />
 }
 
+
 @if (listWineLists.Count == 0)
 {
     <h1>Lista:@Model.WineList.ListName</h1>
 }
 else
 {
-    <form action="https://localhost:44320/WineLists/Details?">
-        <select name="nameList">
-            <option value="@Model.WineList.ListName" selected>Tus Listas</option>
-            @foreach (WineList wineList in listWineLists)
-            {
-                if (wineList.ListName != Model.WineList.ListName)
+    <div class="containerFlex">
+        <form action="https://localhost:44320/WineLists/Details?" class="formWineListWineChange">
+            <h3>Cambiar de listas</h3>
+            <select name="nameList">
+                <option value="@Model.WineList.ListName" selected>Tus listas</option>
+                @foreach (WineList wineList in listWineLists)
                 {
-                    <option value="@wineList.ListName">@wineList.ListName</option>
+                    if (wineList.ListName != Model.WineList.ListName)
+                    {
+                        <option value="@wineList.ListName">@wineList.ListName</option>
+                    }
                 }
-            }
-        </select>
-        <button type="submit">Cambiar</button>
-    </form>
+            </select>
+            <button type="submit">Cambiar</button>
+        </form>
+
+        <a href="https://localhost:44320/WineLists">Volver a listas</a>
+    </div>
 }
+
+
+@if (Model.ListWinesListWines.Count() != 0)
+{
+
 
 <div>
     <div style="display:flex; justify-content:center;">
@@ -66,17 +77,17 @@ else
                                     </div>
                                 </div>
                                 <div class="containerMirar">
-                                    <a asp-controller="Wines" asp-action="Details" asp-route-id="@wineListWine.Id">
+                                    <a asp-controller="Wines" asp-action="Details" asp-route-id="@wineListWine.WineId">
                                         <i class="fa fa-eye"></i>
                                     </a>
                                 </div>
 
                                 <ul class="list-group list-group-flush collapse listaCollapse">
-                                    <li class="list-group-item">@wineListWine.Wine.Colour.ColourType</li>
-                                    <li class="list-group-item">@wineListWine.Wine.Sweetnes.SweetnesType</li>
-                                    <li class="list-group-item">@wineListWine.Wine.Source.SourceType</li>
-                                    <li class="list-group-item">@wineListWine.Wine.Year</li>
-                                    <li class="list-group-item">Precio @wineListWine.Wine.Price</li>
+                                    <li class="list-group-item">Color: @wineListWine.Wine.Colour.ColourType</li>
+                                    <li class="list-group-item">Dulzor: @wineListWine.Wine.Sweetnes.SweetnesType</li>
+                                    <li class="list-group-item">D.O: @wineListWine.Wine.Source.SourceType</li>
+                                    <li class="list-group-item">Añada: @wineListWine.Wine.Year</li>
+                                    <li class="list-group-item">Precio: @wineListWine.Wine.Price</li>
                                 </ul>
                                 <div class="card-body">
                                     <form asp-controller="Wines" asp-action="DelateWineListWineValues">
@@ -143,7 +154,7 @@ else
                                     </div>
                                 </div>
                                 <div class="containerMirar">
-                                    <a asp-controller="Wines" asp-action="Details" asp-route-id="@wineListWine.Id">
+                                    <a asp-controller="Wines" asp-action="Details" asp-route-id="@wineListWine.WineId">
                                         <i class="fa fa-eye"></i>
                                     </a>
                                 </div>
@@ -220,7 +231,7 @@ else
                                     </div>
                                 </div>
                                 <div class="containerMirar">
-                                    <a asp-controller="Wines" asp-action="Details" asp-route-id="@wineListWine.Id">
+                                    <a asp-controller="Wines" asp-action="Details" asp-route-id="@wineListWine.WineId">
                                         <i class="fa fa-eye"></i>
                                     </a>
                                 </div>
@@ -297,7 +308,7 @@ else
                                     </div>
                                 </div>
                                 <div class="containerMirar">
-                                    <a asp-controller="Wines" asp-action="Details" asp-route-id="@wineListWine.Id">
+                                    <a asp-controller="Wines" asp-action="Details" asp-route-id="@wineListWine.WineId">
                                         <i class="fa fa-eye"></i>
                                     </a>
                                 </div>
@@ -360,6 +371,11 @@ else
         </div>
     </div>
 </div>
+}
+else
+{
+    <h1>Lista </h1>
+}
 @section Scripts{
     <script src="~/js/WineList.js"></script>
 }

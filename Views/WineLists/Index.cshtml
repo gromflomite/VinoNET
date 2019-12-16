@@ -14,17 +14,19 @@
 
 @section Styles {
     <link href="@Url.Content("~/css/wineListsIndex.css")" rel="stylesheet" type="text/css" />
+
 }
 
-<h1>Index</h1>
 <style type="text/css">
     li {
         list-style: none;
     }
 </style>
 
+<h1 class="titleWineList">Lista de vinos</h1>
+
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Nueva lista</a>
 </p>
 <table class="table">
     <thead>
@@ -39,33 +41,76 @@
                 Fecha Creación
             </th>
             <th></th>
+            <th></th>
         </tr>
     </thead>
-    <tbody>
-        @foreach (WineList wineList in Model.ListWinesLists)
-        {
-            <tr class="imageCollapse">
-                <td>
+</table>
+@foreach (WineList wineList in Model.ListWinesLists)
+{
+    <table class="table tableColor">
+        <thead>
+            <tr>
+                <th style="width: 200px;">
                     @Html.DisplayFor(modelItem => wineList.ListName)
-                </td>
-                <td>
+                </th>
+                <th style="width: 400px;">
                     @Html.DisplayFor(modelItem => wineList.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => wineList.ListDate)
-                </td>
+                </th>
+                <th style="width: 250px;">
+                    @wineList.ListDate.Value.ToShortDateString()
+                </th>
+                <th class="containerLink">
+                    <a asp-controller="WineLists" asp-action="Details" asp-route-nameList="@wineList.ListName"><img src="~/img/Show-Property-icon.png" alt="Ver lista" title="Detalles" /></a> 
 
-                <td>
-                    <a asp-action="Edit" asp-route-id="@wineList.Id">Edit</a> |
+                    <a asp-action="Edit" asp-route-id="@wineList.Id"><img src="~/img/edit-property.png" alt="Alternate Text" title="Editar" /></a> 
 
-                    <a asp-controller="WineLists" asp-action="Details" asp-route-nameList="@wineList.ListName">Details</a>                    |
+                    <a asp-controller="WineLists" asp-action="DeleteWineList" asp-route-winwListId="@wineList.Id"><img src="~/img/boton-borrar-png-5.png" alt="Eliminar lista" title="Elinar" /></a>
+
+                </th>
+                <th>
+                    <img src="~/img/desplegable.png" alt="Alternate Text" class="imageCollapse" />
+                </th>
+            </tr>
+        </thead>
+    </table>
+
+        listWineListWinesx = await _wineListsServices.GetWineListsWinesByWineLisIdAsync(wineList.Id);
+
+    @if (listWineListWines.Where(x => x.WineListId == wineList.Id).Count() == 0)
+    {
+                    
+            <h2 class="collapse listaCollapse">Lista Vacia</h2>
+                    
+    }
+    else
+    {
+
+        <table class="table table-striped collapse listaCollapse">
+            <thead>
+            <tr>
+                <th scope="col">Nombre</th>
+                <th scope="col">Color</th>
+                <th scope="col">Dulzor</th>
+                <th scope="col">D.O</th>
+                <th></th>
+            </tr>
+            </thead>
+                <tbody>
+                        @foreach (WineListWine wineListWine in listWineListWinesx)
+                        {                                            
+                            <tr>
+                                <td style="width: 300px;">@wineListWine.Wine.Name</td>
+                                <td style="width: 300px;">@wineListWine.Wine.Colour.ColourType</td>
+                                <td style="width: 300px;">@wineListWine.Wine.Sweetnes.SweetnesType</td>
+                                <td style="width: 300px;">@wineListWine.Wine.Source.SourceType</td>
 
                     <form asp-controller="WineLists" asp-action="DeleteWineList">
                         <input type="hidden" name="winwListId" value="@wineList.Id" />
                         <button type="submit" title="Borrar" class="botonPrueba">
-                            <img src="~/img/boton-borrar-png-5.png" alt="Alternate Text" />
+                            <img src="~/img/boton-borrar-png-5.png" alt="Alternate Text" />                      
                         </button>
                     </form>
+
                 </td>
             </tr>
             <tr class="collapse listaCollapse">
@@ -96,11 +141,13 @@
                                             </td>
                                         </tr>
                                     </table>
+
                                 </li>
                             }
                         }
                     </ul>
                 </td>
+
             </tr>
         }
     </tbody>

@@ -2,6 +2,11 @@
     background-image: url("../img/navbarbackground5.jpg");
     height: 250px;
 }
+
+img {
+    height: 30px;
+}
+
 .botonPrueba {
     color: white;
     background-image: initial;
@@ -15,5 +20,11 @@
     border-color: initial;
     background-color: initial;
 
-    height:50px;
+   
+}
+.tableColor {
+    background-color: #fdddde;
+}
+.titleWineList{
+    text-align:center;
 }
