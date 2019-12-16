@@ -10,28 +10,139 @@
 
 <h1 class="title">Catálogo de vinos</h1>
 
-<div class="row">
+<div class="winestypemenu">
+    <div style="display:flex; justify-content:center;">
+        <ul class="nav nav-tabs" style="background-color:white;position: static; z-index: 0; width:auto; height:auto;">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#todos">Todos</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#tinto">Tinto</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#blanco">Blanco</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#rosado">Rosado</a>
+            </li>
+        </ul>
+    </div>
+</div>
 
-    @foreach (Wine wine in Model)
-    {
+<div id="myTabContent" class="tab-content">
+    <div class="tab-pane fade active show" id="todos">
 
-        <div class="col cards">
-            <div class="card h-100" style="width: 12rem;">
+        <div class="row">
 
-                <form asp-controller="Wines" asp-action="Details">
-                    <input type="hidden" name="id" value="@wine.Id" />
-                    <input class="card-img-top" type="image" src="~/img/wines/@wine.Image" />
-                </form>
+            @foreach (Wine wine in Model)
+            {
 
-                <div class="card-header text-center">
-                    <p>@wine.Name (@wine.Year)</p>
+                <div class="col cards">
+                    <div class="card h-100" style="width: 12rem;">
+
+                        <form asp-controller="Wines" asp-action="Details">
+                            <input type="hidden" name="id" value="@wine.Id" />
+                            <input class="card-img-top" type="image" src="~/img/wines/@wine.Image" />
+                        </form>
+
+                        <div class="card-header text-center">
+                            <p>@wine.Name (@wine.Year)</p>
+                        </div>
+                        <ul class="list-group list-group-flush cardwinedetails">
+                            <li class="list-group-item">@wine.Colour.ColourType - @wine.Sweetnes.SweetnesType</li>
+                            <li class="list-group-item"> <img src="~/img/dologo/@wine.Source.Logo" alt="Alternate Text" /> </li>
+                        </ul>
+                    </div>
                 </div>
-                <ul class="list-group list-group-flush cardwinedetails">
-                    <li class="list-group-item">@wine.Colour.ColourType - @wine.Sweetnes.SweetnesType</li>
-                    <li class="list-group-item"> <img src="~/img/dologo/@wine.Source.Logo" alt="Alternate Text" /> </li>
-                </ul>
-            </div>
-        </div>
 
-    }
+            }
+        </div>
+    </div>
+
+    <div class="tab-pane fade" id="tinto">
+
+        <div class="row">
+
+            @foreach (Wine wine in Model.Where(x => x.Colour.Id == 1))
+            {
+
+                <div class="col cards">
+                    <div class="card h-100" style="width: 12rem;">
+
+                        <form asp-controller="Wines" asp-action="Details">
+                            <input type="hidden" name="id" value="@wine.Id" />
+                            <input class="card-img-top" type="image" src="~/img/wines/@wine.Image" />
+                        </form>
+
+                        <div class="card-header text-center">
+                            <p>@wine.Name (@wine.Year)</p>
+                        </div>
+                        <ul class="list-group list-group-flush cardwinedetails">
+                            <li class="list-group-item">@wine.Colour.ColourType - @wine.Sweetnes.SweetnesType</li>
+                            <li class="list-group-item"> <img src="~/img/dologo/@wine.Source.Logo" alt="Alternate Text" /> </li>
+                        </ul>
+                    </div>
+                </div>
+
+            }
+        </div>
+    </div>
+
+    <div class="tab-pane fade" id="blanco">
+
+        <div class="row">
+
+            @foreach (Wine wine in Model.Where(x => x.Colour.Id == 2))
+            {
+
+                <div class="col cards">
+                    <div class="card h-100" style="width: 12rem;">
+
+                        <form asp-controller="Wines" asp-action="Details">
+                            <input type="hidden" name="id" value="@wine.Id" />
+                            <input class="card-img-top" type="image" src="~/img/wines/@wine.Image" />
+                        </form>
+
+                        <div class="card-header text-center">
+                            <p>@wine.Name (@wine.Year)</p>
+                        </div>
+                        <ul class="list-group list-group-flush cardwinedetails">
+                            <li class="list-group-item">@wine.Colour.ColourType - @wine.Sweetnes.SweetnesType</li>
+                            <li class="list-group-item"> <img src="~/img/dologo/@wine.Source.Logo" alt="Alternate Text" /> </li>
+                        </ul>
+                    </div>
+                </div>
+
+            }
+        </div>
+    </div>
+
+    <div class="tab-pane fade" id="rosado">
+
+        <div class="row">
+
+            @foreach (Wine wine in Model.Where(x => x.Colour.Id == 3))
+            {
+
+                <div class="col cards">
+                    <div class="card h-100" style="width: 12rem;">
+
+                        <form asp-controller="Wines" asp-action="Details">
+                            <input type="hidden" name="id" value="@wine.Id" />
+                            <input class="card-img-top" type="image" src="~/img/wines/@wine.Image" />
+                        </form>
+
+                        <div class="card-header text-center">
+                            <p>@wine.Name (@wine.Year)</p>
+                        </div>
+                        <ul class="list-group list-group-flush cardwinedetails">
+                            <li class="list-group-item">@wine.Colour.ColourType - @wine.Sweetnes.SweetnesType</li>
+                            <li class="list-group-item"> <img src="~/img/dologo/@wine.Source.Logo" alt="Alternate Text" /> </li>
+                        </ul>
+                    </div>
+                </div>
+
+            }
+        </div>
+    </div>
 </div>
