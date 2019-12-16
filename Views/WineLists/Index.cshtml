@@ -12,6 +12,10 @@
     List<WineListWine> listWineListWinesx = new List<WineListWine>();
 }
 
+@section Styles {
+    <link href="@Url.Content("~/css/wineListsIndex.css")" rel="stylesheet" type="text/css" />
+}
+
 <h1>Index</h1>
 <style type="text/css">
     li {
@@ -26,13 +30,13 @@
     <thead>
         <tr>
             <th>
-                Nam
+                Nombre
             </th>
             <th>
-                Description
+                Descripción
             </th>
             <th>
-                ListDate
+                Fecha Creación
             </th>
             <th></th>
         </tr>
@@ -40,7 +44,7 @@
     <tbody>
         @foreach (WineList wineList in Model.ListWinesLists)
         {
-            <tr class="imageCollapse" >
+            <tr class="imageCollapse">
                 <td>
                     @Html.DisplayFor(modelItem => wineList.ListName)
                 </td>
@@ -58,8 +62,8 @@
 
                     <form asp-controller="WineLists" asp-action="DeleteWineList">
                         <input type="hidden" name="winwListId" value="@wineList.Id" />
-                        <button type="submit" class="btn btn-secondary" title="Borrar">
-                            Borrar
+                        <button type="submit" title="Borrar">
+                            <img src="~/img/boton-borrar-png-5.png" alt="Alternate Text" />                      
                         </button>
                     </form>
 
@@ -79,21 +83,21 @@
                             @foreach (WineListWine wineListWine in listWineListWinesx)
                             {
                                 <li>
-                                    <table>                                        
+                                    <table>
                                         <tr>
                                             <td style="width: 300px;">@wineListWine.Wine.Name</td>
                                             <td>
                                                 <form asp-controller="WineLists" asp-action="DelateWineListWineValues">
                                                     <input type="hidden" name="idWine" value="@wineListWine.Wine.Id" />
-                                                    <input type="hidden" name="wineListWineId" value="@wineListWine.Id" />                                                                                              
+                                                    <input type="hidden" name="wineListWineId" value="@wineListWine.Id" />
                                                     <button type="submit" class="btn btn-secondary" title="Borrar">
-                                                        Borrar
+                                                        <i class="fa fa-trash-alt"></i>
                                                     </button>
                                                 </form>
                                             </td>
                                         </tr>
                                     </table>
-                                
+
                                 </li>
                             }
                         }
