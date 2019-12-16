@@ -24,7 +24,7 @@
             <input type="hidden" name="idWine" value="@Model.Wine.Id" />
             <input type="hidden" name="url" value="https://localhost:44320/Wines/ViewsFavorite/@Model.Wine.Id" />
             <button type="submit" class="btn btn-secondary" data-toggle="tooltip" data-placement="left" title="Like">
-                <i class="fa fa-thumbs-o-up" aria-hidden="true"></i> &nbsp;
+                <i class="fa fa-thumbs-o-up" aria-hidden="true"></i> &nbsp; @Model.Wine.Score
             </button>
             <!--Si quieres poner una foto, EJEMPLO:-->
         </form>
@@ -38,7 +38,7 @@
             <input type="hidden" name="idWine" value="@Model.Wine.Id" />
             <input type="hidden" name="url" value="https://localhost:44320/Wines/ViewsFavorite/@Model.Wine.Id" />
             <button type="submit" class="btn btn-secondary" data-toggle="tooltip" data-placement="left" title="Quitar like">
-                <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+                <i class="fa fa-thumbs-up" aria-hidden="true"></i> &nbsp;  @Model.Wine.Score
             </button>
         </form>
     }

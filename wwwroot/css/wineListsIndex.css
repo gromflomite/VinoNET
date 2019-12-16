@@ -1,0 +1,30 @@
+﻿section.home {
+    background-image: url("../img/navbarbackground5.jpg");
+    height: 250px;
+}
+
+img {
+    height: 30px;
+}
+
+.botonPrueba {
+    color: white;
+    background-image: initial;
+    background-repeat: initial;
+    background-position: initial;
+    -webkit-border-radius: initial;
+    -moz-border-radius: initial;
+    border-radius: initial;
+    border-style: initial;
+    border-width: initial;
+    border-color: initial;
+    background-color: initial;
+
+   
+}
+.tableColor {
+    background-color: #fdddde;
+}
+.titleWineList{
+    text-align:center;
+}
