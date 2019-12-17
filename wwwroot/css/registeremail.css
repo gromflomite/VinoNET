@@ -20,3 +20,14 @@ h5.textdebien{ /*bienvenida a un nuevo usuario*/
     padding-top: 5%;
     padding-bottom: 3%;
 }
+.dosboton {
+    text-align:center;
+    width: 26%;
+    margin-left: 39%;
+    padding-bottom:1%
+}
+.dosboton2 {
+    text-align:center;
+    width: 26%;
+    margin-left: 39%;
+}

@@ -11,10 +11,21 @@
 <partial name="_StatusMessage" model="Model.StatusMessage" />
 
 
-<h4 class="usersurvey"> Ayúdanos a conocerte mejor </h4>
 
-<div class="text-center">
-    <a class="page-link" asp-controller="Tastes" asp-action="Survey"> Continuar </a>
-    <a class= "page-link" asp-controller="Home" asp-action="Index"> Omitir </a>
+<div class="usersurvey">
+
+    <p>Te recomendamos relizar nuestra encuesta para conocer mejor tus gustos</p>
+    <h5> ¡Ayúdanos a conocerte mejor! </h5>
+
 </div>
 
+
+<div class="dosboton">
+
+        <a class="btn btn-outline-danger" asp-controller="Tastes" asp-action="Survey">Realizar encuesta </a>
+</div>
+
+<div class="dosboton2">
+
+        <a class="btn btn-outline-danger" asp-controller="Home" asp-action="Index"> Ahora no </a>
+</div>
