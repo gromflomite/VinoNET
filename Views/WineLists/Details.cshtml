@@ -7,13 +7,16 @@
     List<WineList> listWineLists = await _wineListsServices.GetWineListsByUserIdAsync(Model.AppUser.Id);
 }
 
-@section Styles {
+@section Styles {    
     <link href="@Url.Content("~/css/wineLists.css")" rel="stylesheet" type="text/css" />
 }
 
 
+<h1 class="titleWineListsWine">@Model.WineList.ListName</h1>
+
+>>>>>>>>> Temporary merge branch 2
 @if (listWineLists.Count == 0)
-{
+{    
     <h1>Lista:@Model.WineList.ListName</h1>
 }
 else
@@ -45,7 +48,7 @@ else
 
 <div>
     <div style="display:flex; justify-content:center;">
-        <ul class="nav nav-tabs" style="background-color:white;position: static; z-index: 1; width:auto; height:auto;">
+        <ul class="nav nav-tabs xavi" style="background-color:white;position: static; z-index: 1; width:auto; height:auto;">
             <li class="nav-item">
                 <a class="nav-link active" data-toggle="tab" href="#todos">Todos</a>
             </li>
@@ -58,6 +61,7 @@ else
             <li class="nav-item">
                 <a class="nav-link" data-toggle="tab" href="#rosado">Rosado</a>
             </li>
+
         </ul>
     </div>
     <div id="myTabContent" class="tab-content">
@@ -125,8 +129,10 @@ else
                                                     </button>
                                                 </div>
                                             </div>
+
                                         </form>
                                     }
+
                                 </div>
                             </div>
                         }
@@ -202,8 +208,10 @@ else
                                                     </button>
                                                 </div>
                                             </div>
+
                                         </form>
                                     }
+
                                 </div>
                             </div>
                         }
@@ -279,8 +287,10 @@ else
                                                     </button>
                                                 </div>
                                             </div>
+
                                         </form>
                                     }
+
                                 </div>
                             </div>
                         }
@@ -356,8 +366,10 @@ else
                                                     </button>
                                                 </div>
                                             </div>
+
                                         </form>
                                     }
+
                                 </div>
                             </div>
                         }
@@ -370,6 +382,8 @@ else
             </div>
         </div>
     </div>
+
+
 </div>
 }
 else
@@ -379,3 +393,6 @@ else
 @section Scripts{
     <script src="~/js/WineList.js"></script>
 }
+
+
+

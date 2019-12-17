@@ -36,10 +36,19 @@
                             </li>
 
                             AppUser user = await _userManager.GetUserAsync(User);
+                            if (user.Survey == false)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="Tastes" asp-action="Survey">Encuesta</a>
+                                </li>
+                            }
                             if (await _userManager.IsInRoleAsync(user, "Admin"))
                             {
                                 <li class="nav-item">
                                     <a class="nav-link" asp-area="" asp-controller="AdminInfo" asp-action="Index">Actividad</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="AdminInfo" asp-action="Sponsor">Patrocinio</a>
                                 </li>
                             }
                         }

@@ -10,6 +10,13 @@
 
 <h1 class="title">Catálogo de vinos</h1>
 
+
+<form asp-action="Index" class="mt-5 mb-5 text-center">
+    <input type="text" class="border-dark w-50" placeholder="Introduzca el nombre del vino o de la bodega" name="search" />
+    <button type="submit" class="searchCatalog border-dark"><i class="fa fa-search" aria-hidden="true"></i></button>
+</form>
+
+
 <div class="winestypemenu">
     <div style="display:flex; justify-content:center;">
         <ul class="nav nav-tabs" style="background-color:white;position: static; z-index: 0; width:auto; height:auto;">
@@ -29,7 +36,7 @@
     </div>
 </div>
 
-<div id="myTabContent" class="tab-content">
+<div id="myTabContent" class="tab-content centerCards">
     <div class="tab-pane fade active show" id="todos">
 
         <div class="row">
