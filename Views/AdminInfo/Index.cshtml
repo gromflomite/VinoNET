@@ -10,12 +10,8 @@
     <link rel="stylesheet" href="https://github.com/downloads/lafeber/world-flags-sprite/flags16.css" />
 }
 
-<<<<<<<<< Temporary merge branch 1
-<h1>Actividad de la página</h1>
-=========
 <h1 class="text-center mt-3">ÁREA DEL ADMINISTRADOR</h1>
 <h4 class="text-center mt-3">>> ACTIVIDAD</h4>
->>>>>>>>> Temporary merge branch 2
 
 <!--DESDE AQUI HASTA LA LÍNEA ... NO MODIFICAR, NO AFECTA AL DISEÑO-->
 <script type="text/javascript">
@@ -56,16 +52,6 @@
     </script>
 }
 
-<<<<<<<<< Temporary merge branch 1
-@foreach (Wine wine in Model.topWines)
-{
-    <script type="text/javascript">
-                topTenName.push('@wine.Name');
-                topTenScore.push(@wine.Score);
-    </script>
-}
-=========
->>>>>>>>> Temporary merge branch 2
 
 <!--Introduce valores sourceNames para gráfico D.O MÁS VISITADAS-->
 @foreach (var sourceScore in Model.sourceScores2)
@@ -108,8 +94,6 @@
     </script>
 }
 
-<<<<<<<<< Temporary merge branch 1
-=========
 
 <!--Introduce valores topName Y topTenScore para gráfico 10 VINOS MEJOR VALORADOS-->
 @foreach (Wine wine in Model.topWines)
@@ -129,21 +113,6 @@
     </script>
 }
 
-<<<<<<<<< Temporary merge branch 1
-<div id="resultado">
-
-    <!--Gráfico-->
-    <div class="rdo"></div>
-    <h6 class="tituloItinerario">TOP 5 DE LA SEMANA (Vinos mejor valorados)</h6>
-    <div class="cajaGrafico">
-        <canvas id="myCanvas"></canvas>
-    </div>
-
-    <div class="rdo"></div>
-    <div class="cajaGrafico">
-        <h6 class="tituloItinerario">TIPOS DE VINOS MÁS VISITADOS POR LA ACTIVIDAD DE LOS USUARIOS</h6>
-        <canvas id="myDoughnutChart"></canvas>
-=========
 
 
 
@@ -162,7 +131,6 @@
             <!--Gráfico TOP 10 (Vinos mejor valorados)-->
             <div id="topTenWines"></div>
         </div>
->>>>>>>>> Temporary merge branch 2
     </div>
 </div>
 <!--Actividad de navegación-->
@@ -184,11 +152,7 @@
 </div>
 
 
-<<<<<<<<< Temporary merge branch 1
-<div id="container"></div>
-=========
 
->>>>>>>>> Temporary merge branch 2
 
 @section Scripts{
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
