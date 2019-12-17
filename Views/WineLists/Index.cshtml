@@ -17,13 +17,8 @@
 
 }
 
-<style type="text/css">
-    li {
-        list-style: none;
-    }
-</style>
-
 <h1 class="titleWineList">Lista de vinos</h1>
+<hr />
 
 <p>
     <a asp-action="Create">Nueva lista</a>
@@ -60,9 +55,9 @@
                     @wineList.ListDate.Value.ToShortDateString()
                 </th>
                 <th class="containerLink">
-                    <a asp-controller="WineLists" asp-action="Details" asp-route-nameList="@wineList.ListName"><img src="~/img/Show-Property-icon.png" alt="Ver lista" title="Detalles" /></a> 
+                    <a asp-controller="WineLists" asp-action="Details" asp-route-nameList="@wineList.ListName"><img src="~/img/Show-Property-icon.png" alt="Ver lista" title="Detalles" /></a>
 
-                    <a asp-action="Edit" asp-route-id="@wineList.Id"><img src="~/img/edit-property.png" alt="Alternate Text" title="Editar" /></a> 
+                    <a asp-action="Edit" asp-route-id="@wineList.Id"><img src="~/img/edit-property.png" alt="Alternate Text" title="Editar" /></a>
 
                     <a asp-controller="WineLists" asp-action="DeleteWineList" asp-route-winwListId="@wineList.Id"><img src="~/img/boton-borrar-png-5.png" alt="Eliminar lista" title="Elinar" /></a>
 
@@ -74,51 +69,52 @@
         </thead>
     </table>
 
-        listWineListWinesx = await _wineListsServices.GetWineListsWinesByWineLisIdAsync(wineList.Id);
+    listWineListWinesx = await _wineListsServices.GetWineListsWinesByWineLisIdAsync(wineList.Id);
 
     @if (listWineListWines.Where(x => x.WineListId == wineList.Id).Count() == 0)
     {
-                    
-            <h2 class="collapse listaCollapse">Lista Vacia</h2>
-                    
+
+        <h2 class="collapse listaCollapse">Lista Vacia</h2>
+
     }
     else
     {
 
         <table class="table table-striped collapse listaCollapse">
             <thead>
-            <tr>
-                <th scope="col">Nombre</th>
-                <th scope="col">Color</th>
-                <th scope="col">Dulzor</th>
-                <th scope="col">D.O</th>
-                <th></th>
-            </tr>
+                <tr>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Color</th>
+                    <th scope="col">Dulzor</th>
+                    <th scope="col">D.O</th>
+                    <th></th>
+                </tr>
             </thead>
-                <tbody>
-                        @foreach (WineListWine wineListWine in listWineListWinesx)
-                        {                                            
-                            <tr>
-                                <td style="width: 300px;">@wineListWine.Wine.Name</td>
-                                <td style="width: 300px;">@wineListWine.Wine.Colour.ColourType</td>
-                                <td style="width: 300px;">@wineListWine.Wine.Sweetnes.SweetnesType</td>
-                                <td style="width: 300px;">@wineListWine.Wine.Source.SourceType</td>
+            <tbody>
+                @foreach (WineListWine wineListWine in listWineListWinesx)
+                {
+                    <tr>
+                        <td style="width: 300px;">@wineListWine.Wine.Name</td>
+                        <td style="width: 300px;">@wineListWine.Wine.Colour.ColourType</td>
+                        <td style="width: 300px;">@wineListWine.Wine.Sweetnes.SweetnesType</td>
+                        <td style="width: 300px;">@wineListWine.Wine.Source.SourceType</td>
 
-                                <td>
-                                    <form asp-controller="WineLists" asp-action="DelateWineListWineValues">
-                                        <input type="hidden" name="idWine" value="@wineListWine.Wine.Id" />
-                                        <input type="hidden" name="wineListWineId" value="@wineListWine.Id" />
-                                        <button type="submit" title="Borrar" class="botonPrueba">
-                                            <img src="~/img/boton-borrar-png-5.png" alt="Eliminar lista" />
-                                        </button>
-                                    </form>
-                                </td>                  
-                            </tr>                      
-                            }
-                </tbody>
+                        <td>
+                            <form asp-controller="WineLists" asp-action="DelateWineListWineValues">
+                                <input type="hidden" name="idWine" value="@wineListWine.Wine.Id" />
+                                <input type="hidden" name="wineListWineId" value="@wineListWine.Id" />
+                                <button type="submit" title="Borrar" class="botonPrueba">
+                                    <img src="~/img/boton-borrar-png-5.png" alt="Eliminar lista" />
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+
+                }
+            </tbody>
         </table>
     }
-        @*<td colspan="5">
+    @*<td colspan="5">
             <ul>
 
                 @if (listWineListWines.Where(x => x.WineListId == wineList.Id).Count() == 0)
@@ -153,7 +149,7 @@
         </td>*@
 
 }
-           
+
 
 @section Scripts{
     <script src="~/js/WineList.js"></script>

@@ -31,7 +31,7 @@ namespace Wineapp.Controllers
         }
 
         // Genera los datos para mostrar en la vista
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Index()
         {
             AdminVM avm = await MostVisitedWines();
@@ -143,7 +143,7 @@ namespace Wineapp.Controllers
             return avm;
         }
 
-
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Sponsor(string search)
         {
             //Lista de vinos

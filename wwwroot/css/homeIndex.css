@@ -1,69 +1,77 @@
 .uptext {
-  font-family: 'Ibarra Real Nova', serif;
-  text-align: justify;
-  font-size: 1.3rem;
-  padding-bottom: 3%;  
+    font-family: 'Ibarra Real Nova', serif;
+    text-align: justify;
+    font-size: 1.3rem;
+    padding-bottom: 3%;
 }
 
 h3.card-header {
-  padding-left: 45px;
-  background-color: #404040;
-  color: white;
+    padding-left: 45px;
+    background-color: #404040;
+    color: white;
 }
 
 .doblock, .winesblock {
-  padding-top: 5%;
-  width: 80%;  
-  margin: 0 auto;
+    padding-top: 5%;
+    width: 80%;
+    margin: 0 auto;
 }
 
-.doblock form {   
-  width: 50%;  
-  height: 460px;
-  margin: 0 auto;  
-}
+    .doblock form {
+        width: 50%;
+        height: 460px;
+        margin: 0 auto;
+    }
 
 input.doimages {
-  height: 440px;
-  width: 440px;
-  padding-top:1%;
+    height: 440px;
+    width: 440px;
+    padding-top: 1%;
 }
 
 .winesblock form {
-  width: 50%;
-  height: 500px;
-  margin: 0 auto;
+    width: 50%;
+    height: 500px;
+    margin: 0 auto;
 }
 
 input.winesimages {
-  height: 500px;
-  width: 500px;  
+    height: 500px;
+    width: 500px;
 }
 
 p.list-group-item {
-  font-family: 'Ibarra Real Nova', serif;
-  text-align: center;
-  font-size: 1.4rem;
-  background-color: #722f37;
-  color: white;
+    font-family: 'Ibarra Real Nova', serif;
+    text-align: center;
+    font-size: 1.4rem;
+    background-color: #722f37;
+    color: white;
 }
 
 .hrdown {
-  margin-top: 5%;
-  padding-top: 5%;
+    margin-top: 5%;
+    padding-top: 5%;
 }
 
 .eventstitle {
-padding-bottom: 3%;  
+    padding-bottom: 3%;
 }
-
-
 
 /*Sponsored wines*/
 .sponsorblock {
     background-color: #e4db97;
-    border:solid;
-    border-color:darkred;
+    border: 1px solid;
+    border-color: grey;
+    border-radius: 1%;
+    margin-top: 5%;
+}
+
+.sponsortitle {
+    font-size: 2rem;
+    margin-top: -3%;
+    padding-bottom: 2%;
+    letter-spacing: 30px;
+    font-weight: bold;
 }
 
 .sponsorContainer {
@@ -74,7 +82,6 @@ padding-bottom: 3%;
 .sponsorImage {
     opacity: 1;
     display: block;
-    width: 100%;
     height: auto;
     transition: .5s ease;
     backface-visibility: hidden;
@@ -100,19 +107,21 @@ padding-bottom: 3%;
 }
 
 .sponsorText {
-    background-color: #882641;
+    background-color: #722f37;
     color: white;
-    font-size: 16px;
-    padding: 16px 32px;
-}
-.sponsorCards {
-    display: flex;
-    justify-content: space-between;
-    font-family: 'Ibarra Real Nova', serif;
-}
-.sponsorCardText {
-    background-color: #882641;
-    padding: 3px;
-    color: #f3f0eb;
+    border-radius: 5%;
+    font-size: 1.5rem;
 }
 
+.sponsorCards {
+    font-family: 'Ibarra Real Nova', serif;
+}
+
+.sponsorcompany {
+    font-style: italic;
+}
+
+.sponsorCardText {
+    background-color: #722f37;
+    color: white;
+}
