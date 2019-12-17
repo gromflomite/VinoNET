@@ -1,23 +1,34 @@
 ﻿@page
 @model RegisterConfirmationModel
 @{
-    ViewData["Title"] = "Confirmar registro";
+    ViewData["Title"] = "";
 }
-
+@section Styles {
+    <link href="@Url.Content("~/css/registeremail.css")" rel="stylesheet" type="text/css" />
+}
 <h1>@ViewData["Title"]</h1>
 @{
+    <h5 class="textdebien">
+        Estamos encantados de darte la bienvenida como nuevo usuario en VinoNET.
+    </h5>
+
     if (@Model.DisplayConfirmAccountLink)
     {
-<p>
-    @*This app does not currently have a real email sender registered, see <a href="https://aka.ms/aspaccountconf">these docs</a> for how to configure a real email sender.*@
-    @*Normally this would be emailed:*@ <a id="confirm-link" href="@Model.EmailConfirmationUrl">Click aqui para confirmar</a>
-</p>
+        <p class="usercontinue">
+            @*This app does not currently have a real email sender registered, see <a href="https://aka.ms/aspaccountconf">these docs</a> for how to configure a real email sender.*@
+            @*Normally this would be emailed:*@ 
+
+
+            <a class="btn btn-outline-danger" id="confirm-link" href="@Model.EmailConfirmationUrl">Continuar</a>
+
+        </p>
     }
     else
     {
-<p>
-    @*Please check your email to confirm your account.*@
-    Por favor revise su correo electrónico para confirmar su cuenta.
-</p>
+        <p>
+            @*Please check your email to confirm your account.*@
+            Gracias por registrarte en VinoNET.
+        </p>
     }
 }
+

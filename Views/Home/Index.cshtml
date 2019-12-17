@@ -15,11 +15,48 @@
 
 <h1 class="test">Bienvenido la web del proyecto VinoNET</h1>
 
-<p class="uptext">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pretium, mi sed pellentesque sagittis, ante tortor ultricies lorem, id pharetra augue purus sed turpis. Etiam eget consectetur tellus, at bibendum enim. Pellentesque et diam elementum, rutrum tortor tincidunt, maximus magna. Ut in consequat tellus. Phasellus dictum purus dui, at vestibulum neque blandit ac. Pellentesque at mi tellus. Fusce metus quam, mattis eu tortor scelerisque, ornare dapibus est. Duis vestibulum in nibh nec aliquet. Mauris vehicula sed sem a pellentesque. Phasellus quis venenatis ex. Donec nibh lacus, ultricies dignissim turpis vel, scelerisque rhoncus justo. Nunc eget suscipit sapien. Praesent eu vehicula enim. </p>
+<p class="uptext">
+    VinoNET es la respuesta de Noelia, Xavi, Maura y Raúl al reto propuesto por Grupo Urbegi. 
+    <br><br> El objetivo de este reto era la creación de un sistema de sugerencias de producto en función de los intereses de cada usuario, a partir de una base de datos generada de forma aleatoria.
+    <br><br> Teniendo en cuenta los requisitos iniciales del reto, se ha creado una base de datos con centenares de registros generados aleatoriamente. La interacción del usuario con los distintos elementos interactivos de la aplicación, genera un perfil que refleja los gustos y preferencias del usuario. Toda la información generada es tratada y almacenada en las distintas bases de datos con el fin de mostrar al usuario sugerencias de producto basadas en el perfil generado.
+    <br><br> La aplicación permite al administrador adaptar el número de impresiones de los distintos productos en los diferentes emplazamientos que se proponen en la web. De este modo, se pueden crear campañas de patrocinio que aumenten el número de muestras en pantalla en favor de un producto seleccionado. El Área de Administración brinda la posibilidad de conocer de un vistazo, y de forma gráfica, la actividad de la aplicación.
+    <br><br> El equipo de VinoNET espera que la propuesta sea de su agrado.
+</p>
 
 <hr />
 
 <!---------------------------------------------------------------------------------------------------------------------------------------------------->
+
+@if (Model.SponsoredWines.Count > 0)
+{
+
+    <div class="jumbotron sponsorblock">
+        <h4 class="text-center sponsortitle">Vinos de la semana</h4>
+        <div class="container row sponsorCards">
+            @foreach (Wine wine in Model.SponsoredWines)
+            {
+                <div class="sponsorContainer col-3">
+                    <div class="card" style="width: 16rem; height:24rem;">
+                        <img src="~/img/wines/@wine.Image" alt="@wine.Name" class="card-img sponsorImage" style="width:100%">
+                        <div class="text-center card-body sponsorCardText">
+                            <h4 class="card-title">@wine.Name</h4>
+                            <p class="card-text sponsorcompany">@wine.Company</p>
+                        </div>
+                        <div class="middle">
+                            <form asp-controller="Wines" asp-action="Details">
+                                <input type="hidden" name="id" value="@wine.Id" />
+                                <input class="sponsorText" type="submit" value="Detalles" />
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+}
+
+
 
 <div class="doblock">
     <div class="card mb-3">
@@ -72,7 +109,7 @@
         else
         {
             <!--NO REGISTRADO-->
-            <h3 class="card-header">Nuestros vinos más vistos</h3>
+            <h3 class="card-header">Vinos mejor valorados</h3>
         }
 
         <div id="carouselwines" class="carousel slide" data-interval="2000" data-ride="carousel">

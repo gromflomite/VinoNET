@@ -27,7 +27,7 @@
                     <ul class="navlinks">
 
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Wines" asp-action="Index">Catalogo</a>
+                            <a class="nav-link" asp-area="" asp-controller="Wines" asp-action="Index">Catálogo</a>
                         </li>
                         @if (_signInManager.IsSignedIn(User))
                         {
@@ -36,10 +36,19 @@
                             </li>
 
                             AppUser user = await _userManager.GetUserAsync(User);
+                            if (user.Survey == false)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="Tastes" asp-action="Survey">Encuesta</a>
+                                </li>
+                            }
                             if (await _userManager.IsInRoleAsync(user, "Admin"))
                             {
                                 <li class="nav-item">
                                     <a class="nav-link" asp-area="" asp-controller="AdminInfo" asp-action="Index">Actividad</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="AdminInfo" asp-action="Sponsor">Patrocinio</a>
                                 </li>
                             }
                         }
@@ -58,7 +67,6 @@
 
         <section class="home">
         </section>
-
     </header>
     <div class="container">
         <main role="main" class="pb-3">
@@ -66,7 +74,7 @@
         </main>
     </div>
 
-    <footer class="footer">
+    <footer id="footer" class="footer">
         <div class="social_icons_rounded">
             <ul>
                 <li><a href="#" class="gap f_facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a> </li>
@@ -102,6 +110,5 @@
 
     @RenderSection("Scripts", required: false)
     @RenderSection("Styles", required: false)
-
 </body>
 </html>

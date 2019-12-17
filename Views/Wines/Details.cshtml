@@ -3,34 +3,64 @@
 @inject SignInManager<AppUser> _signInManager
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalles";
 }
 
 @section Styles {
-    <link href="@Url.Content("~/css/dodetails.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/css/winedetails.css")" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/css/imagegallery.css")" rel="stylesheet" type="text/css" />
 }
 
-<div class="winedetailsblock">
-    <img src="~/img/wines/@Model.Wine.Image" alt="Alternate Text" />
+<h2 class="winedetailstoph1">Más información del vino @Model.Wine.Name</h2>
 
-    <img src="~/img/dologo/@Model.Wine.Source.Logo" alt="Alternate Text" />
+<div class="container-fluid w-100 no-gutters">
+    <div class="row winedetailsblock">
 
-    <img src="~/img/domaps/@Model.Wine.Source.Image" alt="Alternate Text" />
+        <div class="col-4">
+            <img class="wineimage" src="~/img/wines/@Model.Wine.Image" alt="Imagen del vino @Model.Wine.Name" />
+        </div>
+
+        <div class="col-6 offset-2 align-items-center">
+            <img class="dologoimage" src="~/img/dologo/@Model.Wine.Source.Logo" alt="Logo de la D.O. @Model.Wine.Source.SourceType" />
+            <img class="domapimage" src="~/img/domaps/@Model.Wine.Source.Image" alt="Localización de la D.O. @Model.Wine.Source.SourceType" />
+
+            <div class="textwinedetails">
+
+                <p class="p1winedetails"><span class="ptitle">Tipo:</span>  @Model.Wine.Colour.ColourType</p>
+                <p class="p2winedetails"><span class="ptitle">Dulzor:</span>  @Model.Wine.Sweetnes.SweetnesType</p>
+                <p class="p3winedetails"><span class="ptitle">Bodega:</span>  @Model.Wine.Company</p>
+                <p class="p4winedetails"><span class="ptitle">Denominación de Origen:</span><a asp-controller="Wines" asp-action="SourcePreferences" asp-route-sourceId="@Model.Wine.Source.Id"> @Model.Wine.Source.SourceType</a></p>
+                <p class="p5winedetails"><span class="ptitle">Precio:</span> @Model.Wine.Price €</p>
+
+                <div class="card-body iframeblock">
+                    @if (_signInManager.IsSignedIn(User))
+                    {
+                        <iframe class="card-text winedetailsiframe" id="inlineFrame"
+                                title="Wines slider"
+                                width="400"
+                                height="200"
+                                src="https://localhost:44320/Wines/ViewsFavorite/@Model.Wine.Id">
+                        </iframe>
+
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
-<div class="card-body">
-    @if (_signInManager.IsSignedIn(User))
-    {
-        <iframe class="card-text wineiframe" id="inlineFrame"
-                title="Wines slider"
-                width="400"
-                height="200"
-                src="https://localhost:44320/Wines/ViewsFavorite/@Model.Wine.Id">
-        </iframe>
+<hr />
 
-    }
-</div>
+@if (_signInManager.IsSignedIn(User))
+{
+    <!--PARA EL USUARIO REGISTRADO-->
+    <h3>Vinos que también te gustarán</h3>
+}
+else
+{
+    <!--NO REGISTRADO-->
+    <h3>Nuestros vinos más votados</h3>
+}
 
 @if (_signInManager.IsSignedIn(User))
 {
@@ -75,7 +105,7 @@
 
         <div class="row slidewinelist">
             @{ int cont2 = 1;
-                foreach (Wine wine in Model.ListWineUserScore)
+                foreach (Wine wine in Model.ListWinesTastesDetails)
                 {
                     <div class="column">
                         <img class="demo cursor" src="~/img/wines/@wine.Image" style="width:100%" onclick="currentSlide(@cont2)" alt="@wine.Name">
@@ -94,7 +124,7 @@ else
     <div class="slider">
 
         <div class="upperframe">
-             
+
             @foreach (Wine wine in Model.ListWineUserScore)
             {
                 <div class="row mySlides">

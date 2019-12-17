@@ -1,11 +1,31 @@
 ﻿@page
 @model ConfirmEmailModel
 @{
-    ViewData["Title"] = "Confirmar Correo electrónico";
+    ViewData["Title"] = "";
+}
+@section Styles {
+    <link href="@Url.Content("~/css/registeremail.css")" rel="stylesheet" type="text/css" />
 }
 
 <h1>@ViewData["Title"]</h1>
 <partial name="_StatusMessage" model="Model.StatusMessage" />
-<p>Ayúdanos a conocerte rellenando esta encuesta</p>
-<a asp-controller="Tastes" asp-action="Survey">Adelante</a>
-<a asp-controller="Home" asp-action="Index">Saltar</a>
+
+
+
+<div class="usersurvey">
+
+    <p>Te recomendamos relizar nuestra encuesta para conocer mejor tus gustos</p>
+    <h5> ¡Ayúdanos a conocerte mejor! </h5>
+
+</div>
+
+
+<div class="dosboton">
+
+        <a class="btn btn-outline-danger" asp-controller="Tastes" asp-action="Survey">Realizar encuesta </a>
+</div>
+
+<div class="dosboton2">
+
+        <a class="btn btn-outline-danger" asp-controller="Home" asp-action="Index"> Ahora no </a>
+</div>
