@@ -1,0 +1,117 @@
+﻿@model List<Wine>
+@{
+    ViewData["Title"] = "Patrocinar";
+}
+
+@section Styles {
+    <link href="@Url.Content("~/css/adminstyle.css")" rel="stylesheet" type="text/css" />
+}
+
+@{
+    List<Wine> spondorWines = new List<Wine>();
+    List<Wine> noSpondorWines = new List<Wine>();
+    foreach (Wine wine in Model)
+    {
+        if (wine.Sponsor)
+        {
+            spondorWines.Add(wine);
+        }
+        else
+        {
+            noSpondorWines.Add(wine);
+        }
+    }
+}
+
+<h1 class="text-center mt-3">ÁREA DEL ADMINISTRADOR</h1>
+<h4 class="text-center mt-3">>> PATROCINAR VINOS</h4>
+
+<form asp-action="Sponsor" class="mt-5 mb-5 text-center">
+    <input type="text" class="border-dark w-50" placeholder="Introduzca el nombre del vino o de la bodega" name="search" />
+    <button type="submit" class="searchAdmin border-dark"><i class="fa fa-search" aria-hidden="true"></i></button>
+
+</form>
+
+<div class="row sponsorList">
+    <div>
+        <div class="row justify-content-center">
+            <h5>Vinos &nbsp; &nbsp;</h5>
+            <a data-toggle="collapse" href="#multiCollapseExample1" aria-expanded="true" aria-controls="multiCollapseExample1"><i class="fa fa-angle-up" aria-hidden="true"></i></a>
+        </div>
+            <hr class="hrdown" />
+        <div class="collapse multi-collapse show" id="multiCollapseExample1">
+
+            @if (noSpondorWines.Count > 20)
+            {
+                @for (int i = 0; i < 20; i++)
+                {
+                    <div class="card mb-3" style="max-width: 440px;">
+                        <div class="row no-gutters">
+                            <div class="col-md-4">
+                                <img src="~/img/wines/@noSpondorWines[i].Image" class="card-img" alt="@noSpondorWines[i].Name">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title">@noSpondorWines[i].Name</h5>
+                                    <p class="card-text">Bodega: @noSpondorWines[i].Company</p>
+                                    <p class="card-text"><small class="text-muted">@noSpondorWines[i].Colour.ColourType, @noSpondorWines[i].Sweetnes.SweetnesType, @noSpondorWines[i].Source.SourceType</small></p>
+                                    <a asp-action="SponsorConfirm" asp-route-id="@noSpondorWines[i].Id">Patrocinar</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                @foreach (Wine wine in noSpondorWines)
+                {
+                    <div class="card mb-3" style="max-width: 440px;">
+                        <div class="row no-gutters">
+                            <div class="col-md-4">
+                                <img src="~/img/wines/@wine.Image" class="card-img" alt="@wine.Name">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title">@wine.Name</h5>
+                                    <p class="card-text">Bodega: @wine.Company</p>
+                                    <p class="card-text"><small class="text-muted">@wine.Colour.ColourType, @wine.Sweetnes.SweetnesType, @wine.Source.SourceType</small></p>
+                                    <a asp-action="SponsorConfirm" asp-route-id="@wine.Id">Patrocinar</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            }
+        </div>
+
+        </div>
+    <div>
+        <div class="row justify-content-center">
+            <h5>Patrocinados &nbsp; &nbsp;</h5>
+            <a data-toggle="collapse" href="#multiCollapseExample2" aria-expanded="true" aria-controls="multiCollapseExample2"><i class="fa fa-angle-up" aria-hidden="true"></i></a>
+        </div>
+        <hr class="hrdown" />
+        <div class="collapse multi-collapse show" id="multiCollapseExample2">
+            @foreach (Wine wine in spondorWines)
+            {
+                <div class="card mb-3" style="max-width: 440px;">
+                    <div class="row no-gutters">
+                        <div class="col-md-4">
+                            <img src="~/img/wines/@wine.Image" class="card-img" alt="@wine.Name">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title">@wine.Name</h5>
+                                <p class="card-text">Bodega: @wine.Company</p>
+                                <p class="card-text"><small class="text-muted">@wine.Colour.ColourType, @wine.Sweetnes.SweetnesType, @wine.Source.SourceType</small></p>
+                                <a asp-action="SponsorConfirm" asp-route-id="@wine.Id">Dejar de patrocinar</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        </div>
+    </div>

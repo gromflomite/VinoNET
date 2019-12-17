@@ -1,13 +1,19 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @model Wineapp.Models.ViewModels.AdminVM
 @inject UserManager<AppUser> _userManager
+@{
+    ViewData["Title"] = "Actividad";
+}
 
 @section Styles {
     <link href="@Url.Content("~/css/adminstyle.css")" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://github.com/downloads/lafeber/world-flags-sprite/flags16.css" />
 }
 
+
+
 <h1>Actividad de la página</h1>
+
 
 <!--DESDE AQUI HASTA LA LÍNEA ... NO MODIFICAR, NO AFECTA AL DISEÑO-->
 <script type="text/javascript">
@@ -47,6 +53,9 @@
     </script>
 }
 
+
+
+
 @foreach (Wine wine in Model.topWines)
 {
     <script type="text/javascript">
@@ -54,6 +63,7 @@
                 topTenScore.push(@wine.Score);
     </script>
 }
+
 
 <!--Introduce valores sourceNames para gráfico D.O MÁS VISITADAS-->
 @foreach (var sourceScore in Model.sourceScores2)
@@ -88,12 +98,16 @@
     <script type="text/javascript">
             sourceNames.push('@Model.sourceNames[i]');
     </script>
-}@for (int i = 0; i < Model.sourceScores.Length; i++)
+}
+@for (int i = 0; i < Model.sourceScores.Length; i++)
 {
     <script type="text/javascript">
         sourceScores.push(parseFloat(@Model.sourceScores[i]));
     </script>
 }
+
+
+
 
 <!--Introduce valores topName Y topTenScore para gráfico 10 VINOS MEJOR VALORADOS-->
 @foreach (Wine wine in Model.topWines)
@@ -113,6 +127,9 @@
     </script>
 }
 
+
+
+
 <div id="resultado">
 
     <!--Gráfico-->
@@ -122,12 +139,14 @@
         <canvas id="myCanvas"></canvas>
     </div>
 
+
     <div class="rdo"></div>
     <div class="cajaGrafico">
         <h6 class="tituloItinerario">TIPOS DE VINOS MÁS VISITADOS POR LA ACTIVIDAD DE LOS USUARIOS</h6>
         <canvas id="myDoughnutChart"></canvas>
     </div>
 </div>
+
 
 <div id="container"></div>
 

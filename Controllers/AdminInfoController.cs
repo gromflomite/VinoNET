@@ -35,7 +35,7 @@ namespace Wineapp.Controllers
         public async Task<IActionResult> Index()
         {
             AdminVM avm = await MostVisitedWines();
-            
+
             return View(avm);
         }
         public async Task<AdminVM> MostVisitedWines()
@@ -52,15 +52,21 @@ namespace Wineapp.Controllers
                 {
                     if (colourTaste.ColourId == i)
                     {
-                        avm.colourScores[i-1] += colourTaste.Score;
+                        avm.colourScores[i - 1] += colourTaste.Score;
                     }
                 }
+            }
+            double colourScoresSum = avm.colourScores.Sum();
+            for (int i = 0; i < avm.colourScores.Length; i++)
+            {
+                double score = (avm.colourScores[i] * 100) / colourScoresSum;
+                avm.colourScores[i] = score;
             }
 
             return await MostVisitedSources(avm);
         }
         public async Task<AdminVM> MostVisitedSources(AdminVM avm)
-        {           
+        {
             List<SourceTaste> sourceTasteList = await _tastesServices.GetSourceTastesAsync();
 
             avm.sourceNames = sourceTasteList.Select(x => x.Source.SourceType).Distinct().ToArray();
@@ -72,7 +78,7 @@ namespace Wineapp.Controllers
                 {
                     if (sourceTaste.SourceId == i)
                     {
-                        avm.sourceScores[i-1] += sourceTaste.Score;
+                        avm.sourceScores[i - 1] += sourceTaste.Score;
                     }
                 }
             }
@@ -82,11 +88,11 @@ namespace Wineapp.Controllers
 
             for (int i = 1; i <= avm.sourceNames.Length; i++)
             {
-                double score = (avm.sourceScores[i-1]*100)/sourceScoreSum;
-                string source = avm.sourceNames[i-1];
+                double score = (avm.sourceScores[i - 1] * 100) / sourceScoreSum;
+                string source = avm.sourceNames[i - 1];
                 avm.sourceScores2.Add(source, score);
             }
-            avm.sourceScores2 = avm.sourceScores2.OrderByDescending(x=>x.Value).ToDictionary(x => x.Key, y => y.Value);
+            avm.sourceScores2 = avm.sourceScores2.OrderByDescending(x => x.Value).ToDictionary(x => x.Key, y => y.Value);
             avm.sourceScores2 = avm.sourceScores2.Take(11).ToDictionary(x => x.Key, y => y.Value);
             List<Wine> wines = await _winesServices.GetWinesAsync();
 
@@ -96,16 +102,16 @@ namespace Wineapp.Controllers
 
             foreach (var sourceScores2 in avm.sourceScores2)
             {
-                avm.sourceTintos.Add(wines.Where(x=>x.Source.SourceType== sourceScores2.Key && x.ColourId==1).Count());
-                avm.sourceBlancos.Add(wines.Where(x=>x.Source.SourceType== sourceScores2.Key && x.ColourId==2).Count());
-                avm.sourceRosados.Add(wines.Where(x=>x.Source.SourceType== sourceScores2.Key && x.ColourId==3).Count());
+                avm.sourceTintos.Add(wines.Where(x => x.Source.SourceType == sourceScores2.Key && x.ColourId == 1).Count());
+                avm.sourceBlancos.Add(wines.Where(x => x.Source.SourceType == sourceScores2.Key && x.ColourId == 2).Count());
+                avm.sourceRosados.Add(wines.Where(x => x.Source.SourceType == sourceScores2.Key && x.ColourId == 3).Count());
             }
 
             return await TopWines(avm);
         }
 
         public async Task<AdminVM> TopWines(AdminVM avm)
-        {           
+        {
 
             avm.topWines = await _winesServices.GetWinesAsync();
             avm.topWines = avm.topWines.OrderByDescending(x => x.Score).ToList().GetRange(0, 10);
@@ -114,7 +120,7 @@ namespace Wineapp.Controllers
 
         }
         public async Task<AdminVM> TopFiveWinesWeek(AdminVM avm)
-        {           
+        {
             List<UserScore> userScores = await _likeServices.GetUserScoreAsync();
             userScores = userScores.Where(x => x.VoteDate > DateTime.Now.AddDays(-7)).ToList();
 
@@ -122,20 +128,53 @@ namespace Wineapp.Controllers
             avm.winesName = userScores.Select(x => x.Wine.Name).Distinct().ToList();
             //Array doble de int
             //avm.winesScore = new int[avm.winesName.Count, avm.winesName.Count];
-            avm.winesScore= new Dictionary<string, int>();
+            avm.winesScore = new Dictionary<string, int>();
 
 
-                for (int i = 0; i < avm.winesName.Count; i++)
-                {
-                    int score = userScores.Where(x => x.Wine.Name == avm.winesName[i]).Count();
-                    string wine = avm.winesName[i];
-                    avm.winesScore.Add(wine, score);
-                }
+            for (int i = 0; i < avm.winesName.Count; i++)
+            {
+                int score = userScores.Where(x => x.Wine.Name == avm.winesName[i]).Count();
+                string wine = avm.winesName[i];
+                avm.winesScore.Add(wine, score);
+            }
 
-            avm.winesScore = avm.winesScore.OrderByDescending(x => x.Value).ToDictionary(x=>x.Key,y=>y.Value);
-            avm.winesScore= avm.winesScore.Skip(0).Take(5).ToDictionary(x => x.Key, y => y.Value);
+            avm.winesScore = avm.winesScore.OrderByDescending(x => x.Value).ToDictionary(x => x.Key, y => y.Value);
+            avm.winesScore = avm.winesScore.Skip(0).Take(5).ToDictionary(x => x.Key, y => y.Value);
             return avm;
         }
+
+
+        public async Task<IActionResult> Sponsor(string search)
+        {
+            //Lista de vinos
+            List<Wine> wines = await _winesServices.GetWinesAsync();
+
+            if (!string.IsNullOrEmpty(search))
+            {
+                wines = wines.Where(x=>x.Name.ToLower().Contains(search.ToLower()) || x.Company.ToLower().Contains(search.ToLower())).ToList();
+            }
+
+            return View(wines);
+        }
+
+        public async Task<IActionResult> SponsorConfirm(int id)
+        {
+            Wine wine = await _winesServices.GetWineByIdAsync(id);
+            if (wine.Sponsor)
+            {
+                wine.Sponsor = false;
+                await _winesServices.UpdateWineAsync(wine);
+            }
+            else
+            {
+            wine.Sponsor = true;
+            await _winesServices.UpdateWineAsync(wine);
+            }
+
+            return RedirectToAction("Sponsor");
+        }
+
+
 
     }
 }
