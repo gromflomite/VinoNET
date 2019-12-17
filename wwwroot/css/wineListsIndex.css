@@ -28,3 +28,6 @@ img {
 .titleWineList{
     text-align:center;
 }
+li {
+    list-style: none;
+}
