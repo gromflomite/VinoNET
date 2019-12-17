@@ -34,7 +34,7 @@
                             <li class="nav-item">
                                 <a class="nav-link" asp-area="" asp-controller="WineLists" asp-action="Index">Mis Listas</a>
                             </li>
-
+                             
                             AppUser user = await _userManager.GetUserAsync(User);
                             if (user.Survey == false)
                             {
