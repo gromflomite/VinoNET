@@ -35,6 +35,9 @@ namespace Wineapp.Models.ViewModels
         public List<WineListWine> ListWinesListWines { get; set; }
         public bool WinelistsWineExit { get; set; }
 
+        //Lista de vinos patrocinados
+        public List<Wine> SponsoredWines { get; set; }
+
 
     }
 }

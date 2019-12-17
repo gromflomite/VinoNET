@@ -17,9 +17,9 @@ namespace Wineapp.Services
         {
             _context = context;
         }
-        public async Task<WineList> GetWineListByNameListAsync(string nameList)
+        public async Task<WineList> GetWineListByNameListAsync(string nameList,string userId)
         {
-            return await _context.WineLists.FirstOrDefaultAsync(x => x.ListName == nameList);
+            return await _context.WineLists.FirstOrDefaultAsync(x => x.ListName == nameList && x.AppUserId == userId);
         }
         public async Task<WineList> GetWineListByIdAsync(int id)
         {

@@ -1,18 +1,17 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @model Wineapp.Models.ViewModels.AdminVM
 @inject UserManager<AppUser> _userManager
+@{
+    ViewData["Title"] = "Actividad";
+}
 
 @section Styles {
     <link href="@Url.Content("~/css/adminstyle.css")" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://github.com/downloads/lafeber/world-flags-sprite/flags16.css" />
 }
 
-
-
-<h1 class="text-center">ÁREA DEL ADMINISTRADOR</h1>
-<button>Patrocinar vino</button>
-
-
+<h1 class="text-center mt-3">ÁREA DEL ADMINISTRADOR</h1>
+<h4 class="text-center mt-3">>> ACTIVIDAD</h4>
 
 <!--DESDE AQUI HASTA LA LÍNEA ... NO MODIFICAR, NO AFECTA AL DISEÑO-->
 <script type="text/javascript">

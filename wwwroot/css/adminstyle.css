@@ -24,3 +24,17 @@
     margin: 0 auto;  
 }
 
+.sponsorList {
+    display: flex;
+    justify-content: space-around;
+}
+.searchAdmin{
+    color:antiquewhite;
+    background-color:purple;
+    border-radius:50%;
+}
+    .searchAdmin:hover {
+        color: purple;
+        background-color: antiquewhite;
+    }
+

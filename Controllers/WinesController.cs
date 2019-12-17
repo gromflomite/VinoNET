@@ -1,13 +1,10 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using Wineapp.Data;
 using Wineapp.Models;
 using Wineapp.Models.ViewModels;
 using Wineapp.Services;
@@ -25,7 +22,6 @@ namespace Wineapp.Controllers
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
 
-
         public WinesController(IWineLists wineListsServices, ILike likeServices, ITastes tastesServices, IWines winesServices, IFilters filtersServices, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
         {
             _wineListsServices = wineListsServices;
@@ -35,7 +31,6 @@ namespace Wineapp.Controllers
             _likeServices = likeServices;
             _userManager = userManager;
             _signInManager = signInManager;
-
         }
 
         public async Task<WinesVM> GetUserPreferences()
@@ -59,7 +54,6 @@ namespace Wineapp.Controllers
         {
             if (_signInManager.IsSignedIn(User))
             {
-
                 WinesVM wvm = await GetUserPreferences();
                 wvm.Source = await _filtersServices.GetSourceByIdAsync(sourceId);
                 wvm.ListSources = await _filtersServices.GetSourceAsync();
@@ -71,7 +65,6 @@ namespace Wineapp.Controllers
 
                 List<Wine> firstPreference = new List<Wine>();
                 List<Wine> secondPreference = new List<Wine>();
-
 
                 if (_signInManager.IsSignedIn(User))
                 {
@@ -90,7 +83,6 @@ namespace Wineapp.Controllers
                             secondPreference.Add(wine);
                         }
                     }
-
                 }
                 else
                 {
@@ -122,7 +114,6 @@ namespace Wineapp.Controllers
                             break;
                         }
                     }
-
                 }
                 if (secondPreference.Count > 0)
                 {
@@ -145,9 +136,7 @@ namespace Wineapp.Controllers
                         {
                             break;
                         }
-
                     }
-
                 }
 
                 if (wvm.ListWinesTastesSources == null)
@@ -156,7 +145,6 @@ namespace Wineapp.Controllers
                 }
 
                 return View(wvm);
-
             }
             else
             {
@@ -185,7 +173,6 @@ namespace Wineapp.Controllers
                 AppUser user = await _userManager.FindByEmailAsync(User.Identity.Name);
                 await _tastesServices.InsertClickValues(wvm.Wine.ColourId, wvm.Wine.SourceId, wvm.Wine.SweetnesId, 1, user.Id);
 
-
                 List<Wine> listOne = new List<Wine>();
                 List<Wine> listTwo = new List<Wine>();
                 List<Wine> listThree = new List<Wine>();
@@ -193,7 +180,6 @@ namespace Wineapp.Controllers
                 int colourTasteOne = wvm.ListUserColourTaste[0].ColourId;
                 int sweetnessTasteOne = wvm.ListUserSweetnessTaste[0].SweetnesId;
                 int sourceTasteOne = wvm.ListUserSourceTaste[0].SourceId;
-
 
                 //Filtro para sacar los vinos segun gustos
                 foreach (Wine wine in await _winesServices.GetWinesAsync())
@@ -246,7 +232,7 @@ namespace Wineapp.Controllers
 
                 Random rnd = new Random();
                 wvm.ListWinesTastesDetails = new List<Wine>();
-                for (int i = 0; i < 5; i++)
+                for (int i = 0; i < 6; i++)
                 {
                     if (listOne.Count != 0 && listOne.Count > i)
                     {
@@ -266,7 +252,7 @@ namespace Wineapp.Controllers
                         break;
                     }
                 }
-                for (int i = 0; i < 3; i++)
+                for (int i = 0; i < 4; i++)
                 {
                     if (listTwo.Count != 0 && listTwo.Count > i)
                     {
@@ -313,20 +299,18 @@ namespace Wineapp.Controllers
                 }
                 //lista de los vinos mejor valorados de orde de mayor a menor
                 wvm.ListWineUserScore = await _winesServices.GetWinesAsync();
-                wvm.ListWineUserScore = wvm.ListWineUserScore.OrderByDescending(x => x.Score).ToList().GetRange(0, 10);
+                wvm.ListWineUserScore = wvm.ListWineUserScore.OrderByDescending(x => x.Score).ToList().GetRange(0, 12);
 
                 return View(wvm);
-
             }
             else
             {
                 WinesVM wvm = new WinesVM();
                 wvm.Wine = await _winesServices.GetWineByIdAsync(id);
                 wvm.ListWineUserScore = await _winesServices.GetWinesAsync();
-                wvm.ListWineUserScore = wvm.ListWineUserScore.OrderByDescending(x => x.Score).ToList().GetRange(0, 10);
+                wvm.ListWineUserScore = wvm.ListWineUserScore.OrderByDescending(x => x.Score).ToList().GetRange(0, 12);
                 return View(wvm);
             }
-
         }
 
         [Authorize]
@@ -349,6 +333,7 @@ namespace Wineapp.Controllers
             }
             return View(wvm);
         }
+
         [Authorize]
         public async Task InsertLikeValues(int colourId, int sourceId, int sweetId, string url, int idWine)
         {
@@ -369,6 +354,7 @@ namespace Wineapp.Controllers
 
             Response.Redirect(url);
         }
+
         [Authorize]
         public async Task DelateLikeValues(int colourId, int sourceId, int sweetId, string url, int idWine)
         {
@@ -396,6 +382,7 @@ namespace Wineapp.Controllers
             await _wineListsServices.AddWineInWineListAsync(wineListWine);
             Response.Redirect(url);
         }
+
         [HttpPost]
         public async Task DelateWineListWineValues(int wineListWineId, string url, int idWine)
         {
@@ -403,12 +390,10 @@ namespace Wineapp.Controllers
             AppUser user = await _userManager.FindByEmailAsync(User.Identity.Name);
             await _tastesServices.DelateWineListWineValues(wine.ColourId, wine.SourceId, wine.SweetnesId, user.Id);
 
-
             await _wineListsServices.DeleteWineListWineAsync(await _wineListsServices.GetWineListWineByIdAsync(wineListWineId));
 
             Response.Redirect(url);
         }
-
 
         //GET: Wines
         public async Task<IActionResult> Index()
@@ -449,7 +434,7 @@ namespace Wineapp.Controllers
         //        }
 
         //        // POST: Wines/Create
-        //        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        //        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         //        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         //        [HttpPost]
         //        [ValidateAntiForgeryToken]
@@ -487,7 +472,7 @@ namespace Wineapp.Controllers
         //        }
 
         //        // POST: Wines/Edit/5
-        //        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        //        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         //        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         //        [HttpPost]
         //        [ValidateAntiForgeryToken]

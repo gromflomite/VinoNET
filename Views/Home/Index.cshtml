@@ -21,6 +21,36 @@
 
 <!---------------------------------------------------------------------------------------------------------------------------------------------------->
 
+@if (Model.SponsoredWines.Count > 0)
+{
+
+    <div class="jumbotron jumbotron-fluid sponsorblock">
+        <h4 class="text-center pb-3">Vinos de la semana</h4>
+        <div class="container row sponsorCards">
+            @foreach (Wine wine in Model.SponsoredWines)
+            {
+                <div class="sponsorContainer col-3">
+                    <div class="card" style="width: 16rem; height:22rem;">
+                        <img src="~/img/wines/@wine.Image" alt="@wine.Name" class="card-img sponsorImage" style="width:100%">
+                        <div class="text-center card-body sponsorCardText">
+                            <h4 class="card-title">@wine.Name</h4>
+                            <p class="card-text">Bodega: @wine.Company</p>
+                        </div>
+                        <div class="middle">
+                            <form asp-controller="Wines" asp-action="Details">
+                                <input type="hidden" name="id" value="@wine.Id" />
+                                <input class="sponsorText" type="submit" value="Detalles" />
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+}
+
+
 <div class="doblock">
     <div class="card mb-3">
         <h3 class="card-header">Denominaciones de Origen</h3>
@@ -72,7 +102,7 @@
         else
         {
             <!--NO REGISTRADO-->
-            <h3 class="card-header">Nuestros vinos más vistos</h3>
+            <h3 class="card-header">Vinos mejor valorados</h3>
         }
 
         <div id="carouselwines" class="carousel slide" data-interval="2000" data-ride="carousel">

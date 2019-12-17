@@ -1,0 +1,49 @@
+section.home {
+    background-image: url("../img/navbarbackground2.jpg");
+    height: 250px;
+}
+
+.title {
+    font-family: 'Ibarra Real Nova', serif;
+    padding-top: 3%;    
+}
+
+.winestypemenu {
+    font-family: 'Ibarra Real Nova', serif;
+    font-size: 1.5rem;
+    padding-bottom: 0.1%;
+}
+
+
+
+.nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link, .nav {
+   border: none;
+}
+
+.cards {
+    font-family: 'Ibarra Real Nova', serif;
+    padding-bottom: 1%;       
+}
+
+.card-header {
+    display: flex;
+    height: 20%;
+    align-items: center;
+}
+
+.card-header p {    
+    margin: 0 auto;
+    font-weight: bold;
+}
+
+.cardwinedetails li {
+    display: flex;
+    align-items: center;
+    margin: 0 auto;
+}
+
+.cardwinedetails li img {
+    height: 60px;
+}
+
+

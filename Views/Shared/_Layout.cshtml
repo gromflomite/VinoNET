@@ -27,7 +27,7 @@
                     <ul class="navlinks">
 
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Wines" asp-action="Index">Catalogo</a>
+                            <a class="nav-link" asp-area="" asp-controller="Wines" asp-action="Index">Catálogo</a>
                         </li>
                         @if (_signInManager.IsSignedIn(User))
                         {
@@ -58,7 +58,6 @@
 
         <section class="home">
         </section>
-
     </header>
     <div class="container">
         <main role="main" class="pb-3">
@@ -66,7 +65,7 @@
         </main>
     </div>
 
-    <footer class="footer">
+    <footer id="footer" class="footer">
         <div class="social_icons_rounded">
             <ul>
                 <li><a href="#" class="gap f_facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a> </li>
@@ -102,6 +101,5 @@
 
     @RenderSection("Scripts", required: false)
     @RenderSection("Styles", required: false)
-
 </body>
 </html>

@@ -15,7 +15,6 @@ namespace Wineapp.Controllers
     public class TastesController : Controller
     {
         private readonly ITastes _tastesServices;
-        private readonly IWines _winesServices;
         private readonly IFilters _filtersServices;
         private readonly ILike _likeServices;
         private readonly UserManager<AppUser> _userManager;
