@@ -24,7 +24,7 @@
             <input type="hidden" name="idWine" value="@Model.Wine.Id" />
             <input type="hidden" name="url" value="https://localhost:44320/Wines/ViewsFavorite/@Model.Wine.Id" />
             <button type="submit" class="btn btn-secondary" data-toggle="tooltip" data-placement="left" title="Like">
-                <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+                <i class="fa fa-thumbs-o-up" aria-hidden="true"></i> &nbsp;
             </button>
             <!--Si quieres poner una foto, EJEMPLO:-->
         </form>
@@ -49,12 +49,12 @@
 
         <div class="btn-group">
             <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Listas
+                Listas de favoritos
             </button>
             <form asp-controller="Wines" asp-action="AddWineInLists">
                 <div class="dropdown-menu">
-                    <div class="row" style="overflow-x:hidden;max-height: 90px;">
-                        <div class="col-sm-10">
+                    <div class="row" style="overflow-x:hidden;max-height: 200px;">
+                        <div class="col">
                             @foreach (WineList wineList in Model.ListWinesLists)
                             {
                                 <div class="form-check">
@@ -67,7 +67,7 @@
                     <div class="dropdown-divider"></div>
                     <input type="hidden" name="url" value="https://localhost:44320/Wines/ViewsFavorite/@Model.Wine.Id" />
                     <input type="hidden" name="idWine" value="@Model.Wine.Id" />
-                    <button type="submit" class="btn btn-info" title="Añadir">
+                    <button type="submit" class="btn btn-info" title="Añadir a la lista">
                         Añadir
                     </button>
 
@@ -82,7 +82,7 @@
             <input type="hidden" name="idWine" value="@Model.Wine.Id" />
             <input type="hidden" name="url" value="https://localhost:44320/Wines/ViewsFavorite/@Model.Wine.Id" />
             <button type="submit" class="btn btn-danger" title="Añadir">
-                Quitar de la lista @Model.WineListWine.WineList.ListName
+                Eliminar de la lista @Model.WineListWine.WineList.ListName
             </button>
         </form>
     }

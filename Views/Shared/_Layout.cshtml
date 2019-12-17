@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<AppUser> _signInManager
+@inject UserManager<AppUser> _userManager
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -21,15 +25,24 @@
                 </div>
                 <div id="mainListDiv" class="main_list">
                     <ul class="navlinks">
+
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Inicio</a>
+                            <a class="nav-link" asp-area="" asp-controller="Wines" asp-action="Index">Catalogo</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Wines" asp-action="Index">Vinos</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="AdminInfo" asp-action="Index">Eventos</a>
-                        </li>
+                        @if (_signInManager.IsSignedIn(User))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="WineLists" asp-action="Index">Mis Listas</a>
+                            </li>
+
+                            AppUser user = await _userManager.GetUserAsync(User);
+                            if (await _userManager.IsInRoleAsync(user, "Admin"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="AdminInfo" asp-action="Index">Actividad</a>
+                                </li>
+                            }
+                        }
                         <li class="nav-item">
                             <partial name="_LoginPartial" />
                         </li>
@@ -53,7 +66,7 @@
         </main>
     </div>
 
-    <footer class="border-top footer">
+    <footer class="footer">
         <div class="social_icons_rounded">
             <ul>
                 <li><a href="#" class="gap f_facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a> </li>

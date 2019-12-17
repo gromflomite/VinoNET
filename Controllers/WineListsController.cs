@@ -72,23 +72,32 @@ namespace Wineapp.Controllers
 
 
         // GET: WineLists/Details/5
-        //    public async Task<IActionResult> Details(int? id)
-        //    {
-        //        if (id == null)
-        //        {
-        //            return NotFound();
-        //        }
+        [Authorize]        
+        public async Task<IActionResult> Details(string nameList)
+        {
+            AppUser user = await _userManager.FindByEmailAsync(User.Identity.Name);
+            List<WineList> wineLists = await _wineListsServices.GetWineListsByUserIdAsync(user.Id);
+            WineList wineList = await _wineListsServices.GetWineListByNameListAsync(nameList);
 
-        //        var wineList = await _context.WineLists
-        //            .Include(w => w.AppUser)
-        //            .FirstOrDefaultAsync(m => m.Id == id);
-        //        if (wineList == null)
-        //        {
-        //            return NotFound();
-        //        }
+            if (wineList.Id == 0)
+            {
+                return NotFound();
+            }
 
-        //        return View(wineList);
-        //    }
+            WinesVM winesVMx = new WinesVM
+            {
+                WineList = wineList,
+                AppUser = user,
+                ListWinesListWines = await _wineListsServices.GetWineListsWinesByWineLisIdAsync(wineList.Id)            
+            };
+            
+            if (winesVMx == null)
+            {
+                return NotFound();
+            }
+
+            return View(winesVMx);
+        }
 
         // GET: WineLists/Create
         public IActionResult Create()
@@ -115,93 +124,61 @@ namespace Wineapp.Controllers
 
             return View(wineList);
         }
+        [Authorize]
+        public async Task MoveWine(string url, int listaId, int wineListWineId)
+        {
+            var user = await _userManager.FindByEmailAsync(User.Identity.Name);
 
-        //    // GET: WineLists/Edit/5
-        //    public async Task<IActionResult> Edit(int? id)
-        //    {
-        //        if (id == null)
-        //        {
-        //            return NotFound();
-        //        }
+            WineListWine wineListWine = await _wineListsServices.GetWineListWineByIdAsync(wineListWineId);
 
-        //        var wineList = await _context.WineLists.FindAsync(id);
-        //        if (wineList == null)
-        //        {
-        //            return NotFound();
-        //        }
-        //        ViewData["AppUserId"] = new SelectList(_context.Set<AppUser>(), "Id", "Id", wineList.AppUserId);
-        //        return View(wineList);
-        //    }
+            wineListWine.WineListId = listaId;
+            if (ModelState.IsValid)
+            {
+                await _wineListsServices.MoveWine(wineListWine);
+                Response.Redirect(url);
+            }
 
-        //    // POST: WineLists/Edit/5
-        //    // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        //    // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //    [HttpPost]
-        //    [ValidateAntiForgeryToken]
-        //    public async Task<IActionResult> Edit(int id, [Bind("Id,ListName,Description,ListDate,AppUserId")] WineList wineList)
-        //    {
-        //        if (id != wineList.Id)
-        //        {
-        //            return NotFound();
-        //        }
+            Response.Redirect(url);
+        }
 
-        //        if (ModelState.IsValid)
-        //        {
-        //            try
-        //            {
-        //                _context.Update(wineList);
-        //                await _context.SaveChangesAsync();
-        //            }
-        //            catch (DbUpdateConcurrencyException)
-        //            {
-        //                if (!WineListExists(wineList.Id))
-        //                {
-        //                    return NotFound();
-        //                }
-        //                else
-        //                {
-        //                    throw;
-        //                }
-        //            }
-        //            return RedirectToAction(nameof(Index));
-        //        }
-        //        ViewData["AppUserId"] = new SelectList(_context.Set<AppUser>(), "Id", "Id", wineList.AppUserId);
-        //        return View(wineList);
-        //    }
+        // GET: WineLists/Edit/5
+        public async Task<IActionResult> Edit(int id)
+        {
+            if (id == 0)
+            {
+                return NotFound();
+            }
 
-        //    // GET: WineLists/Delete/5
-        //    public async Task<IActionResult> Delete(int? id)
-        //    {
-        //        if (id == null)
-        //        {
-        //            return NotFound();
-        //        }
+            WineList wineList = await _wineListsServices.GetWineListByIdAsync(id);
+            if (wineList == null)
+            {
+                return NotFound();
+            }
 
-        //        var wineList = await _context.WineLists
-        //            .Include(w => w.AppUser)
-        //            .FirstOrDefaultAsync(m => m.Id == id);
-        //        if (wineList == null)
-        //        {
-        //            return NotFound();
-        //        }
+            
+            return View(wineList);
+        }
 
-        //        return View(wineList);
-        //    }
+        // POST: WineLists/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("Id,ListName,Description,ListDate,AppUserId")] WineList wineList)
+        {
+            if (id != wineList.Id)
+            {
+                return NotFound();
+            }
 
-        //    // POST: WineLists/Delete/5
-        //    [HttpPost, ActionName("Delete")]
-        //    [ValidateAntiForgeryToken]
-        //    public async Task<IActionResult> DeleteConfirmed(int id)
-        //    {
-        //        var wineList = await _context.WineLists.FindAsync(id);
-        //        _context.WineLists.Remove(wineList);
-        //        await _context.SaveChangesAsync();
-        //        return RedirectToAction(nameof(Index));
-        //    }
+            if (ModelState.IsValid)
+            {
+                await _wineListsServices.UpUpdate(wineList);
 
-        //    private bool WineListExists(int id)
-        //    {
-        //        return _context.WineLists.Any(e => e.Id == id);
-        //    }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(wineList);
+        }
+        
     }
 }

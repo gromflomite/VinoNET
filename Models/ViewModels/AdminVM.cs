@@ -12,6 +12,11 @@ namespace Wineapp.Models.ViewModels
         public double[] colourScores { get; set; }
 
         //gráfico igual pero con las D.O
+        public Dictionary<string, double> sourceScores2 { get; set; }
+        public List<int> sourceTintos { get; set; }
+        public List<int> sourceBlancos { get; set; }
+        public List<int> sourceRosados { get; set; }
+
         public string[] sourceNames { get; set; }
         public double[] sourceScores { get; set; }
 
