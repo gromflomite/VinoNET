@@ -33,7 +33,7 @@ namespace Wineapp.Controllers
 
         public async Task<IActionResult> Index()
         {
-            WinesVM wvm = await WineSourceIndexList();
+            WinesVM wvm = await WineSponsorIndexList();
             return View(wvm);
         }
         public async Task<WinesVM> GetUserPreferences()
@@ -104,7 +104,7 @@ namespace Wineapp.Controllers
             {
                 WinesVM wvm = new WinesVM();
                 wvm.ListWineTaste = await _winesServices.GetWinesAsync();
-                wvm.ListWineTaste = wvm.ListWineTaste.OrderByDescending(x => x.Score).ToList().GetRange(0,3);
+                wvm.ListWineTaste = wvm.ListWineTaste.OrderByDescending(x => x.Score).ToList().GetRange(0, 3);
                 return wvm;
             }
 
@@ -171,6 +171,20 @@ namespace Wineapp.Controllers
             }
         }
 
+        public async Task<WinesVM> WineSponsorIndexList()
+        {
+            WinesVM wvm = await WineSourceIndexList();
+            wvm.SponsoredWines = await _winesServices.GetWinesAsync();
+            wvm.SponsoredWines = wvm.SponsoredWines.Where(x => x.Sponsor == true).ToList();
+            if (wvm.SponsoredWines.Count > 4)
+            {
+                Random rand = new Random();
+                int start = rand.Next(0, wvm.SponsoredWines.Count - 5);
+                wvm.SponsoredWines = wvm.SponsoredWines.GetRange(start, 4);
+
+            }
+            return wvm;
+        }
         public IActionResult Privacy()
         {
             return View();

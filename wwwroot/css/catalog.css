@@ -45,5 +45,21 @@ section.home {
 .cardwinedetails li img {
     height: 60px;
 }
+.centerCards{
+    display:flex;
+    justify-items:center;
+    justify-content:center;
+}
+/*Search button*/
+.searchCatalog {
+    color: antiquewhite;
+    background-color: purple;
+    border-radius: 50%;
+}
+
+    .searchCatalog:hover {
+        color: purple;
+        background-color: antiquewhite;
+    }
 
 

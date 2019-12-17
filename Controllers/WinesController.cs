@@ -396,9 +396,13 @@ namespace Wineapp.Controllers
         }
 
         //GET: Wines
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string search)
         {
             List<Wine> listWines = await _winesServices.GetWinesAsync();
+            if (!string.IsNullOrEmpty(search))
+            {
+                listWines = listWines.Where(x=>x.Name.ToLower().Contains(search.ToLower()) || x.Company.ToLower().Contains(search.ToLower())).ToList();
+            }
             return View(listWines);
         }
 
