@@ -1,3 +1,3 @@
 ## VinoNET
 
-*A work in progress...*
+BBKbootcamp - .NET Grupo Urbegi final project.
